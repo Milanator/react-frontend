@@ -7,7 +7,7 @@ let baseUrl = 'http://localhost:3001/';
 
 class Login extends Component {
 
-	constructor(){
+	constructor() {
 
 		super();
 
@@ -35,7 +35,7 @@ class Login extends Component {
 
 		event.preventDefault();
 
-		const {email,password} = this.state.user;
+		const { email, password } = this.state.user;
 
 		const params = new URLSearchParams();
 		params.append('email', email);
@@ -43,51 +43,48 @@ class Login extends Component {
 
 		axios({
 			method: 'post',
-			url: ourApiUrl+'user/check',
+			url: ourApiUrl + 'user/check',
 			data: params
 		}).then(res => {
 			this.state.user.authenticated = res.data[0] ? 1 : 0;
 		}).catch(err => {
-			console.log( err );
+			console.log(err);
 		});
 	}
 
-    render() {
-        return (
+	render() {
+		return (
+				<div className="container">
 
-            <div className="container">
+					<div className="login-form">
+						<div className="main-div">
 
-                <h1 className="form-heading">login Form</h1>
-                
-                <div className="login-form">
-                    <div className="main-div">
+							<div className="login-image">
+								<img src={logo} width="70px" />
+							</div>
 
-                        <div className="login-image">
-                            <img src={logo} width="70px"/>
-                        </div>
+							<div className="panel">
+								<h2>Login</h2>
+								<p>Please enter your email and password</p>
+							</div>
 
-                        <div className="panel">
-                            <h2>Login</h2>
-                            <p>Please enter your email and password</p>
-                        </div>
+							<form id="Login" onSubmit={this.checkUser}>
+								<div className="form-group">
+									<input type="email" className="form-control" id="email" placeholder="Email Address" name={'email'} onChange={this.onChangeInput} />
+								</div>
 
-                        <form id="Login" onSubmit={this.checkUser}>
-                            <div className="form-group">
-                                <input type="email" className="form-control" id="email" placeholder="Email Address" name={'email'} onChange={this.onChangeInput}/>
-                            </div>
+								<div className="form-group">
+									<input type="password" className="form-control" id="password" placeholder="Password" name={'password'} onChange={this.onChangeInput} />
+								</div>
 
-                            <div className="form-group">
-                                <input type="password" className="form-control" id="password" placeholder="Password" name={'password'} onChange={this.onChangeInput}/>
-                            </div>
+								<button type="submit" className="btn btn-primary">Login</button>
 
-                            <button type="submit" className="btn btn-primary">Login</button>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+							</form>
+						</div>
+					</div>
+				</div>
+		);
+	}
 }
 
 export default Login;
