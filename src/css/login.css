@@ -5,16 +5,6 @@
   --intense-purple: #720C3E;
   --text-heading: 30px;
   --text-menu: 25px;
-
-}
-
-body {
-  background-color: var(--light-yellow);
-  color: var(--basic-text);
-}
-
-.login-page {
-  background-color: var(--intense-purple);
 }
 
 h2 {
@@ -103,23 +93,4 @@ body#LoginForm {
   color: #444444;
   font-size: 13px;
   text-decoration: none;
-}
-
-.top-navigation {
-  background-color: var(--intense-purple);
-  height: 70px;
-  font-size: var(--text-menu);
-}
-
-.top-navigation img {
-  height: 55px;
-  width: 55px;
-  margin-top: 5px;
-  margin-left: 50px;
-}
-
-.top-navigation-dropdown {
-  float: right;
-  margin-right: 50px;
-  margin-top: 5px;
 }
