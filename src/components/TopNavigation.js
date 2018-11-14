@@ -7,7 +7,7 @@ class TopNavigation extends Component {
     render() {
         return (
             <div className="top-navigation">
-                <img src={logo} as={Link} to="/browse" alt="logo" />
+                <Image src={logo} as={Link} to="/browse" alt="logo" />
 
                 <Dropdown trigger={<Image avatar src={logo} />} className="top-navigation-dropdown">
                     <Dropdown.Menu position="right">

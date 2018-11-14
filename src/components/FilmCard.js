@@ -17,8 +17,8 @@ class FilmCard extends Component {
 
                         <MaterialIcon icon="star_half" size={25}/>
                         <p id="rating">50%</p>
-                        <a className=" image"> <MaterialIcon icon="check_box" size={25}/></a>
-                        <a className=" image"><MaterialIcon icon="bookmark_border" size={25}/></a>
+                        <a className=" filmcard-image"> <MaterialIcon icon="check_box" size={25}/></a>
+                        <a className=" filmcard-image"><MaterialIcon icon="bookmark_border" size={25}/></a>
 
                     </div>
                     <h3><a href="#">FILM NAME</a></h3>
