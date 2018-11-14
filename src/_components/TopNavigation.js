@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import logo from "../Logo.png";
+import logo from "../img/Logo.png";
 import { Dropdown, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import Login from '../Login.js';
 
 class TopNavigation extends Component {
     render() {
