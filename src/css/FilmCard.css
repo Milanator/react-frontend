@@ -1,0 +1,41 @@
+.card{
+    margin: 20px;
+    border: solid 2px gray;
+    box-shadow:5px 3px 5px #d7dfea;
+    width: 250px;
+    display: inline;
+    float: left;
+    height: 550px;
+}
+
+.card img{
+    max-width:200px ;
+    max-height:250px ;
+
+    min-height:250px ;
+    position: relative;
+    margin:  0 auto;
+    padding: 10px 0;
+}
+.card h3{
+    text-align: center;
+}
+.card p {
+    padding: 0 10px;
+}
+
+.marks{
+    display: block;
+    padding: 0 20px;
+
+}
+#rating{float:left;}
+
+.filmcard-image {
+    float: right;
+    padding-right: 10px;
+}
+
+
+
+

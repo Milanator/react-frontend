@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import logo from "./../Logo.png";
+import logo from "./../img/Logo.png";
 import axios from 'axios';
 import {Link} from "react-router-dom";
-
 
 let ourApiUrl = 'http://localhost:3000/';
 let baseUrl = 'http://localhost:3001/';
@@ -17,54 +16,62 @@ class Login extends Component {
 			user: {
 				password: '',
 				email: '',
-				authenticated: false,
+				auth: false,
 				error: false
-			}
+			},
+			error: false
 		};
 		this.checkUser = this.checkUser.bind(this);
 		this.onChangeInput = this.onChangeInput.bind(this);
 	}
 
+	// set to this.state password and email
 	onChangeInput = (event) => {
 
+		// set password and email data to this.state
 		let value = event.target.value;
 		let index = event.target.name;
 
 		this.state.user[index] = value;
 	}
 
+	// after form submit
 	checkUser = (event) => {
 
 		event.preventDefault();
 
 		const {email, password} = this.state.user;
-
+		const {history} = this.props;
 		const params = new URLSearchParams();
+		const state = this.state;
+
+		// set password and email to params for ajax
 		params.append('email', email);
 		params.append('password', password);
 
+		// CHECK USER INPUT -->
 		axios({
 			method: 'post',
 			url: ourApiUrl + 'user/check',
 			data: params
-		}).then(response => {
+		}).then(resp => {
 
-			let data = response.data[0];
-			let emptyResponse = data != undefined;
+			let response = resp.data[0];
+			// check exist and correctness of user
+			let isUser = response != undefined;
 
-			let userValue = {
-				email: emptyResponse ? data.email : this.state.user.email,
-				authenticated: emptyResponse ? true : false,
-				error: emptyResponse ? false : true,
-				password: this.state.user.password
-			};
-			// CHECK RESPONSE FROM SERVER AND SET VALUES
-			this.setState({user: userValue});
+			if (isUser) {
+
+				localStorage.setItem('token', email);
+				localStorage.setItem('refreshToken', password);
+
+				history.push('/home');
+			} else{
+				this.setState({ error: true });
+			}
 
 		}).catch(err => {
 			console.log(err);
-		}).then((res) => {
-			console.log(res);
 		});
 	}
 
@@ -79,13 +86,11 @@ class Login extends Component {
 				</ul>
 				<div className="login-form">
 					<div className="main-div">
-
 						{/* IF IS SOME AUTHENTICATION ERROR, THEN WILL SHOW MESSAGE  */}
 						{
 							this.state.user.error &&
 							<div className={'alert alert-danger'}><p>Invalid credentials</p></div>
 						}
-
 						<div className="login-image">
 							<img src={logo} width="70px"/>
 						</div>
