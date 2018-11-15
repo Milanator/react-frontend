@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import logo from "./../img/Logo.png";
 import axios from 'axios';
 import {Link} from "react-router-dom";
 
-let ourApiUrl = 'http://localhost:3000/';
-let baseUrl = 'http://localhost:3001/';
+import logo from "./../img/Logo.png";
+
+import {setUserInBrowserStorage} from "../_helpers/helper";
+import {ourApiUrl} from "../_helpers/variable";
+
 
 class Login extends Component {
 
@@ -19,7 +21,7 @@ class Login extends Component {
 				auth: false,
 				error: false
 			},
-			error: false
+			error: ''
 		};
 		this.checkUser = this.checkUser.bind(this);
 		this.onChangeInput = this.onChangeInput.bind(this);
@@ -43,7 +45,6 @@ class Login extends Component {
 		const {email, password} = this.state.user;
 		const {history} = this.props;
 		const params = new URLSearchParams();
-		const state = this.state;
 
 		// set password and email to params for ajax
 		params.append('email', email);
@@ -57,17 +58,18 @@ class Login extends Component {
 		}).then(resp => {
 
 			let response = resp.data[0];
-			// check exist and correctness of user
+			let days = 30;
+			// check exist and correctness of login user data
 			let isUser = response != undefined;
 
 			if (isUser) {
-
-				localStorage.setItem('token', email);
-				localStorage.setItem('refreshToken', password);
-
+				// with expiration
+				setUserInBrowserStorage(email,days);
+				// redirect
 				history.push('/home');
 			} else{
-				this.setState({ error: true });
+
+				this.setState({ error: 'Invalid credentials!' });
 			}
 
 		}).catch(err => {
@@ -77,19 +79,21 @@ class Login extends Component {
 
 	render() {
 		return (
-
 			<div className="container">
-				<ul>
+				<ul className={'nav'}>
 					<li>
 						<Link to="/login">Login</Link>
+					</li>
+					<li>
+						<Link to="/register">Register</Link>
 					</li>
 				</ul>
 				<div className="login-form">
 					<div className="main-div">
 						{/* IF IS SOME AUTHENTICATION ERROR, THEN WILL SHOW MESSAGE  */}
 						{
-							this.state.user.error &&
-							<div className={'alert alert-danger'}><p>Invalid credentials</p></div>
+							this.state.error &&
+							<div className={'alert alert-danger'}><p>{ this.state.error }</p></div>
 						}
 						<div className="login-image">
 							<img src={logo} width="70px"/>

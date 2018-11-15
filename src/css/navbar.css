@@ -25,3 +25,8 @@
     margin-right: 50px;
     margin-top: 5px;
   }
+
+  .container .nav.navbar-nav li{
+	  display: inline-block;
+	  margin: 0 10px;
+  }
