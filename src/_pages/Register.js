@@ -55,7 +55,6 @@ class Register extends Component {
 				url: ourApiUrl + 'user/',
 				data: params
 			}).then(resp => {
-				console.log( resp );
 				that.setState({ success: "Successful registration!" })
 			}).catch(err => {
 				console.log(err);
