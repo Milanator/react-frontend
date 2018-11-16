@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Button, Menu, Sidebar, Icon } from 'semantic-ui-react'
 import axios from 'axios'
-import MaterialIcon from 'react-google-material-icons'
 
-export default class SidebarExampleSidebar extends Component {
+export default class FilterSidebar extends Component {
     state = {
         visible: false,
         genres: []
