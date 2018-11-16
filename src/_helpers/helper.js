@@ -10,29 +10,37 @@ export function expirationTime(countDays) {
 	return now.setTime(time);
 }
 
-export function setUserInBrowserStorage(email, days) {
+export function setUserInBrowserStorage(email, days,profilePicture,name) {
 
 	// count of days
 	let now = new Date();
 	let startExpiration = btoa(now.getTime());
 	let endExpiration = btoa(expirationTime(days));
+	profilePicture = btoa(profilePicture);
 	email = btoa(email);
+	name = btoa(name);
 
-	// set data about user in browser storage
-	localStorage.setItem('expiration', startExpiration);
-	localStorage.setItem('refreshExpiration', endExpiration);
-	localStorage.setItem('email', email);
+	// store data to object
+	let toLocalStorage = {
+		expiration: startExpiration,
+		refreshExpiration: endExpiration,
+		email: email,
+		profilePicture: profilePicture,
+		name: name
+	};
+
+	// set data to localStorage
+	localStorage.setItem('user',JSON.stringify(toLocalStorage));
 }
 
 // helper function for checking authenticated user
 export function checkAuth() {
 
+	let {email,expiration,refreshExpiration} = JSON.parse(localStorage.getItem('user'));
+
 	// in seconds
 	let now = new Date();
 	now = now.getTime();
-	let email = localStorage.getItem('email');
-	let expiration = localStorage.getItem('expiration');
-	let refreshExpiration = localStorage.getItem('refreshExpiration');
 
 	// IF DATA IS NOT EXIST
 	if (!expiration || !refreshExpiration || !email) {

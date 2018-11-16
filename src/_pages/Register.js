@@ -62,8 +62,6 @@ class Register extends Component {
 		} else{
 			that.setState({ error: 'Different passwords!' })
 		}
-
-
 	}
 
 	render() {

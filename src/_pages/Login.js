@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import logo from "./../img/Logo.png";
 
 import {setUserInBrowserStorage} from "../_helpers/helper";
-import {ourApiUrl} from "../_helpers/variable";
+import {baseUrl, ourApiUrl} from "../_helpers/variable";
 
 
 class Login extends Component {
@@ -42,8 +42,10 @@ class Login extends Component {
 
 		event.preventDefault();
 
+		// clear all data in local storage
+		localStorage.clear();
+
 		const {email, password} = this.state.user;
-		const {history} = this.props;
 		const params = new URLSearchParams();
 
 		// set password and email to params for ajax
@@ -58,15 +60,17 @@ class Login extends Component {
 		}).then(resp => {
 
 			let response = resp.data[0];
+			let profilePicture = response.profile_picture;
+			let name = response.name;
 			let days = 30;
 			// check exist and correctness of login user data
 			let isUser = response != undefined;
 
 			if (isUser) {
 				// with expiration
-				setUserInBrowserStorage(email,days);
+				setUserInBrowserStorage(email,days,profilePicture,name);
 				// redirect
-				history.push('/home');
+				window.location.href = baseUrl + 'home';
 			} else{
 
 				this.setState({ error: 'Invalid credentials!' });

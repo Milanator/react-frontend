@@ -6,7 +6,9 @@ class Home extends Component {
 		return (
 			<div>
 				<TopNavigation />
-				Home
+				<div className="container">
+					Home
+				</div>
 			</div>
 		);
 	}
