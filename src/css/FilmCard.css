@@ -1,11 +1,15 @@
+.content{
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
 .card{
-    margin: 20px;
-    border: solid 2px gray;
-    box-shadow:5px 3px 5px #d7dfea;
-    width: 250px;
-    display: inline;
     float: left;
-    height: 550px;
+    width: calc(25% - 8px) !important;
+    margin: 4px 4px;
+    min-height: 550px;
+    max-height: 550px;
 }
 
 .card img{
@@ -22,6 +26,7 @@
 }
 .card p {
     padding: 0 10px;
+    text-align: left;
 }
 
 .marks{
@@ -31,9 +36,13 @@
 }
 #rating{float:left;}
 
-.filmcard-image {
+.image {
     float: right;
     padding-right: 10px;
+}
+
+ card #p-bottom{
+    background-color: #720C3E;
 }
 
 
