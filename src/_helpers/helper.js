@@ -36,6 +36,9 @@ export function setUserInBrowserStorage(email, days,profilePicture,name) {
 // helper function for checking authenticated user
 export function checkAuth() {
 
+	if( !JSON.parse(localStorage.getItem('user')) )
+		return false;
+
 	let {email,expiration,refreshExpiration} = JSON.parse(localStorage.getItem('user'));
 
 	// in seconds

@@ -94,3 +94,15 @@ body#LoginForm {
   font-size: 13px;
   text-decoration: none;
 }
+
+.container ul.nav{
+	justify-content: flex-end;
+}
+
+	.container ul.nav li{
+		margin: 15px 10px;
+	}
+
+		.container ul.nav li a{
+			font-size: 22px;
+		}

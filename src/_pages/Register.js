@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import axios from 'axios';
 
-import {movieApiUrl} from "../_helpers/helper";
-
 import logo from "../img/Logo.png";
 import {ourApiUrl} from "../_helpers/variable";
 
@@ -54,7 +52,7 @@ class Register extends Component {
 				method: 'post',
 				url: ourApiUrl + 'user/',
 				data: params
-			}).then(resp => {
+			}).then( () => {
 				that.setState({ success: "Successful registration!" })
 			}).catch(err => {
 				console.log(err);
@@ -77,16 +75,19 @@ class Register extends Component {
 				</ul>
 				<div className="login-form">
 					<div className="main-div">
+
 						{/* IF IS SOME AUTHENTICATION ERROR, THEN WILL SHOW MESSAGE  */}
 						{
 							this.state.error &&
 							<div className={'alert alert-danger'}><p>{ this.state.error }</p></div>
 						}
+
 						{/* IF REGISTRATION IS SUCCESSFUL  */}
 						{
 							this.state.success &&
 							<div className={'alert alert-success'}><p>{ this.state.success }</p></div>
 						}
+
 						<div className="login-image">
 							<img src={logo} width="70px"/>
 						</div>
