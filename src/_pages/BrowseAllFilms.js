@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import TopNavigation from '../_components/TopNavigation';
-import MaterialIcon from 'react-google-material-icons';
 import axios from 'axios';
 import FilmCard from '../_components/FilmCard';
+import FilterSidebar from '../_components/FilterSidebar';
 
 var apikey = "e0338266d7945597731b014d7e806075";
 var apiurlparams = "&language=en-US&sort_by=popularity.desc";
@@ -29,6 +29,7 @@ class BrowseAllFilms extends Component {
         return (
             <div>
                 <TopNavigation />
+                <FilterSidebar />
                 {this.state.data.map(data => (
                     <FilmCard
                         id={data.id}

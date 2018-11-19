@@ -1,10 +1,10 @@
-.content{
+.content {
     text-align: center;
     width: 80%;
     margin: 0 auto;
 }
 
-.card{
+.card {
     float: left;
     width: calc(25% - 8px) !important;
     margin: 4px 4px;
@@ -12,39 +12,38 @@
     max-height: 550px;
 }
 
-.card img{
-    max-width:200px ;
-    max-height:250px ;
-
-    min-height:250px ;
+.card img {
+    max-width: 200px;
+    max-height: 250px;
+    min-height: 250px;
     position: relative;
-    margin:  0 auto;
+    margin: 0 auto;
     padding: 10px 0;
 }
-.card h3{
+
+.card h3 {
     text-align: center;
 }
+
 .card p {
     padding: 0 10px;
     text-align: left;
 }
 
-.marks{
+.marks {
     display: block;
     padding: 0 20px;
-
 }
-#rating{float:left;}
+
+#rating {
+    float: left;
+}
 
 .filmcard-image {
     float: right;
     padding-right: 10px;
 }
 
- card #p-bottom{
+card #p-bottom {
     background-color: #720C3E;
 }
-
-
-
-

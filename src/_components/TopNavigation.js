@@ -31,7 +31,7 @@ class TopNavigation extends Component {
         return (
         	<div>
 				<div className="top-navigation">
-					<Image src={logo} as={Link} to="/browse" alt="logo" />
+					<Image src={logo} as={Link} to="/browseAll" alt="logo" />
 
 					<Dropdown trigger={<Image avatar src={this.state.user.profilePicture} />} className="top-navigation-dropdown">
 						<Dropdown.Menu position="right">
