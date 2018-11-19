@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './css/login.css';
 import './css/navbar.css';
+import './css/filmcard.css';
 import 'semantic-ui-css/semantic.min.css';
 import { BrowserRouter } from 'react-router-dom';
 

@@ -4,9 +4,6 @@ import MaterialIcon from 'react-google-material-icons';
 import axios from 'axios';
 import FilmCard from '../_components/FilmCard';
 
-let ourApiUrl = 'http://localhost:3000/';
-let baseUrl = 'http://localhost:3001/';
-
 var apikey = "e0338266d7945597731b014d7e806075";
 var apiurlparams = "&language=en-US&sort_by=popularity.desc";
 var apiurl = "https://api.themoviedb.org/3/discover/movie?api_key=" + apikey + apiurlparams;
@@ -24,9 +21,7 @@ class BrowseAllFilms extends Component {
 
         axios.get(apiurl).then(res => {
             const data = res.data.results;
-            console.log(data);
             this.setState({ data });
-            console.log(this.state);
         });
     }
 
