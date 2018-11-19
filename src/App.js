@@ -6,7 +6,7 @@ import Login from './_pages/Login.js';
 import Home from "./_pages/Home";
 import Register from "./_pages/Register";
 
-import FilmCard from "./_components/FilmCard";
+import BrowseAllFilms from './_pages/BrowseAllFilms';
 
 // redirecting to inside application or login
 function Auth({component: Component, ...rest}) {
@@ -26,7 +26,7 @@ class App extends Component {
 			<div className={'app-routes'}>
 				<Route exact path={'/login'} component={Login}/>
 				<Route exact path={'/register'} component={Register}/>
-				<Route path={'/filmcard'} component={FilmCard}/>
+				<Route path={'/browseAll'} component={BrowseAllFilms}/>
 				<Auth path={'/home'} component={Home} onEnter={Auth}/>
 			</div>
 		);
