@@ -3,6 +3,7 @@ import TopNavigation from '../_components/TopNavigation';
 import axios from 'axios';
 import FilmModal from '../_components/FilmModal';
 import FilterSidebar from '../_components/FilterSidebar';
+import '../css/main.css';
 
 var apikey = "e0338266d7945597731b014d7e806075";
 var apiurlparams = "&language=en-US&sort_by=popularity.desc";

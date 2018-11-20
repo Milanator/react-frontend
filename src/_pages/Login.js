@@ -3,8 +3,6 @@ import axios from 'axios';
 import {Link} from "react-router-dom";
 import '../css/login.css';
 
-import logo from "./../img/Logo.png";
-
 import {setUserInBrowserStorage} from "../_helpers/helper";
 import {baseUrl, ourApiUrl} from "../_helpers/variable";
 
@@ -83,7 +81,10 @@ class Login extends Component {
 	}
 
 	render() {
+		document.body.style.backgroundImage="url('background.png')";
+
 		return (
+			<div className="background">
 			<div className="container">
 				<ul className={'nav'}>
 					<li>
@@ -100,9 +101,6 @@ class Login extends Component {
 							this.state.error &&
 							<div className={'alert alert-danger'}><p>{ this.state.error }</p></div>
 						}
-						<div className="login-image">
-							<img src={logo} width="70px"/>
-						</div>
 						<div className="panel">
 							<h2>Login</h2>
 							<p>Please enter your email and password</p>
@@ -118,6 +116,7 @@ class Login extends Component {
 						</form>
 					</div>
 				</div>
+			</div>
 			</div>
 		);
 	}

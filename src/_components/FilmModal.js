@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Image, Modal, Icon, Grid, Container } from 'semantic-ui-react'
+import { Header, Image, Modal, Icon, Grid, Container, Label } from 'semantic-ui-react'
 import FilmCard from './FilmCard';
 
 class FilmModal extends Component {
@@ -18,9 +18,9 @@ class FilmModal extends Component {
           original_language={original_language} />}
           centered={false}>
 
-          <Modal.Header>{title}</Modal.Header>
+          <Modal.Header color="blue">{title}</Modal.Header>
 
-          <Modal.Content image>
+          <Modal.Content image scrolling>
 
             <Image wrapped size='large' src={"https://image.tmdb.org/t/p/w500" + poster_path} />
 
@@ -30,14 +30,16 @@ class FilmModal extends Component {
 
                 <Grid columns={7}>
                   <Grid.Column width={4}>
-                    <Icon name="star half" /> {rating}%
+                    <Label color="blue" size="large">
+                      <Icon name='star half' /> {rating}%
+                    </Label>
                   </Grid.Column>
                   <Grid.Column /><Grid.Column /><Grid.Column />
                   <Grid.Column>
-                    <Icon color="teal" link name="bookmark outline" />
+                    <Icon color="blue" link name="bookmark outline" />
                   </Grid.Column>
                   <Grid.Column>
-                    <Icon link color="teal" name="check square outline" />
+                    <Icon link color="blue" name="check square outline" />
                   </Grid.Column>
                 </Grid>
 

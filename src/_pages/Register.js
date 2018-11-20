@@ -63,6 +63,7 @@ class Register extends Component {
 	}
 
 	render() {
+		document.body.style.backgroundImage="url('background.png')";
 		return (
 			<div className="container">
 				<ul className={'nav'}>
@@ -88,9 +89,6 @@ class Register extends Component {
 							<div className={'alert alert-success'}><p>{ this.state.success }</p></div>
 						}
 
-						<div className="login-image">
-							<img src={logo} width="70px"/>
-						</div>
 						<div className="panel">
 							<h2>Register</h2>
 							<p>Please enter your user name, email and password</p>

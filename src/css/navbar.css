@@ -1,29 +1,29 @@
 :root {
-    --light-yellow: #FDFFF9;
-    --basic-text: #1A3742;
-    --intense-green: #278C78;
-    --intense-purple: #720C3E;
+    --white: #ffffff;
+    --rich-black: #00171F;
+    --prussian-blue: #003459;
+    --cerulean: #007EA7;
+    --vivid-cerulean: #00A8E8;
     --text-heading: 30px;
     --text-menu: 25px;
   }
   
   .top-navigation {
-    background-color: var(--intense-purple);
-    height: 70px;
+    background-color: var(--rich-black);
+    height: 100px;
     font-size: var(--text-menu);
   }
   
   .top-navigation img {
-    height: 55px;
-    width: 55px;
-    margin-top: 5px;
+    width: 250px;
+    margin-top: 25px;
     margin-left: 50px;
   }
   
   .top-navigation-dropdown {
     float: right;
     margin-right: 50px;
-    margin-top: 5px;
+    margin-top: -7px;
   }
 
   .container .nav.navbar-nav li{
