@@ -1,23 +1,30 @@
 import React, { Component } from 'react';
 import MaterialIcon from 'react-google-material-icons';
+import { Icon, Grid, GridColumn } from 'semantic-ui-react';
 import '../css/filmcard.css';
 
 class FilmCard extends Component {
 
     render() {
 
-        const {id, poster_path, rating, title, overview, original_language, ...rest} = this.props;
+        const { id, poster_path, rating, title, overview, original_language, ...rest } = this.props;
 
         return (
             <div className="card" {...rest}>
                 <img src={"https://image.tmdb.org/t/p/w500" + poster_path} alt="movie poster" />
 
                 <div className="marks">
-
-                    <MaterialIcon icon="star_half" size={25} />
-                    <p id="rating">{rating} %</p>
-                    <a className="filmcard-image"> <MaterialIcon icon="check_box" size={25} /></a>
-                    <a className="filmcard-image"><MaterialIcon icon="bookmark_border" size={25} /></a>
+                    <Grid>
+                        <Grid.Column textAlign="center" width={9}>
+                            <Icon size="large" name="star half" /> {rating}%
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Icon link size="large" name="bookmark outline" />
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Icon link size="large" name="check square outline" />
+                        </Grid.Column>
+                    </Grid>
 
                 </div>
                 <h3>
