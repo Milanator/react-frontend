@@ -34,10 +34,10 @@ class FilmModal extends Component {
                   </Grid.Column>
                   <Grid.Column /><Grid.Column /><Grid.Column />
                   <Grid.Column>
-                    <Icon link name="bookmark outline" />
+                    <Icon color="teal" link name="bookmark outline" />
                   </Grid.Column>
                   <Grid.Column>
-                    <Icon link name="check square outline" />
+                    <Icon link color="teal" name="check square outline" />
                   </Grid.Column>
                 </Grid>
 

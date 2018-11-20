@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MaterialIcon from 'react-google-material-icons';
-import { Icon, Grid, GridColumn } from 'semantic-ui-react';
+import { Icon, Grid, GridColumn, Popup } from 'semantic-ui-react';
 import '../css/filmcard.css';
 
 class FilmCard extends Component {
@@ -14,15 +14,15 @@ class FilmCard extends Component {
                 <img src={"https://image.tmdb.org/t/p/w500" + poster_path} alt="movie poster" />
 
                 <div className="marks">
-                    <Grid>
+                    <Grid verticalAlign="middle">
                         <Grid.Column textAlign="center" width={9}>
-                            <Icon size="large" name="star half" /> {rating}%
+                            <Icon color="grey" name="star half" />{rating}%                            
                         </Grid.Column>
                         <Grid.Column>
-                            <Icon link size="large" name="bookmark outline" />
+                           <Icon color="grey" name="bookmark outline" />
                         </Grid.Column>
                         <Grid.Column>
-                            <Icon link size="large" name="check square outline" />
+                            <Icon  color="grey" name="check square outline" />
                         </Grid.Column>
                     </Grid>
 
