@@ -3,6 +3,7 @@ import logo from "../img/Logo.png";
 import { Dropdown, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import {baseUrl} from "../_helpers/variable";
+import '../css/navbar.css';
 
 class TopNavigation extends Component {
 

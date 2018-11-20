@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TopNavigation from '../_components/TopNavigation';
 import axios from 'axios';
-import FilmCard from '../_components/FilmCard';
+import FilmModal from '../_components/FilmModal';
 import FilterSidebar from '../_components/FilterSidebar';
 
 var apikey = "e0338266d7945597731b014d7e806075";
@@ -31,13 +31,13 @@ class BrowseAllFilms extends Component {
                 <TopNavigation />
                 <FilterSidebar />
                 {this.state.data.map(data => (
-                    <FilmCard
+                    <FilmModal 
                         id={data.id}
-                        image={data.poster_path}
+                        poster_path={data.poster_path}
                         rating={data.vote_average * 10}
-                        filmName={data.title}
+                        title={data.title}
                         overview={data.overview}
-                        language={data.original_language}
+                        original_language={data.original_language}
                     />
                 ))}
             </div>

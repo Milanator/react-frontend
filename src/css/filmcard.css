@@ -10,6 +10,7 @@
     margin: 4px 4px;
     min-height: 550px;
     max-height: 550px;
+    cursor: pointer;
 }
 
 .card img {
