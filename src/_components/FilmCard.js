@@ -1,48 +1,47 @@
 import React, { Component } from 'react';
-import MaterialIcon from 'react-google-material-icons'
-import {textLimit} from './../_helpers/helper'
-import './../css/FilmCard.css';
+import { Icon, Grid, Label } from 'semantic-ui-react';
+import '../css/filmcard.css';
 
 class FilmCard extends Component {
 
-	constructor(props){
-
-		super(props);
-		this.state = {
-			films: this.props.films
-		};
-	}
-
     render() {
-		if( this.state.films.length == 0 ){
+
+        const { id, poster_path, rating, title, overview, original_language, ...rest } = this.props;
+
+        return (
+            <div className="card" {...rest}>
+                <img src={"https://image.tmdb.org/t/p/w500" + poster_path} alt="movie poster" />
 
 			return <div>Loading</div>
 		} else{
-			return (
-				<div>
 					{ this.state.films.map(film => (
-						<div className="card" key={film.id}>
-							<img src={"https://image.tmdb.org/t/p/w500/" + film.poster_path} alt={film.title}/>
+                <div className="marks">
+                    <Grid verticalAlign="middle">
+                        <Grid.Column textAlign="center" width={9}>
+                            <Label size="small" color="grey">
+                                <Icon name='star half' /> {rating}%
+                            </Label>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Icon color="grey" name="bookmark outline" />
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Icon color="grey" name="check square outline" />
+                        </Grid.Column>
+                    </Grid>
 
-							<div className="marks">
-								<MaterialIcon icon="star_half" size={25}/>
-								<p id="rating">
-									{(film.vote_average * 10)}%
-								</p>
-								<a className="image"> <MaterialIcon icon="check_box" size={25}/></a>
-								<a className="image"><MaterialIcon icon="bookmark_border" size={25}/></a>
-							</div>
-							<h3><a href="#">{ film.title }</a></h3>
-							<p>
-								{ textLimit(film.overview,150) }
-							</p>
-							<a href="#">read more</a>
-							<p>language: { film.original_language }</p>
-						</div>
-					))}
-				</div>
-			);
-		}
+                </div>
+                <h3>
+                    {title}
+                </h3>
+                <p>
+                    {overview < 230 ? overview : overview.substring(0, 240) + "..."}
+                </p>
+                <p>
+                    language: {original_language}
+                </p>
+            </div>
+        );
     }
 }
 

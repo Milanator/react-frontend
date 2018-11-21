@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import logo from "../img/Logo.png";
-import { Dropdown, Image } from 'semantic-ui-react';
+import { Dropdown, Image, Grid, GridColumn } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import {baseUrl} from "../_helpers/variable";
+import { baseUrl } from "../_helpers/variable";
+import '../css/navbar.css';
 
 class TopNavigation extends Component {
 
-	constructor(){
+	constructor() {
 		super();
 
 		let user = JSON.parse(localStorage.getItem('user'));
 		this.state = {
-			user: {
+			user: {
 				profilePicture: atob(user.profilePicture),
 				name: atob(user.name)
 			}
@@ -27,22 +28,31 @@ class TopNavigation extends Component {
 		window.location.href = baseUrl + 'login';
 	}
 
-    render() {
-        return (
-        	<div>
+	render() {
+		return (
+			<div>
 				<div className="top-navigation">
-					<Image src={logo} as={Link} to="/browse" alt="logo" />
+					<Grid columns={3}>
+						<GridColumn>
+							<Image src={logo} as={Link} to="/browseAll" alt="logo" />
+						</GridColumn>
+						<GridColumn>
+							{/* insert search field here */}
+						</GridColumn>
+						<GridColumn>
+							<Dropdown trigger={<Image avatar src={this.state.user.profilePicture} />} className="top-navigation-dropdown">
+								<Dropdown.Menu position="right">
+									<Dropdown.Item as={Link} to="/mywatchlist" text="My Movies" />
+									<Dropdown.Item text="Logout" onClick={this.logOut} />
+								</Dropdown.Menu>
+							</Dropdown>
+						</GridColumn>
+					</Grid>
 
-					<Dropdown trigger={<Image avatar src={this.state.user.profilePicture} />} className="top-navigation-dropdown">
-						<Dropdown.Menu position="right">
-							<Dropdown.Item as={Link} to="/mywatchlist" text="My Movies"/>
-							<Dropdown.Item text="Logout" onClick={this.logOut}/>
-						</Dropdown.Menu>
-					</Dropdown>
 				</div >
 			</div>
-        );
-    }
+		);
+	}
 }
 
 export default TopNavigation;
