@@ -5,12 +5,22 @@
     --cerulean: #007EA7;
     --vivid-cerulean: #00A8E8;
     --text-heading: 30px;
-    --text-menu: 25px;
+    --text-menu: 20px;
   }
   
   .top-navigation {
     background-color: var(--rich-black);
     height: 100px;
+    font-size: var(--text-menu);
+  }
+
+  .middle.aligned.column.search-field {
+    font-size: 13px;
+    margin-top: 17px;
+  }
+
+  .center.aligned.middle.aligned.column {
+    margin-top: 17px;
     font-size: var(--text-menu);
   }
   
