@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MaterialIcon from 'react-google-material-icons'
 
 import axios from "axios"
-import TopNavigation from "./TopNavigation";
+import TopNavigation from "./../_components/TopNavigation";
 
 let ourApiUrl = 'http://localhost:3000/';
 let baseUrl = 'http://localhost:3001/';

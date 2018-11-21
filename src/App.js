@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import {Route, Redirect} from 'react-router-dom'
 import {checkAuth} from "./_helpers/helper";
 
+// PAGES
 import Login from './_pages/Login.js';
 import Home from "./_pages/Home";
 import Register from "./_pages/Register";
+import NewFilms from "./_pages/newFilms";
 
 import FilmCard from "./_components/FilmCard";
 
@@ -27,6 +29,7 @@ class App extends Component {
 				<Route exact path={'/login'} component={Login}/>
 				<Route exact path={'/register'} component={Register}/>
 				<Route path={'/filmcard'} component={FilmCard}/>
+				<Route path={'/newfilms'} component={NewFilms}/>
 				<Auth path={'/home'} component={Home} onEnter={Auth}/>
 			</div>
 		);

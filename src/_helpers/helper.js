@@ -62,3 +62,8 @@ export function movieApiUrl(str) {
 	return movieDbDomain + str + movieApiKeyPart;
 }
 
+export function textLimit(str,count) {
+	return str.length < count ? str :
+		str.substring(0, count) + "..."
+}
+
