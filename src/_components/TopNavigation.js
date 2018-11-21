@@ -34,7 +34,7 @@ class TopNavigation extends Component {
 				<div className="top-navigation">
 					<Grid columns={3}>
 						<GridColumn>
-							<Image src={logo} as={Link} to="/browseAll" alt="logo" />
+							<Image src={logo} as={Link} to="/browseAll" alt="logo"/>
 						</GridColumn>
 						<GridColumn>
 							{/* insert search field here */}

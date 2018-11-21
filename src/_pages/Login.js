@@ -61,13 +61,14 @@ class Login extends Component {
 			let response = resp.data[0];
 			let profilePicture = response.profile_picture;
 			let name = response.name;
+			let id = response.id;
 			let days = 30;
 			// check exist and correctness of login user data
 			let isUser = response != undefined;
 
 			if (isUser) {
 				// with expiration
-				setUserInBrowserStorage(email,days,profilePicture,name);
+				setUserInBrowserStorage(email,days,profilePicture,name,id);
 				// redirect
 				window.location.href = baseUrl + 'home';
 			} else{

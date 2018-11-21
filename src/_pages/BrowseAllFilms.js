@@ -4,6 +4,7 @@ import axios from 'axios';
 import FilmModal from '../_components/FilmModal';
 import FilterSidebar from '../_components/FilterSidebar';
 import '../css/main.css';
+import LoaderExampleInlineCentered from "../_components/LoadingIndicator";
 
 var apikey = "e0338266d7945597731b014d7e806075";
 var apiurlparams = "&language=en-US&sort_by=popularity.desc";
@@ -30,7 +31,7 @@ class BrowseAllFilms extends Component {
 
 		if( this.state.data.lenght == 0 ){
 
-			return <div>Loading</div>
+			return <LoaderExampleInlineCentered />
 		} else{
 
 			return (
@@ -45,6 +46,7 @@ class BrowseAllFilms extends Component {
 							title={film.title}
 							overview={film.overview}
 							original_language={film.original_language}
+							key={film.id}
 						/>
 					))}
 				</div>

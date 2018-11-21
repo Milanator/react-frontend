@@ -10,7 +10,7 @@ export function expirationTime(countDays) {
 	return now.setTime(time);
 }
 
-export function setUserInBrowserStorage(email, days,profilePicture,name) {
+export function setUserInBrowserStorage(email, days,profilePicture,name,id) {
 
 	// count of days
 	let now = new Date();
@@ -19,6 +19,7 @@ export function setUserInBrowserStorage(email, days,profilePicture,name) {
 	profilePicture = btoa(profilePicture);
 	email = btoa(email);
 	name = btoa(name);
+	id = btoa(id);
 
 	// store data to object
 	let toLocalStorage = {
@@ -26,7 +27,8 @@ export function setUserInBrowserStorage(email, days,profilePicture,name) {
 		refreshExpiration: endExpiration,
 		email: email,
 		profilePicture: profilePicture,
-		name: name
+		name: name,
+		id: id
 	};
 
 	// set data to localStorage

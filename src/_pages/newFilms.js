@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from "axios"
 import FilmCard from "../_components/FilmCard";
 import FilmModal from "../_components/FilmModal";
+import LoaderExampleInlineCentered from "../_components/LoadingIndicator";
 
 let apikey = "e0338266d7945597731b014d7e806075";
 let apiurlparams = "&language=en-US&sort_by=popularity.desc";
@@ -31,14 +32,22 @@ class NewFilms extends Component {
 	render() {
 		if( this.state.films.length == 0 ){
 
-			return <div>Loading</div>
+			return <LoaderExampleInlineCentered />;
 		} else{
 
 			return (
 				<div>
 					<h1>New Films</h1>
 					{ this.state.films.map((film) => (
-						<FilmModal film={film} />
+						<FilmModal
+							id={film.id}
+							poster_path={film.poster_path}
+							rating={film.vote_average * 10}
+							title={film.title}
+							overview={film.overview}
+							original_language={film.original_language}
+							key={film.id}
+						/>
 					)) }
 				</div>
 			);

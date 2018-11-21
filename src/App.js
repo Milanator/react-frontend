@@ -29,10 +29,12 @@ class App extends Component {
 			<div className={'app-routes'}>
 				<Route exact path={'/login'} component={Login}/>
 				<Route exact path={'/register'} component={Register}/>
-				<Route path={'/browseAll'} component={BrowseAllFilms}/>
 				<Route path={'/filmcard'} component={FilmCard}/>
 				<Route path={'/newfilms'} component={NewFilms}/>
+
+				{/* FOR LOGGED USERS */}
 				<Auth path={'/home'} component={Home} onEnter={Auth}/>
+				<Auth path={'/browseAll'} component={BrowseAllFilms}/>
 			</div>
 		);
 	}

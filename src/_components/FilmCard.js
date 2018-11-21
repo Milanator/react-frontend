@@ -8,9 +8,9 @@ class FilmCard extends Component {
 	render() {
 
 		const { id, poster_path, rating, title, overview, original_language, ...rest } = this.props;
-		
+
 		return (
-			<div className="card" {...rest}>
+			<div className="card" {...rest} key={id}>
 				<img src={"https://image.tmdb.org/t/p/w500" + poster_path} alt="movie poster" />
 
 				<div className="marks">
@@ -33,7 +33,7 @@ class FilmCard extends Component {
 					{title}
 				</h3>
 				<p>
-					{/*{ textLimit(overview,230) }*/}
+					{ textLimit(overview,230) }
 				</p>
 				<p>
 					language: {original_language}

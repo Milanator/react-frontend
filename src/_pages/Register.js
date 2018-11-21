@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import axios from 'axios';
 
-import logo from "../img/Logo.png";
 import {ourApiUrl} from "../_helpers/variable";
 
 class Register extends Component {
@@ -39,6 +38,8 @@ class Register extends Component {
 		let that = this;
 		let {confirm_password,password,email,name} = this.state.user;
 
+		that.setState({ success:'',error:'' });
+
 		if( confirm_password === password ){
 
 			const params = new URLSearchParams();
@@ -52,8 +53,15 @@ class Register extends Component {
 				method: 'post',
 				url: ourApiUrl + 'user/',
 				data: params
-			}).then( () => {
-				that.setState({ success: "Successful registration!" })
+			}).then( (resp) => {
+				// SQL ERROR IS NOT ERROR LIKE RESPONSE FROM AJAX
+				if(resp.data.hasOwnProperty('errno')){
+
+					that.setState({ error: resp.data.sqlMessage })
+				} else{
+
+					that.setState({ success: 'Successful registration!' })
+				}
 			}).catch(err => {
 				console.log(err);
 			})

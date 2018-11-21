@@ -48,7 +48,7 @@ export default class FilterSidebar extends Component {
                     width='thin'
                 >
                     {this.state.genres.map(genre =>
-                        <Menu.Item as='a'>{genre.name}</Menu.Item>
+                        <Menu.Item as='a' key={genre.id}>{genre.name}</Menu.Item>
                     )}
                 </Sidebar>
             </div>
