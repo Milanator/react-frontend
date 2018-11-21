@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from "../img/Logo.png";
-import { Dropdown, Image, Grid, GridColumn } from 'semantic-ui-react';
+import { Dropdown, Image, Grid, GridColumn, Search } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { baseUrl } from "../_helpers/variable";
 import '../css/navbar.css';
@@ -32,17 +32,27 @@ class TopNavigation extends Component {
 		return (
 			<div>
 				<div className="top-navigation">
-					<Grid columns={3}>
-						<GridColumn>
-							<Image src={logo} as={Link} to="/browseAll" alt="logo" />
+					<Grid columns="equal">
+						<GridColumn width={6}>
+							<Image src={logo} as={Link} to="/home" alt="logo" />
 						</GridColumn>
-						<GridColumn>
+						<GridColumn className="search-field" verticalAlign="middle" width={4}>
+							<Search 
+								
+							/>
 							{/* insert search field here */}
 						</GridColumn>
-						<GridColumn>
+						<GridColumn verticalAlign="middle" textAlign="center" width={1}>
+							<Link to="/home">Home</Link>
+						</GridColumn>
+						<GridColumn verticalAlign="middle" textAlign="center" >
+						<Link to="/browseAll">Browse All</Link>
+						</GridColumn>
+						<GridColumn verticalAlign="middle">
 							<Dropdown trigger={<Image avatar src={this.state.user.profilePicture} />} className="top-navigation-dropdown">
-								<Dropdown.Menu position="right">
-									<Dropdown.Item as={Link} to="/mywatchlist" text="My Movies" />
+								<Dropdown.Menu direction="left">
+									<Dropdown.Item icon="bookmark" as={Link} to="/mywatchlist" text="My Watchlist" />
+									<Dropdown.Item icon="check square" as={Link} to="/completedmovies" text="Completed Movies" />
 									<Dropdown.Item text="Logout" onClick={this.logOut} />
 								</Dropdown.Menu>
 							</Dropdown>
