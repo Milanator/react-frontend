@@ -9,6 +9,7 @@ import Register from "./_pages/Register";
 import NewFilms from "./_pages/newFilms";
 
 import BrowseAllFilms from './_pages/BrowseAllFilms';
+import FilmCard from "./_components/FilmCard";
 
 // redirecting to inside application or login
 function Auth({component: Component, ...rest}) {

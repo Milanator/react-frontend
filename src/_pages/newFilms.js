@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from "axios"
 import FilmCard from "../_components/FilmCard";
+import FilmModal from "../_components/FilmModal";
 
 let apikey = "e0338266d7945597731b014d7e806075";
 let apiurlparams = "&language=en-US&sort_by=popularity.desc";
@@ -36,7 +37,9 @@ class NewFilms extends Component {
 			return (
 				<div>
 					<h1>New Films</h1>
-					<FilmCard films={this.state.films} />
+					{ this.state.films.map((film) => (
+						<FilmModal film={film} />
+					)) }
 				</div>
 			);
 		}

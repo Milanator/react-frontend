@@ -10,40 +10,47 @@ var apiurlparams = "&language=en-US&sort_by=popularity.desc";
 var apiurl = "https://api.themoviedb.org/3/discover/movie?api_key=" + apikey + apiurlparams;
 
 class BrowseAllFilms extends Component {
-    constructor(props) {
-        super(props);
+	constructor(props) {
+		super(props);
 
-        this.state = {
-            data: []
-        };
-    }
+		this.state = {
+			data: []
+		};
+	}
 
-    componentDidMount() {
+	componentDidMount() {
 
-        axios.get(apiurl).then(res => {
-            const data = res.data.results;
-            this.setState({ data });
-        });
-    }
+		axios.get(apiurl).then(res => {
+			const data = res.data.results;
+			this.setState({ data });
+		});
+	}
 
-    render() {
-        return (
-            <div>
-                <TopNavigation />
-                <FilterSidebar />
-                {this.state.data.map(data => (
-                    <FilmModal 
-                        id={data.id}
-                        poster_path={data.poster_path}
-                        rating={data.vote_average * 10}
-                        title={data.title}
-                        overview={data.overview}
-                        original_language={data.original_language}
-                    />
-                ))}
-            </div>
-        );
-    }
+	render() {
+
+		if( this.state.data.lenght == 0 ){
+
+			return <div>Loading</div>
+		} else{
+
+			return (
+				<div>
+					<TopNavigation />
+					<FilterSidebar />
+					{this.state.data.map(film => (
+						<FilmModal
+							id={film.id}
+							poster_path={film.poster_path}
+							rating={film.vote_average * 10}
+							title={film.title}
+							overview={film.overview}
+							original_language={film.original_language}
+						/>
+					))}
+				</div>
+			);
+		}
+	}
 }
 
 export default BrowseAllFilms;
