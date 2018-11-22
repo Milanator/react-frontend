@@ -4,27 +4,26 @@ export function expirationTime(countDays) {
 
 	const day = 86400;
 	let now = new Date();
-	let time = now.getTime();
-	time += countDays * day;
+	let time = 0;
+	time += (countDays * day);
 
-	return now.setTime(time);
+	return (Number(now.getTime()+time));
 }
 
 export function setUserInBrowserStorage(email, days,profilePicture,name,id) {
 
 	// count of days
 	let now = new Date();
-	let startExpiration = btoa(now.getTime());
-	let endExpiration = btoa(expirationTime(days));
 	profilePicture = btoa(profilePicture);
 	email = btoa(email);
 	name = btoa(name);
 	id = btoa(id);
 
+
 	// store data to object
 	let toLocalStorage = {
-		expiration: startExpiration,
-		refreshExpiration: endExpiration,
+		expiration: now.getTime(),
+		refreshExpiration: expirationTime(days),
 		email: email,
 		profilePicture: profilePicture,
 		name: name,
@@ -53,7 +52,7 @@ export function checkAuth() {
 	}
 
 	// IF CREDENTIALS EXPIRED
-	if (atob(refreshExpiration) < now || atob(expiration) > now) {
+	if (refreshExpiration < now || expiration > now) {
 		return false;
 	}
 
@@ -68,4 +67,31 @@ export function textLimit(str,count) {
 	return str.length < count ? str :
 		str.substring(0, count) + "..."
 }
+
+// find closest element
+export function getClosest(elem, selector) {
+
+	// Element.matches() polyfill
+	if (!Element.prototype.matches) {
+		Element.prototype.matches =
+			Element.prototype.matchesSelector ||
+			Element.prototype.mozMatchesSelector ||
+			Element.prototype.msMatchesSelector ||
+			Element.prototype.oMatchesSelector ||
+			Element.prototype.webkitMatchesSelector ||
+			function(s) {
+				var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+					i = matches.length;
+				while (--i >= 0 && matches.item(i) !== this) {}
+				return i > -1;
+			};
+	}
+
+	// Get the closest matching element
+	for ( ; elem && elem !== document; elem = elem.parentNode ) {
+		if ( elem.matches( selector ) ) return elem;
+	}
+	return null;
+
+};
 

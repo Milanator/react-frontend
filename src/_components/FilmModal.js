@@ -3,33 +3,43 @@ import {Header, Image, Modal, Icon, Grid, Container, Label} from 'semantic-ui-re
 import FilmCard from './FilmCard';
 
 import {ourApiUrl} from "../_helpers/variable";
-import {addToSeenList, addToWatchList} from "./../_helpers/method";
+import {addSeenWatchList} from "./../_helpers/method";
 
 class FilmModal extends Component {
 
 	constructor(props) {
+
 		super(props);
 
 		let userId = atob(JSON.parse(localStorage.getItem('user')).id);
 
 		this.state = {
-			userId: userId
+			userId: userId,
+			seenList: this.props.seen,
+			watchList: this.props.watched
 		};
 	}
 
-	addToSeenList = addToSeenList;
-	addToWatchList = addToWatchList;
+	addSeenWatchList = addSeenWatchList;
 
 	render() {
 
-		const {id, poster_path, rating, title, overview, original_language, ...rest} = this.props;
-		const userId = this.state.userId;
+		const {id, poster_path, rating, title, overview, original_language, inSeenList, inWatchList, ...rest} = this.props;
+		const {userId} = this.state;
 
 		return (
 
 			<div>
 				<Modal trigger={
-					<FilmCard id={id} poster_path={poster_path} rating={rating} title={title} overview={overview} original_language={original_language}/>
+					<FilmCard id={id}
+							  poster_path={poster_path}
+							  rating={rating}
+							  title={title}
+							  overview={overview}
+							  original_language={original_language}
+							  inSeenList={inSeenList}
+							  inWatchList={inWatchList}
+					/>
 				} centered={false}>
 					<Modal.Header color="blue">{title}</Modal.Header>
 					<Modal.Content image scrolling>
@@ -44,13 +54,21 @@ class FilmModal extends Component {
 									</Grid.Column>
 									<Grid.Column/><Grid.Column/><Grid.Column/>
 									<Grid.Column>
-										<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id} onClick={this.addToWatchList}>
-											<Icon color="blue" link name="bookmark outline"/>
+										<a href={ourApiUrl+"watchlist/user/"+userId+"/film/"+id}
+										   onClick={this.addSeenWatchList}
+										   data-inverse-url={ourApiUrl+"watchlist/user/"+userId+"/film/"+id+'/delete'}
+										>
+											<Icon link
+												  color="blue"
+												  name={"bookmark" + (inWatchList ? "" : " outline")}/>
 										</a>
 									</Grid.Column>
 									<Grid.Column>
-										<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id} onClick={this.addToSeenList}>
-											<Icon link color="blue" name="check square outline"/>
+										<a href={ourApiUrl+"seenlist/user/"+userId+"/film/"+id}
+										   onClick={this.addSeenWatchList}
+										   data-inverse-url={ourApiUrl+"seenlist/user/"+userId+"/film/"+id+'/delete'}
+										>
+											<Icon link color="blue" name={"check square"+ (inSeenList ? "" : " outline")}/>
 										</a>
 									</Grid.Column>
 								</Grid>

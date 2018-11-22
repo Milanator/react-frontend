@@ -3,7 +3,7 @@ import {Icon, Grid, Label} from 'semantic-ui-react';
 import '../css/filmcard.css';
 
 import {textLimit} from "../_helpers/helper";
-import {addToSeenList, addToWatchList} from "./../_helpers/method";
+import {addSeenWatchList} from "./../_helpers/method";
 import {ourApiUrl} from "../_helpers/variable";
 
 class FilmCard extends Component {
@@ -14,16 +14,17 @@ class FilmCard extends Component {
 		let userId = atob(JSON.parse(localStorage.getItem('user')).id);
 
 		this.state = {
-			userId: userId
+			userId: userId,
+			seenList: 0,
+			watchList: 0
 		};
 	}
 
-	addToSeenList = addToSeenList;
-	addToWatchList = addToWatchList;
+	addSeenWatchList = addSeenWatchList;
 
 	render() {
 
-		const {id, poster_path, rating, title, overview, original_language, ...rest} = this.props;
+		const {id, poster_path, rating, title, overview, original_language, inSeenList, inWatchList,...rest} = this.props;
 		const userId = this.state.userId;
 
 		return (
@@ -37,13 +38,21 @@ class FilmCard extends Component {
 							</Label>
 						</Grid.Column>
 						<Grid.Column>
-							<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id} onClick={this.addToWatchList}>
-								<Icon color="grey" name="bookmark outline"/>
+							<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id}
+							   onClick={this.addSeenWatchList}
+							   data-inverse-url={ourApiUrl+"watchlist/user/"+userId+"/film/"+id+'/delete'}
+							>
+								<Icon color="grey"
+									  name={"bookmark" + (inWatchList ? "" : " outline")}/>
 							</a>
 						</Grid.Column>
 						<Grid.Column>
-							<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id} onClick={this.addToSeenList}>
-								<Icon color="grey" name="check square outline"/>
+							<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id}
+							   onClick={this.addSeenWatchList}
+							   data-inverse-url={ourApiUrl+"seenlist/user/"+userId+"/film/"+id+'/delete'}
+							>
+								<Icon color="grey"
+									  name={"check square"+ (inSeenList ? "" : " outline")}/>
 							</a>
 						</Grid.Column>
 					</Grid>
