@@ -3,7 +3,7 @@ import {Header, Image, Modal, Icon, Grid, Container, Label} from 'semantic-ui-re
 import FilmCard from './FilmCard';
 
 import {ourApiUrl} from "../_helpers/variable";
-import {addToSeenList, addToWatchList} from "./SeenWatchListMethods";
+import {addToSeenList, addToWatchList} from "./../_helpers/method";
 
 class FilmModal extends Component {
 

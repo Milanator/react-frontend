@@ -3,7 +3,7 @@ import {Icon, Grid, Label} from 'semantic-ui-react';
 import '../css/filmcard.css';
 
 import {textLimit} from "../_helpers/helper";
-import {addToSeenList, addToWatchList} from "./SeenWatchListMethods";
+import {addToSeenList, addToWatchList} from "./../_helpers/method";
 import {ourApiUrl} from "../_helpers/variable";
 
 class FilmCard extends Component {
@@ -20,7 +20,6 @@ class FilmCard extends Component {
 
 	addToSeenList = addToSeenList;
 	addToWatchList = addToWatchList;
-
 
 	render() {
 

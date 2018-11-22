@@ -25,7 +25,7 @@ export default class FilterSidebar extends Component {
     }
 
     render() {
-        const { visible } = this.state
+        const { visible } = this.state;
 
         return (
             <div>

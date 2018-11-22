@@ -27,14 +27,14 @@ class App extends Component {
 	render() {
 		return (
 			<div className={'app-routes'}>
-				<Route exact path={'/login'} component={Login}/>
+				<Route exact path={['/login','/']} component={Login}/>
 				<Route exact path={'/register'} component={Register}/>
 				<Route path={'/filmcard'} component={FilmCard}/>
-				<Route path={'/newfilms'} component={NewFilms}/>
 
 				{/* FOR LOGGED USERS */}
 				<Auth path={'/home'} component={Home} onEnter={Auth}/>
 				<Auth path={'/browseAll'} component={BrowseAllFilms}/>
+				<Auth path={'/newfilms'} component={NewFilms}/>
 			</div>
 		);
 	}
