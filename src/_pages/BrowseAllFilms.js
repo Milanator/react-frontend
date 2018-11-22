@@ -10,8 +10,8 @@ import { movieDbDomain, movieApiKeyPart } from '../_helpers/variable';
 
 var apiurlparams = "&language=en-US&sort_by=popularity.desc&page=";
 var apiUrl = movieDbDomain + "3/discover/movie" + movieApiKeyPart + apiurlparams;
-var data;
 var isLoading;
+var films;
 
 class BrowseAllFilms extends Component {
 	constructor(props) {
@@ -19,7 +19,8 @@ class BrowseAllFilms extends Component {
 		isLoading = true;
 
 		this.state = {
-			data: [],
+			films: [],
+			totalPages: null,
 			activePage: 1
 		};
 
@@ -29,8 +30,10 @@ class BrowseAllFilms extends Component {
 	componentDidMount() {
 		axios.get(apiUrl + this.state.activePage).then(res => {
 			isLoading = false;
-			const data = res.data.results;
-			this.setState({ data });
+			const films = res.data.results;
+			const totalPages = res.data.total_pages;
+			this.setState({ films, totalPages });
+			console.log(res.data.results);
 		});
 	}
 
@@ -39,8 +42,8 @@ class BrowseAllFilms extends Component {
 		this.setState({ activePage }, () => {
 			axios.get(apiUrl + this.state.activePage).then(res => {
 				isLoading = false;
-				data = res.data.results;
-				this.setState({ data });
+				films = res.data.results;
+				this.setState({ films });
 			})
 		});
 
@@ -53,21 +56,23 @@ class BrowseAllFilms extends Component {
 			return (
 				<div>
 					<TopNavigation />
-					<FilterSidebar />
 
-					{this.state.data.map(film => (
-						<FilmModal
-							id={film.id}
-							poster_path={film.poster_path}
-							rating={film.vote_average * 10}
-							title={film.title}
-							overview={film.overview}
-							original_language={film.original_language}
-							key={film.id}
-						/>
-					))}
-					<div className="pagination-component">
-						<Pagination activePage={this.state.activePage} totalPages={20} onPageChange={this.handlePaginationChange} />
+					<div className="container">
+						<FilterSidebar />
+						{this.state.films.map(film => (
+							<FilmModal
+								id={film.id}
+								poster_path={film.poster_path}
+								rating={film.vote_average * 10}
+								title={film.title}
+								overview={film.overview}
+								original_language={film.original_language}
+								key={film.id}
+							/>
+						))}
+						<div className="pagination-component">
+							<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange} />
+						</div>
 					</div>
 				</div>
 			);
