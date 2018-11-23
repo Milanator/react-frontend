@@ -1,0 +1,15 @@
+:root {
+    --white: #ffffff;
+    --rich-black: #00171F;
+    --prussian-blue: #003459;
+    --cerulean: #007EA7;
+    --vivid-cerulean: #00A8E8;
+    --text-heading: 30px;
+    --text-menu: 20px;
+  }
+  
+  .empty-list {
+    text-align: center;
+    font-size: var(--text-heading);
+    margin-top: 200px;
+}

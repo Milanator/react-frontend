@@ -4,6 +4,7 @@ import axios from 'axios';
 import FilmModal from '../_components/FilmModal';
 import LoadingIndicator from '../_components/LoadingIndicator';
 import '../css/main.css';
+import '../css/lists.css';
 import { movieDbDomain, movieApiKeyPart } from '../_helpers/variable';
 import { ourApiUrl } from "../_helpers/variable";
 
@@ -21,9 +22,7 @@ class CompletedMovies extends Component {
             seenList: [],
             watchList: [],
             userId: userId,
-            isLoading: true,
-            totalPages: 20,
-            activePage: 1
+            isLoading: true
         };
     }
 
@@ -56,7 +55,6 @@ class CompletedMovies extends Component {
                 this.setState({ seenList: arraySeenList });
             });
 
-        if (this.state.seenList.length !== 0) {
             let arraySeenList = new Array();
             this.state.seenList.forEach(function (film) {
                 const requestUrl = apiUrl + film + movieApiKeyPart + apiurlparams;
@@ -70,12 +68,22 @@ class CompletedMovies extends Component {
                 })
             });
             this.setState({ films: arraySeenList, isLoading: false });
-        }
+
     }
 
     render() {
+
         if (this.state.isLoading == true) {
-            return <div><LoadingIndicator /></div>
+            return <div><TopNavigation /><LoadingIndicator /></div>
+        } if (this.state.seenList.length == 0) {
+            return (
+                <div>
+                    <TopNavigation />
+                <div className="empty-list">
+                    You don't have any movies completed yet.
+                </div>
+                </div>
+            )
         } else {
             return (
                 <div>

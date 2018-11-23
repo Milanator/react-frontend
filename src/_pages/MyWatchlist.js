@@ -4,6 +4,7 @@ import axios from 'axios';
 import FilmModal from '../_components/FilmModal';
 import LoadingIndicator from '../_components/LoadingIndicator';
 import '../css/main.css';
+import '../css/lists.css';
 import { movieDbDomain, movieApiKeyPart } from '../_helpers/variable';
 import { ourApiUrl } from "../_helpers/variable";
 
@@ -56,26 +57,34 @@ class CompletedMovies extends Component {
                 this.setState({ seenList: arraySeenList });
             });
 
-        if (this.state.watchList.length !== 0) {
-            let arrayWatchList = new Array();
-            this.state.watchList.forEach(function (film) {
-                const requestUrl = apiUrl + film + movieApiKeyPart + apiurlparams;
-                promises.push(axios.get(requestUrl));
-            });
+        let arrayWatchList = new Array();
+        this.state.watchList.forEach(function (film) {
+            const requestUrl = apiUrl + film + movieApiKeyPart + apiurlparams;
+            promises.push(axios.get(requestUrl));
+        });
 
-            await axios.all(promises).then(function (results) {
-                results.forEach(function (response) {
-                    film = response.data;
-                    arrayWatchList.push(film);
-                })
-            });
-            this.setState({ films: arrayWatchList, isLoading: false });
-        }
+        await axios.all(promises).then(function (results) {
+            results.forEach(function (response) {
+                film = response.data;
+                arrayWatchList.push(film);
+            })
+        });
+        this.setState({ films: arrayWatchList, isLoading: false });
+
     }
 
     render() {
         if (this.state.isLoading == true) {
-            return <div><LoadingIndicator /></div>
+            return <div><TopNavigation /><LoadingIndicator /></div>
+        } if (this.state.watchList.length == 0) {
+            return (
+                <div>
+                    <TopNavigation />
+                    <div className="empty-list">
+                        You don't have any movies in your Watchlist yet.
+                </div>
+                </div>
+            )
         } else {
             return (
                 <div>
