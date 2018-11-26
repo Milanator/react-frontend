@@ -59,7 +59,7 @@ class Login extends Component {
 		}).then(resp => {
 
 			let response = resp.data[0];
-			let profilePicture = response.profile_picture;
+			let profilePicture = response.profile_picture || '';
 			let name = response.name;
 			let id = response.id;
 			let days = 30;

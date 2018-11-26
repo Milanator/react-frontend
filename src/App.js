@@ -11,6 +11,7 @@ import BrowseAllFilms from './_pages/BrowseAllFilms';
 import FilmCard from "./_components/FilmCard";
 import MyWatchlist from "./_pages/MyWatchlist";
 import CompletedMovies from "./_pages/CompletedMovies";
+import SearchInput from "./_components/SearchInput";
 
 // redirecting to inside application or login
 function Auth({component: Component, ...rest}) {

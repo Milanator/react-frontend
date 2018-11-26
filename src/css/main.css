@@ -17,3 +17,7 @@ body {
     text-align: center;
     margin: auto;   
 }
+
+.ui.search>.results .result .image{
+	background: red;
+}

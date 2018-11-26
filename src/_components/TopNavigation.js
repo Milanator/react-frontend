@@ -4,6 +4,7 @@ import { Dropdown, Image, Grid, GridColumn, Search } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { baseUrl } from "../_helpers/variable";
 import '../css/navbar.css';
+import SearchInput from "./SearchInput";
 
 class TopNavigation extends Component {
 
@@ -37,9 +38,9 @@ class TopNavigation extends Component {
 							<Image src={logo} as={Link} to="/home" alt="logo" />
 						</GridColumn>
 						<GridColumn className="search-field" verticalAlign="middle" width={4}>
-							<Search 
-								
-							/>
+
+							<SearchInput/>
+
 							{/* insert search field here */}
 						</GridColumn>
 						<GridColumn verticalAlign="middle" textAlign="center" width={1}>
