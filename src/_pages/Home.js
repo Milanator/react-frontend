@@ -4,20 +4,16 @@ import { Pagination } from 'semantic-ui-react';
 import LoadingIndicator from './../_components/LoadingIndicator';
 import FilmModal from "../_components/FilmModal";
 import TopNavigation from './../_components/TopNavigation';
-import {movieDbDomain, movieApiKeyPart, ourApiUrl} from '../_helpers/variable';
+import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
 
-var apiurlparams = "&language=en-US&sort_by=popularity.desc&primary_release_year=2018page=";
+var apiurlparams = "&language=en-US&sort_by=popularity.desc&primary_release_year=2018&page=";
 var apiUrl = movieDbDomain + "3/discover/movie" + movieApiKeyPart + apiurlparams;
 
-var films;
-var isLoading;
 
 class Home extends Component {
 
 	constructor(props) {
 		super(props);
-
-		isLoading = true;
 
 		let userId = atob(JSON.parse(localStorage.getItem('user')).id);
 		let userName = atob(JSON.parse(localStorage.getItem('user')).name);
@@ -26,10 +22,11 @@ class Home extends Component {
 			name: userName,
 			films: [],
 			activePage: 1,
+			totalPages: null,
 			userId: userId,
-			isLoading: true,
 			seenList: [],
-			watchList: []
+			watchList: [],
+			isLoading: true
 		};
 
 		this.handlePaginationChange = this.handlePaginationChange.bind(this);
@@ -38,23 +35,18 @@ class Home extends Component {
 	componentDidMount() {
 
 		let that = this;
-		let seenList,watchList;
-		let {userId} = this.state;
+		let seenList, watchList;
+		let { userId } = this.state;
 
 		axios.all([
 
 			axios.get(apiUrl + this.state.activePage).then(res => {
-				isLoading = false;
 				const films = res.data.results;
-				that.setState({films});
+				const totalPages = res.data.total_pages;
+				that.setState({ films, totalPages });
 			}),
 
-			axios.get(apiUrl).then(res => {
-				const films = res.data.results;
-				that.setState({films});
-			}),
-
-			axios.get(ourApiUrl+'seenlist/user/'+userId).then(res => {
+			axios.get(ourApiUrl + 'seenlist/user/' + userId).then(res => {
 
 				let arraySeenList = new Array();
 				seenList = res.data;
@@ -62,10 +54,10 @@ class Home extends Component {
 				seenList.forEach((item) => {
 					arraySeenList.push(item.film_id);
 				});
-				that.setState({seenList: arraySeenList});
+				that.setState({ seenList: arraySeenList });
 			}),
 
-			axios.get(ourApiUrl+'watchlist/user/'+userId).then(res => {
+			axios.get(ourApiUrl + 'watchlist/user/' + userId).then(res => {
 
 				let arrayWatchList = new Array();
 				watchList = res.data;
@@ -73,31 +65,32 @@ class Home extends Component {
 				watchList.forEach((item) => {
 					arrayWatchList.push(item.film_id);
 				});
-				that.setState({watchList:arrayWatchList});
+				that.setState({ watchList: arrayWatchList });
 			})
 		]).then(() => {
-
-			this.setState({isLoading: false});
+			this.setState({ isLoading: false });
 		});
 	}
 
 	handlePaginationChange = (e, { activePage }) => {
-		isLoading = true;
+		this.setState({isLoading: true});
 		this.setState({ activePage }, () => {
 			axios.get(apiUrl + this.state.activePage).then(res => {
-				isLoading = false;
-				films = res.data.results;
+				const films = res.data.results;
 				this.setState({ films });
-			})
+				console.log(apiUrl + this.state.activePage);
+			}).then(() => {
+				this.setState({isLoading: false});
+			});
 		});
-
 	}
 
 	render() {
 
-		if( this.state.films.length == 0 || this.state.isLoading ){
+		if (this.state.films.length == 0 || this.state.isLoading) {
 			return <LoadingIndicator />;
 		} else {
+			console.log(this.state.activePage);
 
 			return (
 
@@ -105,8 +98,6 @@ class Home extends Component {
 					<TopNavigation />
 					<div className="container">
 						<h1 className={'title'}>Welcome {this.state.name}</h1>
-
-
 
 						<h1>New Films</h1>
 						{this.state.films.map((film) => (
@@ -124,7 +115,7 @@ class Home extends Component {
 						))}
 
 						<div className="pagination-component">
-							<Pagination activePage={this.state.activePage} totalPages={20} onPageChange={this.handlePaginationChange} />
+							<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange} />
 						</div>
 					</div>
 				</div>
