@@ -4,13 +4,22 @@
     --prussian-blue: #003459;
     --cerulean: #007EA7;
     --vivid-cerulean: #00A8E8;
-    --text-heading: 30px;
+    --text-heading-font-size: 30px;
+    --text-heading-font-weight: bold;
     --text-menu: 20px;
   }
 
 body {
     background-color: var(--white);
     color: var(--rich-black);
+}
+
+.page-title {
+    text-align: left;
+    font-size: var(--text-heading-font-size);
+    font-weight: var(--text-heading-font-weight);
+    margin-top: 40px;
+    margin-bottom: 30px;
 }
 
 .pagination-component {

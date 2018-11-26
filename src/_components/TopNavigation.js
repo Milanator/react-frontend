@@ -46,10 +46,7 @@ class TopNavigation extends Component {
 						<GridColumn verticalAlign="middle" textAlign="center" width={1}>
 							<Link to="/home">Home</Link>
 						</GridColumn>
-						<GridColumn verticalAlign="middle" textAlign="center" >
-						<Link to="/browseAll">Browse All</Link>
-						</GridColumn>
-						<GridColumn verticalAlign="middle">
+						<GridColumn verticalAlign="middle" width={3}>
 							<Dropdown trigger={<Image avatar src={this.state.user.profilePicture} />} className="top-navigation-dropdown">
 								<Dropdown.Menu direction="left">
 									<Dropdown.Item icon="bookmark" as={Link} to="/mywatchlist" text="My Watchlist" />

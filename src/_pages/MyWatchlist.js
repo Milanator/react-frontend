@@ -7,6 +7,7 @@ import '../css/main.css';
 import '../css/lists.css';
 import { movieDbDomain, movieApiKeyPart } from '../_helpers/variable';
 import { ourApiUrl } from "../_helpers/variable";
+import PageTitle from '../_components/PageTitle';
 
 var apiurlparams = "&language=en-US";
 var apiUrl = movieDbDomain + "3/movie/";
@@ -90,6 +91,7 @@ class CompletedMovies extends Component {
                 <div>
                     <TopNavigation />
                     <div className="container">
+                    <PageTitle title="Your Watchlist" />
                         {this.state.films.map(film => (
                             <FilmModal
                                 id={film.id}

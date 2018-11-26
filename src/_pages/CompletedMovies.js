@@ -7,6 +7,7 @@ import '../css/main.css';
 import '../css/lists.css';
 import { movieDbDomain, movieApiKeyPart } from '../_helpers/variable';
 import { ourApiUrl } from "../_helpers/variable";
+import PageTitle from '../_components/PageTitle';
 
 var apiurlparams = "&language=en-US";
 var apiUrl = movieDbDomain + "3/movie/";
@@ -55,19 +56,19 @@ class CompletedMovies extends Component {
                 this.setState({ seenList: arraySeenList });
             });
 
-            let arraySeenList = new Array();
-            this.state.seenList.forEach(function (film) {
-                const requestUrl = apiUrl + film + movieApiKeyPart + apiurlparams;
-                promises.push(axios.get(requestUrl));
-            });
+        let arraySeenList = new Array();
+        this.state.seenList.forEach(function (film) {
+            const requestUrl = apiUrl + film + movieApiKeyPart + apiurlparams;
+            promises.push(axios.get(requestUrl));
+        });
 
-            await axios.all(promises).then(function (results) {
-                results.forEach(function (response) {
-                    film = response.data;
-                    arraySeenList.push(film);
-                })
-            });
-            this.setState({ films: arraySeenList, isLoading: false });
+        await axios.all(promises).then(function (results) {
+            results.forEach(function (response) {
+                film = response.data;
+                arraySeenList.push(film);
+            })
+        });
+        this.setState({ films: arraySeenList, isLoading: false });
 
     }
 
@@ -79,8 +80,8 @@ class CompletedMovies extends Component {
             return (
                 <div>
                     <TopNavigation />
-                <div className="empty-list">
-                    You don't have any movies completed yet.
+                    <div className="empty-list">
+                        You don't have any movies completed yet.
                 </div>
                 </div>
             )
@@ -89,19 +90,22 @@ class CompletedMovies extends Component {
                 <div>
                     <TopNavigation />
                     <div className="container">
-                        {this.state.films.map(film => (
-                            <FilmModal
-                                id={film.id}
-                                poster_path={film.poster_path}
-                                rating={film.vote_average * 10}
-                                title={film.title}
-                                overview={film.overview}
-                                original_language={film.original_language}
-                                key={film.id}
-                                inSeenList={this.state.seenList.includes(film.id) ? 1 : 0}
-                                inWatchList={this.state.watchList.includes(film.id) ? 1 : 0}
-                            />
-                        ))}
+                        <PageTitle title="Movies You Have Watched" />
+                        <div className="container">
+                            {this.state.films.map(film => (
+                                <FilmModal
+                                    id={film.id}
+                                    poster_path={film.poster_path}
+                                    rating={film.vote_average * 10}
+                                    title={film.title}
+                                    overview={film.overview}
+                                    original_language={film.original_language}
+                                    key={film.id}
+                                    inSeenList={this.state.seenList.includes(film.id) ? 1 : 0}
+                                    inWatchList={this.state.watchList.includes(film.id) ? 1 : 0}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
             );
