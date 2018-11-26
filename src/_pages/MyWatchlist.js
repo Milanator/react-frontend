@@ -4,55 +4,87 @@ import axios from 'axios';
 import FilmModal from '../_components/FilmModal';
 import LoadingIndicator from '../_components/LoadingIndicator';
 import '../css/main.css';
-import { Pagination } from 'semantic-ui-react';
+import '../css/lists.css';
 import { movieDbDomain, movieApiKeyPart } from '../_helpers/variable';
+import { ourApiUrl } from "../_helpers/variable";
 
-var apiurlparams = "&language=en-US&sort_by=popularity.desc&page=";
-var apiUrl = movieDbDomain + "3/discover/movie" + movieApiKeyPart + apiurlparams;
-var isLoading;
-var films;
+var apiurlparams = "&language=en-US";
+var apiUrl = movieDbDomain + "3/movie/";
 
-class MyWatchlist extends Component {
+class CompletedMovies extends Component {
     constructor(props) {
         super(props);
-        isLoading = true;
+
+        let userId = atob(JSON.parse(localStorage.getItem('user')).id);
 
         this.state = {
             films: [],
-            totalPages: null,
+            seenList: [],
+            watchList: [],
+            userId: userId,
+            isLoading: true,
+            totalPages: 20,
             activePage: 1
         };
-
-        this.handlePaginationChange = this.handlePaginationChange.bind(this);
     }
 
-    // CHANGE REQUEST TO GET DATA ABOUT WATCHED MOVIES
-    componentDidMount() {
-        axios.get(apiUrl + this.state.activePage).then(res => {
-            isLoading = false;
-            const films = res.data.results;
-            const totalPages = res.data.total_pages;
-            this.setState({ films, totalPages });
-            console.log(res.data.results);
+    async componentDidMount() {
+        let seenList, watchList;
+        let { userId } = this.state;
+        let promises = [];
+        let film = {};
+
+        await axios.get(ourApiUrl + 'watchlist/user/' + userId)
+            .then(resp => {
+
+                let arrayWatchList = new Array();
+                watchList = resp.data;
+
+                watchList.forEach((item) => {
+                    arrayWatchList.push(item.film_id);
+                });
+                this.setState({ watchList: arrayWatchList });
+            });
+
+        await axios.get(ourApiUrl + 'seenlist/user/' + userId)
+            .then(resp => {
+                let arraySeenList = new Array();
+                seenList = resp.data;
+
+                seenList.forEach((item) => {
+                    arraySeenList.push(item.film_id);
+                });
+                this.setState({ seenList: arraySeenList });
+            });
+
+        let arrayWatchList = new Array();
+        this.state.watchList.forEach(function (film) {
+            const requestUrl = apiUrl + film + movieApiKeyPart + apiurlparams;
+            promises.push(axios.get(requestUrl));
         });
-    }
 
-    // CHANGE REQUEST TO GET DATA ABOUT WATCHED MOVIES
-    handlePaginationChange = (e, { activePage }) => {
-        isLoading = true;
-        this.setState({ activePage }, () => {
-            axios.get(apiUrl + this.state.activePage).then(res => {
-                isLoading = false;
-                films = res.data.results;
-                this.setState({ films });
+        await axios.all(promises).then(function (results) {
+            results.forEach(function (response) {
+                film = response.data;
+                arrayWatchList.push(film);
             })
         });
+        this.setState({ films: arrayWatchList, isLoading: false });
 
     }
 
     render() {
-        if (isLoading == true) {
-            return <div><LoadingIndicator /></div>
+        if (this.state.isLoading == true) {
+            return <div><TopNavigation /><LoadingIndicator /></div>
+        } if (this.state.watchList.length == 0) {
+            return (
+                <div>
+                    <TopNavigation />
+                    <div className="empty-list">
+                        You don't have any movies in your Watchlist yet.
+                </div>
+                </div>
+            )
         } else {
             return (
                 <div>
@@ -67,12 +99,10 @@ class MyWatchlist extends Component {
                                 overview={film.overview}
                                 original_language={film.original_language}
                                 key={film.id}
+                                inSeenList={this.state.seenList.includes(film.id) ? 1 : 0}
+                                inWatchList={this.state.watchList.includes(film.id) ? 1 : 0}
                             />
                         ))}
-                    </div>
-
-                    <div className="pagination-component">
-                        <Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange} />
                     </div>
                 </div>
             );
@@ -80,4 +110,4 @@ class MyWatchlist extends Component {
     }
 }
 
-export default MyWatchlist;
+export default CompletedMovies;
