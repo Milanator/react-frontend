@@ -5,6 +5,7 @@ import LoadingIndicator from './../_components/LoadingIndicator';
 import FilmModal from "../_components/FilmModal";
 import TopNavigation from './../_components/TopNavigation';
 import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
+import PageTitle from '../_components/PageTitle';
 
 var apiurlparams = "&language=en-US&sort_by=popularity.desc&primary_release_year=2018&page=";
 var apiUrl = movieDbDomain + "3/discover/movie" + movieApiKeyPart + apiurlparams;
@@ -97,9 +98,7 @@ class Home extends Component {
 				<div>
 					<TopNavigation />
 					<div className="container">
-						<h1 className={'title'}>Welcome {this.state.name}</h1>
-
-						<h1>New Films</h1>
+						<PageTitle title="Find the Latest Movies on Movie Bot" />
 						{this.state.films.map((film) => (
 							<FilmModal
 								id={film.id}

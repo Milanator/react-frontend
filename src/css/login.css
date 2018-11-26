@@ -4,7 +4,8 @@
   --prussian-blue: #003459;
   --cerulean: #007EA7;
   --vivid-cerulean: #00A8E8;
-  --text-heading: 30px;
+  --text-heading-font-size: 30px;
+  --text-heading-font-weight: bold;
   --text-menu: 25px;
 }
 
