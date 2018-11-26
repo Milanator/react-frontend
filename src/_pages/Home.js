@@ -4,7 +4,7 @@ import { Pagination } from 'semantic-ui-react';
 import LoadingIndicator from './../_components/LoadingIndicator';
 import FilmModal from "../_components/FilmModal";
 import TopNavigation from './../_components/TopNavigation';
-import { movieDbDomain, movieApiKeyPart } from '../_helpers/variable';
+import {movieDbDomain, movieApiKeyPart, ourApiUrl} from '../_helpers/variable';
 
 var apiurlparams = "&language=en-US&sort_by=popularity.desc&primary_release_year=2018page=";
 var apiUrl = movieDbDomain + "3/discover/movie" + movieApiKeyPart + apiurlparams;
@@ -19,25 +19,65 @@ class Home extends Component {
 
 		isLoading = true;
 
-		let userStorage = JSON.parse(localStorage.getItem('user'));
+		let userId = atob(JSON.parse(localStorage.getItem('user')).id);
+		let userName = atob(JSON.parse(localStorage.getItem('user')).name);
 
 		this.state = {
-			name: atob(userStorage.name),
+			name: userName,
 			films: [],
-			activePage: 1
-		}
-		
+			activePage: 1,
+			userId: userId,
+			isLoading: true,
+			seenList: [],
+			watchList: []
+		};
+
 		this.handlePaginationChange = this.handlePaginationChange.bind(this);
 	}
 
 	componentDidMount() {
 
 		let that = this;
+		let seenList,watchList;
+		let {userId} = this.state;
 
-		axios.get(apiUrl + this.state.activePage).then(res => {
-			isLoading = false;
-			const films = res.data.results;
-			that.setState({films});
+		axios.all([
+
+			axios.get(apiUrl + this.state.activePage).then(res => {
+				isLoading = false;
+				const films = res.data.results;
+				that.setState({films});
+			}),
+
+			axios.get(apiUrl).then(res => {
+				const films = res.data.results;
+				that.setState({films});
+			}),
+
+			axios.get(ourApiUrl+'seenlist/user/'+userId).then(res => {
+
+				let arraySeenList = new Array();
+				seenList = res.data;
+
+				seenList.forEach((item) => {
+					arraySeenList.push(item.film_id);
+				});
+				that.setState({seenList: arraySeenList});
+			}),
+
+			axios.get(ourApiUrl+'watchlist/user/'+userId).then(res => {
+
+				let arrayWatchList = new Array();
+				watchList = res.data;
+
+				watchList.forEach((item) => {
+					arrayWatchList.push(item.film_id);
+				});
+				that.setState({watchList:arrayWatchList});
+			})
+		]).then(() => {
+
+			this.setState({isLoading: false});
 		});
 	}
 
@@ -54,7 +94,8 @@ class Home extends Component {
 	}
 
 	render() {
-		if (isLoading == true) {
+
+		if( this.state.films.length == 0 || this.state.isLoading ){
 			return <LoadingIndicator />;
 		} else {
 
@@ -77,6 +118,8 @@ class Home extends Component {
 								overview={film.overview}
 								original_language={film.original_language}
 								key={film.id}
+								inSeenList={this.state.seenList.includes(film.id) ? 1 : 0}
+								inWatchList={this.state.watchList.includes(film.id) ? 1 : 0}
 							/>
 						))}
 

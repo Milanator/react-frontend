@@ -1,5 +1,4 @@
 import axios from "axios";
-import {getClosest} from "./helper";
 
 export const addSeenWatchList = (event) => {
 
@@ -7,11 +6,10 @@ export const addSeenWatchList = (event) => {
 	event.stopPropagation();
 
 	let anchorTag = event.target.parentNode;
-	let type = anchorTag.getAttribute('id');
-	let card = getClosest(anchorTag,'.card');
 	let url = anchorTag.getAttribute('href');
 	let inverseUrl = anchorTag.getAttribute('data-inverse-url');
 	let icon = event.target;
+	let that = this;
 
 	axios({
 		method: 'get',
@@ -19,9 +17,14 @@ export const addSeenWatchList = (event) => {
 	}).then(() => {
 
 		icon.classList.toggle('outline');
-		anchorTag.setAttribute('href', inverseUrl);
-		anchorTag.setAttribute('data-inverse-url', url);
-		console.log(card.querySelectorAll('i.bookmark'));
+		anchorTag.setAttribute('href',inverseUrl);
+		anchorTag.setAttribute('data-inverse-url',url);
+
+		if( icon.classList.contains('watchlist') ){
+			that.setState({watchList: 1-that.state.watchList()});
+		} else if( icon.classList.contains('seenlist') ){
+			that.setState({seenList: 1-that.state.seenList});
+		}
 
 	}).catch(err => {
 		console.log(err);

@@ -3,29 +3,75 @@ import {Icon, Grid, Label} from 'semantic-ui-react';
 import '../css/filmcard.css';
 
 import {textLimit} from "../_helpers/helper";
-import {addSeenWatchList} from "./../_helpers/method";
 import {ourApiUrl} from "../_helpers/variable";
+import axios from "axios";
 
 class FilmCard extends Component {
 
 	constructor(props) {
+
 		super(props);
 
 		let userId = atob(JSON.parse(localStorage.getItem('user')).id);
 
 		this.state = {
 			userId: userId,
-			seenList: 0,
-			watchList: 0
+			// FROM FILM MODAL - after loading
+			seenList: this.props.inSeenList,
+			watchList: this.props.inWatchList
 		};
+		this.addSeenWatchList = this.addSeenWatchList.bind(this);
 	}
 
-	addSeenWatchList = addSeenWatchList;
+	// if props are updated, if data are changed
+	componentWillReceiveProps = (nextProps) => {
+
+		this.setState({watchList: nextProps.inWatchList});
+		this.setState({seenList: nextProps.inSeenList});
+	};
+
+	addSeenWatchList = (event) => {
+
+		event.preventDefault();
+		event.stopPropagation();
+
+		let that = this;
+		let icon = event.target;
+		let anchorTag = icon.parentNode;
+		let url = anchorTag.getAttribute('href');
+		let inverseUrl = anchorTag.getAttribute('data-inverse-url');
+
+		axios({
+			method: 'get',
+			url: url
+		}).then(() => {
+
+			// change visual of icon
+			icon.classList.toggle('outline');
+			// change href of anchors
+			anchorTag.setAttribute('href',inverseUrl);
+			anchorTag.setAttribute('data-inverse-url',url);
+
+			if (icon.classList.contains('watchlist')) {
+				// set opposite value
+				that.setState({watchList: 1 - that.state.watchList});
+			} else if (icon.classList.contains('seenlist')) {
+				// set opposite value
+				that.setState({seenList: 1 - that.state.seenList});
+			}
+
+			// send data to film modal --> update seen and watch button
+			that.props.sendWatchSeen(that.state.watchList,that.state.seenList)
+
+		}).catch(err => {
+			console.log(err);
+		});
+	};
 
 	render() {
 
-		const {id, poster_path, rating, title, overview, original_language, inSeenList, inWatchList,...rest} = this.props;
-		const userId = this.state.userId;
+		const {id, poster_path, rating, title, overview, original_language, ...rest} = this.props;
+		const {userId,watchList,seenList} = this.state;
 
 		return (
 			<div className="card" {...rest} key={id}>
@@ -38,22 +84,42 @@ class FilmCard extends Component {
 							</Label>
 						</Grid.Column>
 						<Grid.Column>
-							<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id}
-							   onClick={this.addSeenWatchList}
-							   data-inverse-url={ourApiUrl+"watchlist/user/"+userId+"/film/"+id+'/delete'}
-							>
-								<Icon color="grey"
-									  name={"bookmark" + (inWatchList ? "" : " outline")}/>
-							</a>
+
+							{watchList == 1 ? (
+								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id}>
+									<Icon link color="blue"
+										  name={"bookmark" + (watchList ? "" : " outline")}
+										  className={'watchlist'}
+									/>
+								</a>
+							) : (
+								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'}>
+									<Icon link color="blue"
+										  name={"bookmark" + (watchList ? "" : " outline")}
+										  className={'watchlist'}
+									/>
+								</a>
+							)}
+
 						</Grid.Column>
 						<Grid.Column>
-							<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id}
-							   onClick={this.addSeenWatchList}
-							   data-inverse-url={ourApiUrl+"seenlist/user/"+userId+"/film/"+id+'/delete'}
-							>
-								<Icon color="grey"
-									  name={"check square"+ (inSeenList ? "" : " outline")}/>
-							</a>
+
+							{seenList == 1 ? (
+								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id}>
+									<Icon link color="blue"
+										  name={"check square" + (seenList ? "" : " outline")}
+										  className={'seenlist'}
+									/>
+								</a>
+							) : (
+								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'}>
+									<Icon link color="blue"
+										  name={"check square" + (seenList ? "" : " outline")}
+										  className={'seenlist'}
+									/>
+								</a>
+							)}
+
 						</Grid.Column>
 					</Grid>
 				</div>

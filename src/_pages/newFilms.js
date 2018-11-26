@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import axios from "axios"
-import FilmCard from "../_components/FilmCard";
 import FilmModal from "../_components/FilmModal";
 import LoaderExampleInlineCentered from "../_components/LoadingIndicator";
 import {ourApiUrl} from "../_helpers/variable";
