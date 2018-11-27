@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import TopNavigation from '../_components/TopNavigation';
 import axios from 'axios';
-import FilmModal from '../_components/FilmModal';
-import LoadingIndicator from '../_components/LoadingIndicator';
+
 import '../css/main.css';
 import '../css/lists.css';
+
 import { movieDbDomain, movieApiKeyPart } from '../_helpers/variable';
 import { ourApiUrl } from "../_helpers/variable";
-import PageTitle from '../_components/PageTitle';
 
-var apiurlparams = "&language=en-US";
-var apiUrl = movieDbDomain + "3/movie/";
+import PageTitle from '../_components/PageTitle';
+import FilmModal from '../_components/FilmModal';
+import TopNavigation from '../_components/TopNavigation';
+import LoadingIndicator from '../_components/LoadingIndicator';
+
+let apiurlparams = "&language=en-US";
+let apiUrl = movieDbDomain + "3/movie/";
 
 class CompletedMovies extends Component {
     constructor(props) {

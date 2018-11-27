@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {Icon, Grid, Label} from 'semantic-ui-react';
+import axios from "axios";
+
 import '../css/filmcard.css';
 
 import {textLimit} from "../_helpers/helper";
 import {ourApiUrl} from "../_helpers/variable";
-import axios from "axios";
 
 class FilmCard extends Component {
 

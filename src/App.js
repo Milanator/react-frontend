@@ -11,6 +11,8 @@ import FilmCard from "./_components/FilmCard";
 import MyWatchlist from "./_pages/MyWatchlist";
 import CompletedMovies from "./_pages/CompletedMovies";
 import SearchInput from "./_components/SearchInput";
+import SearchFilms from "./_pages/searchFilms";
+import FilmDetail from "./_pages/FilmDetail";
 
 // redirecting to inside application or login
 function Auth({component: Component, ...rest}) {
@@ -35,6 +37,7 @@ class App extends Component {
 				{/* FOR LOGGED USERS */}
 				<Auth path={'/home'} component={Home} onEnter={Auth}/>
 				<Auth path={'/mywatchlist'} component={MyWatchlist}/>
+				<Auth path={'/film/:id?'} component={FilmDetail} />
 				<Auth path={'/completedmovies'} component={CompletedMovies}/>
 			</div>
 		);

@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
-import TopNavigation from '../_components/TopNavigation';
 import axios from 'axios';
-import FilmModal from '../_components/FilmModal';
-import LoadingIndicator from '../_components/LoadingIndicator';
+
 import '../css/main.css';
 import '../css/lists.css';
+
+import PageTitle from '../_components/PageTitle';
+import TopNavigation from '../_components/TopNavigation';
+import FilmModal from '../_components/FilmModal';
+import LoadingIndicator from '../_components/LoadingIndicator';
+
 import { movieDbDomain, movieApiKeyPart } from '../_helpers/variable';
 import { ourApiUrl } from "../_helpers/variable";
-import PageTitle from '../_components/PageTitle';
 
-var apiurlparams = "&language=en-US";
-var apiUrl = movieDbDomain + "3/movie/";
+let apiUrl = movieDbDomain + "movie/";
 
 class CompletedMovies extends Component {
+
     constructor(props) {
+
         super(props);
 
         let userId = atob(JSON.parse(localStorage.getItem('user')).id);
@@ -28,6 +32,7 @@ class CompletedMovies extends Component {
     }
 
     async componentDidMount() {
+
         let seenList, watchList;
         let { userId } = this.state;
         let promises = [];
@@ -58,7 +63,7 @@ class CompletedMovies extends Component {
 
         let arraySeenList = new Array();
         this.state.seenList.forEach(function (film) {
-            const requestUrl = apiUrl + film + movieApiKeyPart + apiurlparams;
+            const requestUrl = apiUrl + film + movieApiKeyPart;
             promises.push(axios.get(requestUrl));
         });
 
