@@ -10,6 +10,7 @@ import Register from "./_pages/Register";
 import FilmCard from "./_components/FilmCard";
 import MyWatchlist from "./_pages/MyWatchlist";
 import CompletedMovies from "./_pages/CompletedMovies";
+import Profile from "./_components/Profile";
 
 // redirecting to inside application or login
 function Auth({component: Component, ...rest}) {
@@ -30,6 +31,7 @@ class App extends Component {
 				<Route exact path={['/login','/']} component={Login}/>
 				<Route exact path={'/register'} component={Register}/>
 				<Route path={'/filmcard'} component={FilmCard}/>
+				<Route path={'/profile'} component={Profile}/>
 
 				{/* FOR LOGGED USERS */}
 				<Auth path={'/home'} component={Home} onEnter={Auth}/>
