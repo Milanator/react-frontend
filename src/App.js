@@ -10,7 +10,7 @@ import Register from "./_pages/Register";
 import FilmCard from "./_components/FilmCard";
 import MyWatchlist from "./_pages/MyWatchlist";
 import CompletedMovies from "./_pages/CompletedMovies";
-import Profile from "./_components/Profile";
+import Profile from "./_pages/Profile";
 import FilmDetail from "./_pages/FilmDetail";
 
 // redirecting to inside application or login

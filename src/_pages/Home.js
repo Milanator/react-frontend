@@ -12,6 +12,7 @@ import FilterSidebar from "../_components/FilterSidebar";
 
 let apiurlparams = "&language=en-US&sort_by=popularity.desc&primary_release_year=2018&page=";
 let apiUrl = movieDbDomain + "discover/movie" + movieApiKeyPart + apiurlparams;
+let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
 class Home extends Component {
 
@@ -48,10 +49,12 @@ class Home extends Component {
 
 		axios.all([
 
-			axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=e0338266d7945597731b014d7e806075&language=en-US').then(res => {
+			// genres
+			axios.get(genreApiUrl).then(res => {
 				this.setState({ genres: res.data.genres });
 			}),
 
+			// films
 			axios.get(apiUrl + this.state.activePage).then(res => {
 
 				let films = res.data.results;
@@ -60,6 +63,7 @@ class Home extends Component {
 				that.setState({films, totalPages});
 			}),
 
+			// seenlist
 			axios.get(ourApiUrl + 'seenlist/user/' + userId).then(res => {
 
 				let arraySeenList = [];
@@ -72,6 +76,7 @@ class Home extends Component {
 				that.setState({seenList: arraySeenList});
 			}),
 
+			// watchlist
 			axios.get(ourApiUrl + 'watchlist/user/' + userId).then(res => {
 
 				let arrayWatchList = [];
@@ -84,10 +89,11 @@ class Home extends Component {
 				that.setState({watchList: arrayWatchList});
 			})
 		]).then(() => {
+
 			let films = this.setFilmGenre(this.state.genres);
 			this.setState({films});
 		}).then(() => {
-			
+
 			this.setState({isLoading: false});
 		}).catch((err) => {
 
@@ -115,13 +121,13 @@ class Home extends Component {
 	// set genres to film
 	setFilmGenre = (genres) => {
 
-		let finalGenreArray = [];
+		let genreArray = [];
 		let films = this.state.films;
 
 		// set genre array, where ID is key and value is name
 		genres.forEach((genre,key) => {
 
-			finalGenreArray[genre.id] = genre.name;
+			genreArray[genre.id] = genre.name;
 		});
 
 		// create and set parameter genre to this.state.films
@@ -131,7 +137,7 @@ class Home extends Component {
 
 			film.genre_ids.forEach((id,key) => {
 
-				film.genre.push(finalGenreArray[id]);
+				film.genre.push(genreArray[id]);
 			});
 		});
 

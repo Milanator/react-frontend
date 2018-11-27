@@ -43,12 +43,13 @@ class TopNavigation extends Component {
 
 							{/* insert search field here */}
 						</GridColumn>
-						<GridColumn verticalAlign="middle" textAlign="center" width={1}>
+						<GridColumn verticalAlign="middle" textAlign="right" width={1}>
 							<Link to="/home">Home</Link>
 						</GridColumn>
 						<GridColumn verticalAlign="middle" width={3}>
 							<Dropdown trigger={<Image avatar src={this.state.user.profilePicture} />} className="top-navigation-dropdown">
 								<Dropdown.Menu direction="left">
+									<Dropdown.Item icon="user" as={Link} to="/profile" text="My Profile" />
 									<Dropdown.Item icon="bookmark" as={Link} to="/mywatchlist" text="My Watchlist" />
 									<Dropdown.Item icon="check square" as={Link} to="/completedmovies" text="Completed Movies" />
 									<Dropdown.Item text="Logout" onClick={this.logOut} />
