@@ -14,8 +14,7 @@
 
 .card img {
     max-width: 200px;
-    max-height: 250px;
-    min-height: 250px;
+    max-height: 220px;
     position: relative;
     margin: 0 auto;
     padding: 10px 0;
@@ -31,6 +30,10 @@
     padding: 0 10px;
     text-align: left;
     cursor: pointer;
+}
+
+.card p span.badge{
+	margin: 2px 1px;
 }
 
 .marks {

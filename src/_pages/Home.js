@@ -8,6 +8,7 @@ import TopNavigation from './../_components/TopNavigation';
 import PageTitle from '../_components/PageTitle';
 import {Pagination} from 'semantic-ui-react';
 import LoadingIndicator from './../_components/LoadingIndicator';
+import FilterSidebar from "../_components/FilterSidebar";
 
 let apiurlparams = "&language=en-US&sort_by=popularity.desc&primary_release_year=2018&page=";
 let apiUrl = movieDbDomain + "discover/movie" + movieApiKeyPart + apiurlparams;
@@ -15,6 +16,7 @@ let apiUrl = movieDbDomain + "discover/movie" + movieApiKeyPart + apiurlparams;
 class Home extends Component {
 
 	constructor(props) {
+
 		super(props);
 
 		let user = JSON.parse(localStorage.getItem('user'));
@@ -29,10 +31,12 @@ class Home extends Component {
 			userId: userId,
 			seenList: [],
 			watchList: [],
-			isLoading: true
+			isLoading: true,
+			genres: []
 		};
 
 		this.handlePaginationChange = this.handlePaginationChange.bind(this);
+		this.setFilmGenre = this.setFilmGenre.bind(this);
 	}
 
 	// THIS IS FIRST ACTION ON PAGE
@@ -44,18 +48,25 @@ class Home extends Component {
 
 		axios.all([
 
+			axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=e0338266d7945597731b014d7e806075&language=en-US').then(res => {
+				this.setState({ genres: res.data.genres });
+			}),
+
 			axios.get(apiUrl + this.state.activePage).then(res => {
-				const films = res.data.results;
+
+				let films = res.data.results;
 				const totalPages = res.data.total_pages;
+
 				that.setState({films, totalPages});
 			}),
 
 			axios.get(ourApiUrl + 'seenlist/user/' + userId).then(res => {
 
-				let arraySeenList = new Array();
+				let arraySeenList = [];
 				seenList = res.data;
 
-				seenList.forEach((item) => {
+				seenList.forEach((item,key) => {
+
 					arraySeenList.push(item.film_id);
 				});
 				that.setState({seenList: arraySeenList});
@@ -63,16 +74,24 @@ class Home extends Component {
 
 			axios.get(ourApiUrl + 'watchlist/user/' + userId).then(res => {
 
-				let arrayWatchList = new Array();
+				let arrayWatchList = [];
 				watchList = res.data;
 
-				watchList.forEach((item) => {
+				watchList.forEach((item,key) => {
+
 					arrayWatchList.push(item.film_id);
 				});
 				that.setState({watchList: arrayWatchList});
 			})
 		]).then(() => {
+			let films = this.setFilmGenre(this.state.genres);
+			this.setState({films});
+		}).then(() => {
+			
 			this.setState({isLoading: false});
+		}).catch((err) => {
+
+			console.log( err );
 		});
 	}
 
@@ -83,13 +102,40 @@ class Home extends Component {
 		this.setState({activePage}, () => {
 
 			axios.get(apiUrl + this.state.activePage).then(res => {
+
 				const films = res.data.results;
 				this.setState({films});
-				console.log(apiUrl + this.state.activePage);
 			}).then(() => {
+
 				this.setState({isLoading: false});
 			});
 		});
+	}
+
+	// set genres to film
+	setFilmGenre = (genres) => {
+
+		let finalGenreArray = [];
+		let films = this.state.films;
+
+		// set genre array, where ID is key and value is name
+		genres.forEach((genre,key) => {
+
+			finalGenreArray[genre.id] = genre.name;
+		});
+
+		// create and set parameter genre to this.state.films
+		films.forEach((film,key) => {
+
+			film.genre = [];
+
+			film.genre_ids.forEach((id,key) => {
+
+				film.genre.push(finalGenreArray[id]);
+			});
+		});
+
+		return films;
 	}
 
 	render() {
@@ -97,13 +143,15 @@ class Home extends Component {
 		if (this.state.films.length == 0 || this.state.isLoading) {
 			return <LoadingIndicator/>;
 		} else {
-			console.log(this.state.activePage);
 
 			return (
 
 				<div>
 					<TopNavigation/>
 					<div className="container">
+						<FilterSidebar
+							genres={this.state.genres}
+						/>
 						<PageTitle title="Find the Latest Movies on Movie Bot"/>
 						{this.state.films.map((film) => (
 							<FilmModal
@@ -115,7 +163,9 @@ class Home extends Component {
 								original_language={film.original_language}
 								key={film.id}
 								inSeenList={this.state.seenList.includes(film.id) ? 1 : 0}
-								inWatchList={this.state.watchList.includes(film.id) ? 1 : 0}/>
+								inWatchList={this.state.watchList.includes(film.id) ? 1 : 0}
+								genres={film.genre}
+							/>
 						))}
 						<div className="pagination-component">
 							<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange}/>

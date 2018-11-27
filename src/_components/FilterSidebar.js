@@ -3,25 +3,19 @@ import { Button, Menu, Sidebar, Icon } from 'semantic-ui-react'
 import axios from 'axios'
 
 export default class FilterSidebar extends Component {
-    state = {
-        visible: false,
-        genres: []
-    }
 
-    handleShowClick = () => this.setState({ visible: true })
-    handleSidebarHide = () => this.setState({ visible: false })
+	constructor(props){
 
-    componentDidMount() {
+		super(props);
 
-        axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=e0338266d7945597731b014d7e806075&language=en-US')
-            .then(res => {
-                this.setState({ genres: res.data.genres });
-                console.log(this.state);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
+		this.state = {
+			visible: false,
+			genres: this.props.genres
+		}
+
+		this.handleShowClick = () => this.setState({ visible: true })
+		this.handleSidebarHide = () => this.setState({ visible: false })
+	}
 
     render() {
         const { visible } = this.state;

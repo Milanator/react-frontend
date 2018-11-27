@@ -13,7 +13,7 @@ import TopNavigation from '../_components/TopNavigation';
 import LoadingIndicator from '../_components/LoadingIndicator';
 
 let apiurlparams = "&language=en-US";
-let apiUrl = movieDbDomain + "3/movie/";
+let apiUrl = movieDbDomain + "movie/";
 
 class CompletedMovies extends Component {
     constructor(props) {
