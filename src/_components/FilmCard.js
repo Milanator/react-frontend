@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Icon, Grid, Label, Container} from 'semantic-ui-react';
+import {Icon, Grid, Label} from 'semantic-ui-react';
 import axios from "axios";
 
 import '../css/filmcard.css';
@@ -7,7 +7,6 @@ import '../css/filmcard.css';
 import {textLimit} from "../_helpers/helper";
 import {ourApiUrl} from "../_helpers/variable";
 import {Modal} from "semantic-ui-react/dist/commonjs/modules/Modal/Modal";
-import LoadingIndicator from "./LoadingIndicator";
 
 class FilmCard extends Component {
 
@@ -75,17 +74,22 @@ class FilmCard extends Component {
 
 		const {id, poster_path, rating, title, overview, original_language,genres, ...rest} = this.props;
 		const {userId,watchList,seenList} = this.state;
-
+		const ratingWidth = 75;
 
 		return (
 			<div className="card" {...rest} key={id}>
-				<img src={"https://image.tmdb.org/t/p/w500" + poster_path} alt="movie poster"/>
+				<img src={"https://image.tmdb.org/t/p/w500" + poster_path} className={'poster-picture'} alt="movie poster"/>
 				<div className="marks">
 					<Grid verticalAlign="middle">
 						<Grid.Column textAlign="center" width={9}>
-							<Label size="small" color="grey">
-								<Icon name="star half"/> {rating}%
-							</Label>
+							<div className="rating">
+								<div className={'stars'} style={{width:(ratingWidth/100)*rating}}>
+									<img srcSet={require('./../img/5-stars.png')} style={{width:ratingWidth}}/>
+								</div>
+								<div className={"rate"}>
+									{rating}%
+								</div>
+							</div>
 						</Grid.Column>
 						<Grid.Column>
 							{watchList == 1 ? (
@@ -132,7 +136,7 @@ class FilmCard extends Component {
 					language: {original_language}
 				</p>
 				<p>
-					{ genres.map((genre) => (
+					{ genres && genres.map((genre) => (
 						<span className="badge badge-primary">{genre}</span>
 					))}
 				</p>

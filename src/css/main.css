@@ -27,6 +27,6 @@ body {
     margin: auto;   
 }
 
-.ui.search>.results .result .image{
+.ui.search > .results .result .image{
 	background: red;
 }

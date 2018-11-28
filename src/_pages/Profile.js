@@ -15,6 +15,12 @@ class Profile extends Component {
 		super(props);
 
 		let user = JSON.parse(localStorage.getItem('user'));
+
+		const exp = (user.expiration);
+		const ref = (user.refreshExpiration);
+
+		console.log(  ref - exp );
+
 		this.state = {
 			user: {
 				profilePicture: atob(user.profilePicture),

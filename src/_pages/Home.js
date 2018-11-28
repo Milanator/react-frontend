@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Pagination} from 'semantic-ui-react';
 
 import {movieDbDomain, movieApiKeyPart, ourApiUrl} from '../_helpers/variable';
 
 import FilmModal from "../_components/FilmModal";
 import TopNavigation from './../_components/TopNavigation';
 import PageTitle from '../_components/PageTitle';
-import {Pagination} from 'semantic-ui-react';
 import LoadingIndicator from './../_components/LoadingIndicator';
 import FilterSidebar from "../_components/FilterSidebar";
 
@@ -147,6 +147,7 @@ class Home extends Component {
 	render() {
 
 		if (this.state.films.length == 0 || this.state.isLoading) {
+
 			return <LoadingIndicator/>;
 		} else {
 
