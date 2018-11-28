@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-import {Icon, Grid, Label} from 'semantic-ui-react';
+import {Icon, Grid, Label, Container} from 'semantic-ui-react';
+import axios from "axios";
+
 import '../css/filmcard.css';
 
 import {textLimit} from "../_helpers/helper";
 import {ourApiUrl} from "../_helpers/variable";
-import axios from "axios";
+import {Modal} from "semantic-ui-react/dist/commonjs/modules/Modal/Modal";
+import LoadingIndicator from "./LoadingIndicator";
 
 class FilmCard extends Component {
 
@@ -60,7 +63,7 @@ class FilmCard extends Component {
 				that.setState({seenList: 1 - that.state.seenList});
 			}
 
-			// send data to film modal --> update seen and watch button
+			// send data to FilmModal --> update seen and watch button
 			that.props.sendWatchSeen(that.state.watchList,that.state.seenList)
 
 		}).catch(err => {
@@ -70,8 +73,9 @@ class FilmCard extends Component {
 
 	render() {
 
-		const {id, poster_path, rating, title, overview, original_language, ...rest} = this.props;
+		const {id, poster_path, rating, title, overview, original_language,genres, ...rest} = this.props;
 		const {userId,watchList,seenList} = this.state;
+
 
 		return (
 			<div className="card" {...rest} key={id}>
@@ -84,42 +88,37 @@ class FilmCard extends Component {
 							</Label>
 						</Grid.Column>
 						<Grid.Column>
-
 							{watchList == 1 ? (
-								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id}>
+								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id} data-toggle="tooltip" data-placement="bottom" title="Add to Watchlist">
 									<Icon link color="blue"
 										  name={"bookmark" + (watchList ? "" : " outline")}
-										  className={'watchlist'}
-									/>
+										  className={'watchlist'} />
 								</a>
 							) : (
-								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'}>
+								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'} data-toggle="tooltip" data-placement="bottom" title="Add to seenlist">
 									<Icon link color="blue"
 										  name={"bookmark" + (watchList ? "" : " outline")}
 										  className={'watchlist'}
 									/>
 								</a>
 							)}
-
 						</Grid.Column>
 						<Grid.Column>
-
 							{seenList == 1 ? (
-								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id}>
+								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id} data-toggle="tooltip" data-placement="bottom" title="Add towatchlist">
 									<Icon link color="blue"
 										  name={"check square" + (seenList ? "" : " outline")}
 										  className={'seenlist'}
 									/>
 								</a>
 							) : (
-								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'}>
+								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'} data-toggle="tooltip" data-placement="bottom" title="Add to seenlist">
 									<Icon link color="blue"
 										  name={"check square" + (seenList ? "" : " outline")}
 										  className={'seenlist'}
 									/>
 								</a>
 							)}
-
 						</Grid.Column>
 					</Grid>
 				</div>
@@ -131,6 +130,11 @@ class FilmCard extends Component {
 				</p>
 				<p>
 					language: {original_language}
+				</p>
+				<p>
+					{ genres.map((genre) => (
+						<span className="badge badge-primary">{genre}</span>
+					))}
 				</p>
 			</div>
 		);

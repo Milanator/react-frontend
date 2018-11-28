@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
+
 import '../css/login.css';
 
 import {setUserInBrowserStorage} from "../_helpers/helper";
@@ -59,7 +60,7 @@ class Login extends Component {
 		}).then(resp => {
 
 			let response = resp.data[0];
-			let profilePicture = response.profile_picture;
+			let profilePicture = response.profile_picture || '';
 			let name = response.name;
 			let id = response.id;
 			let days = 30;

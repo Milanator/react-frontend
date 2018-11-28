@@ -4,8 +4,8 @@ import axios from 'axios'
 import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
 
 let yearArray = [{ key: 0, value: 'All', text: 'All' }];
-let getGenresApiUrl = movieDbDomain + "3/genre/movie/list" + movieApiKeyPart + "&language=en-US";
-let getFilmsByFilterCriteria = movieDbDomain + "3/discover/movie" + movieApiKeyPart + "&language=en-US&sort_by=popularity.desc&page=1";
+let getGenresApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart + "&language=en-US";
+let getFilmsByFilterCriteria = movieDbDomain + "discover/movie" + movieApiKeyPart + "&language=en-US&sort_by=popularity.desc&page=1";
 
 export default class FilterMenu extends Component {
 
@@ -37,19 +37,24 @@ export default class FilterMenu extends Component {
             })
             .catch(error => {
                 console.log(error);
-            }); 
+            });
     }
 
     handleFilterClick(e) {
         let requestUrl;
-        if (this.state.chosenGenre === 0 || this.state.chosenYear === 0 || (this.state.chosenGenre == '' && this.state.chosenYear == '')) {
+        if ((this.state.chosenGenre === '' && this.state.chosenYear === '')
+            || (this.state.chosenGenre === 0 && this.state.chosenYear === '')
+            || (this.state.chosenGenre === 0 && this.state.chosenYear === 0)
+            || (this.state.chosenGenre === '' && this.state.chosenYear === 0)) {
             requestUrl = getFilmsByFilterCriteria;
-        } if (this.state.chosenGenre == '' && this.state.chosenYear != '') {
+        } if ((this.state.chosenGenre === '' && this.state.chosenYear != '')
+            || (this.state.chosenGenre === 0 && this.state.chosenYear != '')) {
             requestUrl = getFilmsByFilterCriteria + '&primary_release_year=' + this.state.chosenYear;
-        } if (this.state.chosenGenre != '' && this.state.chosenYear != '') {
-            requestUrl = getFilmsByFilterCriteria + '&primary_release_year=' + this.state.chosenYear + '&with_genres=' + this.state.chosenGenre.key;
-        } if (this.state.chosenGenre != '' && this.state.chosenYear == '') {
-            requestUrl = getFilmsByFilterCriteria + '&with_genres=' + this.state.chosenGenre.key;
+        } if ((this.state.chosenGenre != '' && this.state.chosenYear === '')
+            || (this.state.chosenGenre != '' && this.state.chosenYear === 0)) {
+            requestUrl = getFilmsByFilterCriteria + '&with_genres=' + this.state.chosenGenre;
+        } if ((this.state.chosenGenre != '' && this.state.chosenYear != '')) {
+            requestUrl = getFilmsByFilterCriteria + '&primary_release_year=' + this.state.chosenYear + '&with_genres=' + this.state.chosenGenre;
         }
 
         axios.get(requestUrl)
@@ -62,7 +67,7 @@ export default class FilterMenu extends Component {
 
     handleGenreChange(e, data) {
         const { value } = data;
-        let chosenGenre = data.options.find(o => o.value === value);
+        let chosenGenre = data.options.find(o => o.value === value).key;
         this.setState({ chosenGenre });
     }
 
