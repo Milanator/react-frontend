@@ -4,6 +4,7 @@
   --prussian-blue: #003459;
   --cerulean: #007EA7;
   --vivid-cerulean: #00A8E8;
+  --standard-blue: #4d9dd9;
   --text-heading-font-size: 30px;
   --text-heading-font-weight: bold;
   --text-menu: 20px;
@@ -13,6 +14,11 @@
   background-color: var(--rich-black);
   height: 100px;
   font-size: var(--text-menu);
+  color: var(--standard-blue);
+}
+
+.top-navigation a {
+  color: var(--standard-blue);
 }
 
 .ui.equal.width.grid {

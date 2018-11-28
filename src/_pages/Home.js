@@ -1,17 +1,18 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import {Pagination} from 'semantic-ui-react';
 
-import {movieDbDomain, movieApiKeyPart, ourApiUrl} from '../_helpers/variable';
+import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
+import '../css/main.css';
 
 import FilmModal from "../_components/FilmModal";
 import TopNavigation from './../_components/TopNavigation';
 import PageTitle from '../_components/PageTitle';
+import FilterMenu from '../_components/FilterMenu';
 import LoadingIndicator from './../_components/LoadingIndicator';
-import FilterSidebar from "../_components/FilterSidebar";
 
-let apiurlparams = "&language=en-US&sort_by=popularity.desc&primary_release_year=2018&page=";
-let apiUrl = movieDbDomain + "discover/movie" + movieApiKeyPart + apiurlparams;
+let apiUrlParams = "&language=en-US&sort_by=popularity.desc";
+let apiUrl = movieDbDomain + "discover/movie" + movieApiKeyPart + apiUrlParams;
 let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
 class Home extends Component {
@@ -29,6 +30,8 @@ class Home extends Component {
 			films: [],
 			activePage: 1,
 			totalPages: null,
+			chosenYear: '',
+			chosenGenre: '',
 			userId: userId,
 			seenList: [],
 			watchList: [],
@@ -45,22 +48,19 @@ class Home extends Component {
 
 		let that = this;
 		let seenList, watchList;
-		let {userId} = this.state;
+		let { userId } = this.state;
 
 		axios.all([
+
+			axios.get(apiUrl + '&primary_release_year=2018&page=' + this.state.activePage).then(res => {
+				const films = res.data.results;
+				const totalPages = res.data.total_pages;
+				that.setState({ films, totalPages });
+			}),
 
 			// genres
 			axios.get(genreApiUrl).then(res => {
 				this.setState({ genres: res.data.genres });
-			}),
-
-			// films
-			axios.get(apiUrl + this.state.activePage).then(res => {
-
-				let films = res.data.results;
-				const totalPages = res.data.total_pages;
-
-				that.setState({films, totalPages});
 			}),
 
 			// seenlist
@@ -69,11 +69,11 @@ class Home extends Component {
 				let arraySeenList = [];
 				seenList = res.data;
 
-				seenList.forEach((item,key) => {
+				seenList.forEach((item, key) => {
 
 					arraySeenList.push(item.film_id);
 				});
-				that.setState({seenList: arraySeenList});
+				that.setState({ seenList: arraySeenList });
 			}),
 
 			// watchlist
@@ -82,60 +82,69 @@ class Home extends Component {
 				let arrayWatchList = [];
 				watchList = res.data;
 
-				watchList.forEach((item,key) => {
+				watchList.forEach((item, key) => {
 
 					arrayWatchList.push(item.film_id);
 				});
-				that.setState({watchList: arrayWatchList});
+				that.setState({ watchList: arrayWatchList });
 			})
 		]).then(() => {
-
-			let films = this.setFilmGenre(this.state.genres);
-			this.setState({films});
+			let films = this.setFilmGenre(this.state.genres, this.state.films);
+			this.setState({ films });
 		}).then(() => {
-
-			this.setState({isLoading: false});
+			this.setState({ isLoading: false });
 		}).catch((err) => {
-
-			console.log( err );
+			console.log(err);
 		});
 	}
 
-	handlePaginationChange = (e, {activePage}) => {
+	handlePaginationChange = (e, { activePage }) => {
+		this.setState({ isLoading: true });
 
-		this.setState({isLoading: true});
+		this.setState({ activePage }, () => {
+			let requestUrl = apiUrl + '&page=' + this.state.activePage;
 
-		this.setState({activePage}, () => {
+			if (this.state.chosenGenre) {
+				requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre;
+			}
 
-			axios.get(apiUrl + this.state.activePage).then(res => {
+			if (this.state.chosenYear) {
+				requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear;
+			}
 
-				const films = res.data.results;
-				this.setState({films});
+			axios.get(requestUrl).then(res => {
+				let films = res.data.results;
+				films = this.setFilmGenre(this.state.genres, films);
+				this.setState({ films });
 			}).then(() => {
-
-				this.setState({isLoading: false});
+				this.setState({ isLoading: false });
 			});
 		});
 	}
 
+	onUpdate(result, totalPages, chosenGenre, chosenYear) {
+		result = this.setFilmGenre(this.state.genres, result);
+		this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear });
+	}
+
 	// set genres to film
-	setFilmGenre = (genres) => {
+	setFilmGenre = (genres, films) => {
 
 		let genreArray = [];
-		let films = this.state.films;
+		// let films = this.state.films;
 
 		// set genre array, where ID is key and value is name
-		genres.forEach((genre,key) => {
+		genres.forEach((genre, key) => {
 
 			genreArray[genre.id] = genre.name;
 		});
 
 		// create and set parameter genre to this.state.films
-		films.forEach((film,key) => {
+		films.forEach((film, key) => {
 
 			film.genre = [];
 
-			film.genre_ids.forEach((id,key) => {
+			film.genre_ids.forEach((id, key) => {
 
 				film.genre.push(genreArray[id]);
 			});
@@ -146,20 +155,26 @@ class Home extends Component {
 
 	render() {
 
-		if (this.state.films.length == 0 || this.state.isLoading) {
-
-			return <LoadingIndicator/>;
+		if (this.state.films.length == 0 || this.state.isLoading || this.state.genres == 0) {
+			return (
+				<div>
+					<TopNavigation />
+					<LoadingIndicator />
+				</div>
+			);
 		} else {
 
 			return (
 
 				<div>
-					<TopNavigation/>
+					<TopNavigation />
 					<div className="container">
-						<FilterSidebar
-							genres={this.state.genres}
-						/>
-						<PageTitle title="Find the Latest Movies on Movie Bot"/>
+						<PageTitle title="Find the Latest Movies on Movie Bot" />
+						<FilterMenu
+							onUpdate={this.onUpdate.bind(this)}
+							chosenGenre={this.state.chosenGenre}
+							chosenYear={this.state.chosenYear} />
+
 						{this.state.films.map((film) => (
 							<FilmModal
 								id={film.id}
@@ -174,15 +189,18 @@ class Home extends Component {
 								genres={film.genre}
 							/>
 						))}
-						<div className="pagination-component">
-							<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange}/>
-						</div>
+					</div>
+
+					<div className="pagination-component">
+						<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange} />
+
 					</div>
 				</div>
+
 			);
 		}
-
 	}
+
 }
 
 export default Home;

@@ -1,81 +1,107 @@
 import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Dropdown, Button } from 'semantic-ui-react'
+import axios from 'axios'
+import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
 
-export default class MenuExampleHeaderVertical extends Component {
+let yearArray = [{ key: 0, value: 'All', text: 'All' }];
+let getGenresApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart + "&language=en-US";
+let getFilmsByFilterCriteria = movieDbDomain + "discover/movie" + movieApiKeyPart + "&language=en-US&sort_by=popularity.desc&page=1";
 
-  handleItemClick = name => this.setState({ activeItem: name });
+export default class FilterMenu extends Component {
 
-  render() {
-    const { activeItem } = this.state || {}
+    constructor(props) {
+        super(props);
 
-    return (
-      <Menu vertical fixed="left">
-        <Menu.Item>
-          <Menu.Header>Products</Menu.Header>
+        for (let i = 2018; i > 1900; i--) {
+            var year = { key: i, value: i, text: i };
+            yearArray.push(year);
+        }
 
-          <Menu.Menu>
-            <Menu.Item
-              name='enterprise'
-              active={activeItem === 'enterprise'}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name='consumer'
-              active={activeItem === 'consumer'}
-              onClick={this.handleItemClick}
-            />
-          </Menu.Menu>
-        </Menu.Item>
+        this.state = {
+            genres: [],
+            years: yearArray,
+            films: [],
+            chosenGenre: '',
+            chosenYear: '',
+        }
 
-        <Menu.Item>
-          <Menu.Header>CMS Solutions</Menu.Header>
+    }
 
-          <Menu.Menu>
-            <Menu.Item
-              name='rails'
-              active={activeItem === 'rails'}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name='python'
-              active={activeItem === 'python'}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item name='php' active={activeItem === 'php'} onClick={this.handleItemClick} />
-          </Menu.Menu>
-        </Menu.Item>
+    componentDidMount() {
+        let genresArray;
+        axios.get(getGenresApiUrl)
+            .then(res => {
+                genresArray = res.data.genres;
+                genresArray.unshift({ id: 0, name: 'All' });
+                this.setState({ genres: genresArray });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
-        <Menu.Item>
-          <Menu.Header>Hosting</Menu.Header>
+    handleFilterClick(e) {
+        let requestUrl = getFilmsByFilterCriteria;
+        if(this.state.chosenGenre) {
+            requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre;
+        }
 
-          <Menu.Menu>
-            <Menu.Item
-              name='shared'
-              active={activeItem === 'shared'}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name='dedicated'
-              active={activeItem === 'dedicated'}
-              onClick={this.handleItemClick}
-            />
-          </Menu.Menu>
-        </Menu.Item>
+        if(this.state.chosenYear) {
+            requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear;
+        }
 
-        <Menu.Item>
-          <Menu.Header>Support</Menu.Header>
+        axios.get(requestUrl)
+            .then(res => {
+                this.props.onUpdate(res.data.results, res.data.total_pages, this.state.chosenGenre, this.state.chosenYear);
+            }).catch(error => {
+                console.log(error);
+            });
+    }
 
-          <Menu.Menu>
-            <Menu.Item name='email' active={activeItem === 'email'} onClick={this.handleItemClick}>
-              E-mail Support
-            </Menu.Item>
+    handleGenreChange(e, data) {
+        const { value } = data;
+        let chosenGenre = data.options.find(o => o.value === value).key;
+        this.setState({ chosenGenre });
+    }
 
-            <Menu.Item name='faq' active={activeItem === 'faq'} onClick={this.handleItemClick}>
-              FAQs
-            </Menu.Item>
-          </Menu.Menu>
-        </Menu.Item>
-      </Menu>
-    )
-  }
+    handleYearChange(e, data) {
+        const { value } = data;
+        let chosenYear = data.options.find(o => o.value === value).key;
+        this.setState({ chosenYear });
+    }
+
+    render() {
+        const { value, chosenGenre, chosenYear, years, genres, ...rest } = this.state;
+        return (
+            <Menu borderless text compact size="small">
+                <Menu.Menu>
+                    <Dropdown
+                        placeholder='Select Genre'
+                        search
+                        selection
+                        value={value}
+                        options={genres.map(genre => ({
+                            key: genre.id,
+                            value: genre.name,
+                            text: genre.name
+                        }))}
+                        onChange={this.handleGenreChange.bind(this)} />
+                </Menu.Menu>
+                <Menu.Menu>
+                    <Dropdown
+                        placeholder='Select Year'
+                        search
+                        selection
+                        value={value}
+                        options={years}
+                        onChange={this.handleYearChange.bind(this)} />
+                </Menu.Menu>
+                <Button
+                    icon='right arrow'
+                    inverted
+                    color='blue'
+                    onClick={this.handleFilterClick.bind(this)} />
+            </Menu>
+        )
+    }
 }
