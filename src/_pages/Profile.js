@@ -138,6 +138,10 @@ class Profile extends Component {
 							<label htmlFor="passwordConfirmation">Password confirmation</label>
 							<input type="password" className="form-control" id="passwordConfirmation" placeholder="Enter password" name={'passwordConfirmation'} defaultValue={passwordConfirmation} onChange={this.onChangeInput}/>
 						</div>
+						<div className="form-group">
+							<label htmlFor="profilePicture">Link on profile picture</label>
+							<input type="test" className="form-control" id="profilePicture" placeholder="Enter link on profile picture" name={'profilePicture'} defaultValue={profilePicture} onChange={this.onChangeInput}/>
+						</div>
 						<button id="edit-profile" className="btn btn-dark">Edit profile</button>
 					</div>
 				</form>
