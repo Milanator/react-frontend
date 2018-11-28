@@ -104,11 +104,9 @@ export default class FilterMenu extends Component {
                         onChange={this.handleYearChange.bind(this)} />
                 </Menu.Menu>
                 <Button
-                    content='Filter'
                     icon='right arrow'
-                    labelPosition='right'
+                    inverted
                     color='blue'
-                    compact
                     onClick={this.handleFilterClick.bind(this)} />
             </Menu>
         )

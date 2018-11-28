@@ -37,16 +37,13 @@ class TopNavigation extends Component {
 						<GridColumn width={6}>
 							<Image src={logo} as={Link} to="/home" alt="logo" />
 						</GridColumn>
-						<GridColumn className="search-field" verticalAlign="middle" width={4}>
-
+						<GridColumn className="search-field" verticalAlign="middle" width={6}>
 							<SearchInput/>
-
-							{/* insert search field here */}
 						</GridColumn>
 						<GridColumn verticalAlign="middle" textAlign="right" width={1}>
 							<Link to="/home">Home</Link>
 						</GridColumn>
-						<GridColumn verticalAlign="middle" width={3}>
+						<GridColumn verticalAlign="middle" width={2}>
 							<Dropdown trigger={<Image avatar src={this.state.user.profilePicture} />} className="top-navigation-dropdown">
 								<Dropdown.Menu direction="left">
 									<Dropdown.Item icon="user" as={Link} to="/profile" text="My Profile" />

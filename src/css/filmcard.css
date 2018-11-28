@@ -1,3 +1,15 @@
+:root {
+    --white: #ffffff;
+    --rich-black: #00171F;
+    --prussian-blue: #003459;
+    --cerulean: #007EA7;
+    --vivid-cerulean: #00A8E8;
+    --standard-blue: #4d9dd9;
+    --text-heading-font-size: 30px;
+    --text-heading-font-weight: bold;
+    --text-menu: 20px;
+  }
+
 .content {
     text-align: center;
     width: 80%;
@@ -54,4 +66,8 @@
 
 card #p-bottom {
     background-color: #720C3E;
+}
+
+.badge.badge-primary {
+    background-color: var(--standard-blue);
 }
