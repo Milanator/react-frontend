@@ -41,25 +41,18 @@ export default class FilterMenu extends Component {
     }
 
     handleFilterClick(e) {
-        let requestUrl;
-        if ((this.state.chosenGenre === '' && this.state.chosenYear === '')
-            || (this.state.chosenGenre === 0 && this.state.chosenYear === '')
-            || (this.state.chosenGenre === 0 && this.state.chosenYear === 0)
-            || (this.state.chosenGenre === '' && this.state.chosenYear === 0)) {
-            requestUrl = getFilmsByFilterCriteria;
-        } if ((this.state.chosenGenre === '' && this.state.chosenYear != '')
-            || (this.state.chosenGenre === 0 && this.state.chosenYear != '')) {
-            requestUrl = getFilmsByFilterCriteria + '&primary_release_year=' + this.state.chosenYear;
-        } if ((this.state.chosenGenre != '' && this.state.chosenYear === '')
-            || (this.state.chosenGenre != '' && this.state.chosenYear === 0)) {
-            requestUrl = getFilmsByFilterCriteria + '&with_genres=' + this.state.chosenGenre;
-        } if ((this.state.chosenGenre != '' && this.state.chosenYear != '')) {
-            requestUrl = getFilmsByFilterCriteria + '&primary_release_year=' + this.state.chosenYear + '&with_genres=' + this.state.chosenGenre;
+        let requestUrl = getFilmsByFilterCriteria;
+        if(this.state.chosenGenre) {
+            requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre;
+        }
+
+        if(this.state.chosenYear) {
+            requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear;
         }
 
         axios.get(requestUrl)
             .then(res => {
-                this.props.onUpdate(res.data.results, this.state.chosenGenre, this.state.chosenYear);
+                this.props.onUpdate(res.data.results, res.data.total_pages, this.state.chosenGenre, this.state.chosenYear);
             }).catch(error => {
                 console.log(error);
             });

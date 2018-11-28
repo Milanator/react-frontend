@@ -89,14 +89,11 @@ class Home extends Component {
 				that.setState({ watchList: arrayWatchList });
 			})
 		]).then(() => {
-
 			let films = this.setFilmGenre(this.state.genres, this.state.films);
 			this.setState({ films });
 		}).then(() => {
-
 			this.setState({ isLoading: false });
 		}).catch((err) => {
-
 			console.log(err);
 		});
 	}
@@ -105,22 +102,15 @@ class Home extends Component {
 		this.setState({ isLoading: true });
 
 		this.setState({ activePage }, () => {
-			let requestUrl;
-			if ((this.state.chosenGenre === '' && this.state.chosenYear === '')
-				|| (this.state.chosenGenre === 0 && this.state.chosenYear === '')
-				|| (this.state.chosenGenre === 0 && this.state.chosenYear === 0)
-				|| (this.state.chosenGenre === '' && this.state.chosenYear === 0)) {
-				requestUrl = apiUrl + '&page=' + this.state.activePage;
-			} if ((this.state.chosenGenre === '' && this.state.chosenYear != '')
-				|| (this.state.chosenGenre === 0 && this.state.chosenYear != '')) {
-				requestUrl = apiUrl + '&page=' + this.state.activePage + '&primary_release_year=' + this.state.chosenYear;
-			} if ((this.state.chosenGenre != '' && this.state.chosenYear === '')
-				|| (this.state.chosenGenre != '' && this.state.chosenYear === 0)) {
-				requestUrl = apiUrl + '&page=' + this.state.activePage + '&with_genres=' + this.state.chosenGenre.key;
-			} if ((this.state.chosenGenre != '' && this.state.chosenYear != '')) {
-				requestUrl = apiUrl + '&page=' + this.state.activePage + '&primary_release_year=' + this.state.chosenYear + '&with_genres=' + this.state.chosenGenre.key;
+			let requestUrl = apiUrl + '&page=' + this.state.activePage;
+
+			if (this.state.chosenGenre) {
+				requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre;
 			}
-			console.log(requestUrl);
+
+			if (this.state.chosenYear) {
+				requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear;
+			}
 
 			axios.get(requestUrl).then(res => {
 				let films = res.data.results;
@@ -132,11 +122,9 @@ class Home extends Component {
 		});
 	}
 
-	onUpdate(result, chosenGenre, chosenYear) {
-		console.log(result);
+	onUpdate(result, totalPages, chosenGenre, chosenYear) {
 		result = this.setFilmGenre(this.state.genres, result);
-		console.log(result);
-		this.setState({ films: result, chosenGenre, chosenYear });
+		this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear });
 	}
 
 	// set genres to film
