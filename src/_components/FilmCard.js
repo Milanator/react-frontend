@@ -87,14 +87,13 @@ class FilmCard extends Component {
 						<Grid.Column>
 
 							{watchList == 1 ? (
-								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id}>
+								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id} data-toggle="tooltip" data-placement="bottom" title="Add to Watchlist">
 									<Icon link color="blue"
 										  name={"bookmark" + (watchList ? "" : " outline")}
-										  className={'watchlist'}
-									/>
+										  className={'watchlist'} />
 								</a>
 							) : (
-								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'}>
+								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'} data-toggle="tooltip" data-placement="bottom" title="Add to seenlist">
 									<Icon link color="blue"
 										  name={"bookmark" + (watchList ? "" : " outline")}
 										  className={'watchlist'}
@@ -106,14 +105,14 @@ class FilmCard extends Component {
 						<Grid.Column>
 
 							{seenList == 1 ? (
-								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id}>
+								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id} data-toggle="tooltip" data-placement="bottom" title="Add towatchlist">
 									<Icon link color="blue"
 										  name={"check square" + (seenList ? "" : " outline")}
 										  className={'seenlist'}
 									/>
 								</a>
 							) : (
-								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'}>
+								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'} data-toggle="tooltip" data-placement="bottom" title="Add to seenlist">
 									<Icon link color="blue"
 										  name={"check square" + (seenList ? "" : " outline")}
 										  className={'seenlist'}
