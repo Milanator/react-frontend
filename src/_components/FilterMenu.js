@@ -26,20 +26,7 @@ export default class FilterMenu extends Component {
         }
 
     }
-
-    componentDidMount() {
-        let genresArray;
-        axios.get(getGenresApiUrl)
-            .then(res => {
-                genresArray = res.data.genres;
-                genresArray.unshift({ id: 0, name: 'All' });
-                this.setState({ genres: genresArray });
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-
+    
     handleFilterClick(e) {
         let requestUrl = getFilmsByFilterCriteria;
         if(this.state.chosenGenre) {
@@ -71,7 +58,8 @@ export default class FilterMenu extends Component {
     }
 
     render() {
-        const { value, chosenGenre, chosenYear, years, genres, ...rest } = this.state;
+        const { value, years } = this.state;
+        const { genres } = this.props;
         return (
             <Menu borderless text compact size="small">
                 <Menu.Menu>
@@ -80,7 +68,8 @@ export default class FilterMenu extends Component {
                         search
                         selection
                         value={value}
-                        options={genres.map(genre => ({
+                        options={
+                            genres.map(genre => ({
                             key: genre.id,
                             value: genre.name,
                             text: genre.name

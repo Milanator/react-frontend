@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import logo from "../img/Logo.png";
 import { Dropdown, Image, Grid, GridColumn, Search } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+
 import { baseUrl } from "../_helpers/variable";
+import logo from "../img/Logo.png";
 import '../css/navbar.css';
+
 import SearchInput from "./SearchInput";
 
 class TopNavigation extends Component {
