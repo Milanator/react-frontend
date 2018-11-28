@@ -58,14 +58,15 @@ class FilmModal extends Component {
         });
     };
 
-    setWatchSeen = function(watch,seen){
+    // receive data from child --> FILMCARD.JS
+    setWatchSeen = (watch,seen) => {
         this.setState({watchList: watch});
         this.setState({seenList: seen});
     };
 
     render() {
 
-        const {id, poster_path, rating, title, overview, original_language, ...rest} = this.props;
+        const {id, poster_path, rating, title, overview, original_language,genres, ...rest} = this.props;
         const {userId,seenList,watchList} = this.state;
 
         return (
@@ -81,6 +82,7 @@ class FilmModal extends Component {
                               inSeenList={seenList}
                               inWatchList={watchList}
                               sendWatchSeen={this.setWatchSeen}
+							  genres={genres}
                     />
                 } centered={false}>
                     <Modal.Header color="blue">{title}</Modal.Header>
