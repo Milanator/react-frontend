@@ -7,7 +7,6 @@ import Login from './_pages/Login.js';
 import Home from "./_pages/Home";
 import Register from "./_pages/Register";
 
-import FilmCard from "./_components/FilmCard";
 import MyWatchlist from "./_pages/MyWatchlist";
 import CompletedMovies from "./_pages/CompletedMovies";
 import Profile from "./_pages/Profile";
@@ -31,14 +30,13 @@ class App extends Component {
 			<div className={'app-routes'}>
 				<Route exact path={['/login','/']} component={Login}/>
 				<Route exact path={'/register'} component={Register}/>
-				<Route path={'/filmcard'} component={FilmCard}/>
-				<Route path={'/profile'} component={Profile}/>
 
 				{/* FOR LOGGED USERS */}
 				<Auth path={'/home'} component={Home} onEnter={Auth}/>
 				<Auth path={'/mywatchlist'} component={MyWatchlist}/>
 				<Auth path={'/film/:id?'} component={FilmDetail} />
 				<Auth path={'/completedmovies'} component={CompletedMovies}/>
+				<Auth path={'/profile'} component={Profile}/>
 			</div>
 		);
 	}

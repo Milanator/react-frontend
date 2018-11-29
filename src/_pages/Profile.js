@@ -19,8 +19,6 @@ class Profile extends Component {
 		const exp = (user.expiration);
 		const ref = (user.refreshExpiration);
 
-		console.log(  ref - exp );
-
 		this.state = {
 			user: {
 				profilePicture: atob(user.profilePicture),
@@ -55,7 +53,12 @@ class Profile extends Component {
 		let that = this;
 		let {name,email,userId,newPassword,oldPassword,passwordConfirmation,profilePicture} = this.state.user;
 
-		if( newPassword !== passwordConfirmation ){
+
+		if( !newPassword || !passwordConfirmation ){
+			newPassword = passwordConfirmation = oldPassword;
+		}
+
+		if (newPassword !== passwordConfirmation) {
 
 			that.setState({error: 'Different passwords!'});
 			return;
@@ -69,18 +72,25 @@ class Profile extends Component {
 				name: name,
 				email: email,
 				oldPassword: oldPassword,
-				newPassword: newPassword
+				newPassword: newPassword,
+				profilePicture: profilePicture
 			}
-		}).then(() => {
+		}).then((resp) => {
 
-			let days = 30;
-			// with expiration
-			setUserInBrowserStorage(email,days,profilePicture,name,userId);
 
-			window.location.reload();
+			if( resp.data.affectedRows == 0 ){
+
+				that.setState({error: 'Incorrect passwords!'});
+			} else{
+
+				let days = 30;
+				// with expiration
+				setUserInBrowserStorage(email,days,profilePicture,name,userId);
+				// window.location.reload();
+			}
 		}).catch(error => {
-			console.log(error);
-			that.setState({error: 'error'});
+			console.log( error );
+			that.setState({error: 'Error. '});
 		});
 	}
 
@@ -102,27 +112,8 @@ class Profile extends Component {
 						<div className={'alert alert-danger'}><p>{this.state.error}</p></div>
 					}
 					<div id="informations">
-						<h1> Informations:</h1>
-						{/*<table className={"table"}>*/}
-						{/*<thead>*/}
-						{/*<tr>*/}
-						{/*<td><h3>Name</h3></td>*/}
-						{/*<td> {this.state.user.name} </td>*/}
-						{/*</tr>*/}
-						{/*<tr>*/}
-						{/*<td><h3>Mail</h3></td>*/}
-						{/*<td> {this.state.user.email} </td>*/}
-						{/*</tr>*/}
-						{/*<tr>*/}
-						{/*<td><h3>seen list</h3></td>*/}
-						{/*<td> {this.state.user.seenCount} </td>*/}
-						{/*</tr>*/}
-						{/*<tr>*/}
-						{/*<td><h3>Watched list</h3></td>*/}
-						{/*<td> {this.state.user.watchCount} </td>*/}
-						{/*</tr>*/}
-						{/*</thead>*/}
-						{/*</table>*/}
+						<h1> Informations</h1>
+						<p>for each change you have to enter correct current password. </p>
 						<input type="hidden" name="userId" value={userId}/>
 						<div className="form-group">
 							<label htmlFor="name">Name</label>
@@ -133,8 +124,8 @@ class Profile extends Component {
 							<input type="email" className="form-control" id="email" placeholder="Enter email" name={'email'} defaultValue={email} onChange={this.onChangeInput}/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="oldPassword">Old password</label>
-							<input type="password" className="form-control" id="oldPassword" placeholder="Enter password" name={'oldPassword'} defaultValue={oldPassword} onChange={this.onChangeInput}/>
+							<label htmlFor="profilePicture">Link on profile picture</label>
+							<input type="test" className="form-control" id="profilePicture" placeholder="Enter link on profile picture" name={'profilePicture'} defaultValue={profilePicture} onChange={this.onChangeInput}/>
 						</div>
 						<div className="form-group">
 							<label htmlFor="newPassword">New password</label>
@@ -145,10 +136,10 @@ class Profile extends Component {
 							<input type="password" className="form-control" id="passwordConfirmation" placeholder="Enter password" name={'passwordConfirmation'} defaultValue={passwordConfirmation} onChange={this.onChangeInput}/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="profilePicture">Link on profile picture</label>
-							<input type="test" className="form-control" id="profilePicture" placeholder="Enter link on profile picture" name={'profilePicture'} defaultValue={profilePicture} onChange={this.onChangeInput}/>
+							<label htmlFor="oldPassword">Current password</label>
+							<input type="password" className="form-control" id="oldPassword" placeholder="Enter password" name={'oldPassword'} defaultValue={oldPassword} onChange={this.onChangeInput}/>
 						</div>
-						<button id="edit-profile" className="btn btn-dark">Edit profile</button>
+						<button id="edit-profile" className="btn btn-dark">Save profile</button>
 					</div>
 				</form>
 			</div>
