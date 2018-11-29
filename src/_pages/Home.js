@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Pagination } from 'semantic-ui-react';
+import {Pagination} from 'semantic-ui-react';
 
 import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
 import { setFilmGenre } from '../_helpers/method';
