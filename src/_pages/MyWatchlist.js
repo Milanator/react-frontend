@@ -4,16 +4,16 @@ import axios from 'axios';
 import '../css/main.css';
 import '../css/lists.css';
 
-import { movieDbDomain, movieApiKeyPart } from '../_helpers/variable';
-import { ourApiUrl } from "../_helpers/variable";
-
 import PageTitle from '../_components/PageTitle';
 import FilmModal from '../_components/FilmModal';
 import TopNavigation from '../_components/TopNavigation';
 import LoadingIndicator from '../_components/LoadingIndicator';
 
-let apiurlparams = "&language=en-US";
+import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
+import { setFilmGenre } from "../_helpers/method";
+
 let apiUrl = movieDbDomain + "movie/";
+let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
 class CompletedMovies extends Component {
     constructor(props) {
@@ -25,10 +25,9 @@ class CompletedMovies extends Component {
             films: [],
             seenList: [],
             watchList: [],
+            genres: [],
             userId: userId,
-            isLoading: true,
-            totalPages: 20,
-            activePage: 1
+            isLoading: true
         };
     }
 
@@ -61,9 +60,13 @@ class CompletedMovies extends Component {
                 this.setState({ seenList: arraySeenList });
             });
 
+        await axios.get(genreApiUrl).then(res => {
+            this.setState({ genres: res.data.genres });
+        });
+
         let arrayWatchList = new Array();
         this.state.watchList.forEach(function (film) {
-            const requestUrl = apiUrl + film + movieApiKeyPart + apiurlparams;
+            const requestUrl = apiUrl + film + movieApiKeyPart;
             promises.push(axios.get(requestUrl));
         });
 
@@ -73,6 +76,7 @@ class CompletedMovies extends Component {
                 arrayWatchList.push(film);
             })
         });
+        arrayWatchList = setFilmGenre(this.state.genres, arrayWatchList);
         this.setState({ films: arrayWatchList, isLoading: false });
 
     }
@@ -94,7 +98,7 @@ class CompletedMovies extends Component {
                 <div>
                     <TopNavigation />
                     <div className="container">
-                    <PageTitle title="Your Watchlist" />
+                        <PageTitle title="Your Watchlist" />
                         {this.state.films.map(film => (
                             <FilmModal
                                 id={film.id}
@@ -106,6 +110,7 @@ class CompletedMovies extends Component {
                                 key={film.id}
                                 inSeenList={this.state.seenList.includes(film.id) ? 1 : 0}
                                 inWatchList={this.state.watchList.includes(film.id) ? 1 : 0}
+                                genres={film.genre}
                             />
                         ))}
                     </div>

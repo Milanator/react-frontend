@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Pagination} from 'semantic-ui-react';
 
 import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
+import { setFilmGenre } from '../_helpers/method';
 import '../css/main.css';
 
 import FilmModal from "../_components/FilmModal";
@@ -38,9 +39,6 @@ class Home extends Component {
 			isLoading: true,
 			genres: []
 		};
-
-		this.handlePaginationChange = this.handlePaginationChange.bind(this);
-		this.setFilmGenre = this.setFilmGenre.bind(this);
 	}
 
 	// THIS IS FIRST ACTION ON PAGE
@@ -52,6 +50,7 @@ class Home extends Component {
 
 		axios.all([
 
+			// films
 			axios.get(apiUrl + '&primary_release_year=2018&page=' + this.state.activePage).then(res => {
 				const films = res.data.results;
 				const totalPages = res.data.total_pages;
@@ -60,7 +59,9 @@ class Home extends Component {
 
 			// genres
 			axios.get(genreApiUrl).then(res => {
-				this.setState({ genres: res.data.genres });
+				let genresArray = res.data.genres;
+                genresArray.unshift({ id: 0, name: 'All' });
+				this.setState({ genres: genresArray });
 			}),
 
 			// seenlist
@@ -89,7 +90,7 @@ class Home extends Component {
 				that.setState({ watchList: arrayWatchList });
 			})
 		]).then(() => {
-			let films = this.setFilmGenre(this.state.genres, this.state.films);
+			let films = setFilmGenre(this.state.genres, this.state.films);
 			this.setState({ films });
 		}).then(() => {
 			this.setState({ isLoading: false });
@@ -104,17 +105,19 @@ class Home extends Component {
 		this.setState({ activePage }, () => {
 			let requestUrl = apiUrl + '&page=' + this.state.activePage;
 
-			if (this.state.chosenGenre) {
-				requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre;
+			// create requestUrl with correct parameters
+			if (this.state.chosenGenre && this.state.chosenGenre.key !== 0) {
+				requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre.key;
 			}
 
-			if (this.state.chosenYear) {
-				requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear;
+			if (this.state.chosenYear && this.state.chosenYear.key !== 0) {
+				requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear.key;
 			}
 
+			// request film results for requested page
 			axios.get(requestUrl).then(res => {
 				let films = res.data.results;
-				films = this.setFilmGenre(this.state.genres, films);
+				films = setFilmGenre(this.state.genres, films);
 				this.setState({ films });
 			}).then(() => {
 				this.setState({ isLoading: false });
@@ -122,39 +125,13 @@ class Home extends Component {
 		});
 	}
 
+	// handle any update of the filterMenu
 	onUpdate(result, totalPages, chosenGenre, chosenYear) {
-		result = this.setFilmGenre(this.state.genres, result);
-		this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear });
-	}
-
-	// set genres to film
-	setFilmGenre = (genres, films) => {
-
-		let genreArray = [];
-		// let films = this.state.films;
-
-		// set genre array, where ID is key and value is name
-		genres.forEach((genre, key) => {
-
-			genreArray[genre.id] = genre.name;
-		});
-
-		// create and set parameter genre to this.state.films
-		films.forEach((film, key) => {
-
-			film.genre = [];
-
-			film.genre_ids.forEach((id, key) => {
-
-				film.genre.push(genreArray[id]);
-			});
-		});
-
-		return films;
+		result = setFilmGenre(this.state.genres, result);
+		this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear});
 	}
 
 	render() {
-
 		if (this.state.films.length == 0 || this.state.isLoading || this.state.genres == 0) {
 			return (
 				<div>
@@ -163,7 +140,6 @@ class Home extends Component {
 				</div>
 			);
 		} else {
-
 			return (
 
 				<div>
@@ -173,7 +149,8 @@ class Home extends Component {
 						<FilterMenu
 							onUpdate={this.onUpdate.bind(this)}
 							chosenGenre={this.state.chosenGenre}
-							chosenYear={this.state.chosenYear} />
+							chosenYear={this.state.chosenYear}
+							genres={this.state.genres} />
 
 						{this.state.films.map((film) => (
 							<FilmModal
@@ -192,7 +169,7 @@ class Home extends Component {
 					</div>
 
 					<div className="pagination-component">
-						<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange} />
+						<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange.bind(this)} />
 
 					</div>
 				</div>

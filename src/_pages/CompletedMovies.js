@@ -9,10 +9,11 @@ import TopNavigation from '../_components/TopNavigation';
 import FilmModal from '../_components/FilmModal';
 import LoadingIndicator from '../_components/LoadingIndicator';
 
-import { movieDbDomain, movieApiKeyPart } from '../_helpers/variable';
-import { ourApiUrl } from "../_helpers/variable";
+import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
+import {setFilmGenre} from "../_helpers/method";
 
 let apiUrl = movieDbDomain + "movie/";
+let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
 class CompletedMovies extends Component {
 
@@ -26,6 +27,7 @@ class CompletedMovies extends Component {
             films: [],
             seenList: [],
             watchList: [],
+            genres: [],
             userId: userId,
             isLoading: true
         };
@@ -61,6 +63,10 @@ class CompletedMovies extends Component {
                 this.setState({ seenList: arraySeenList });
             });
 
+        await axios.get(genreApiUrl).then(res => {
+            this.setState({ genres: res.data.genres });
+        });
+
         let arraySeenList = new Array();
         this.state.seenList.forEach(function (film) {
             const requestUrl = apiUrl + film + movieApiKeyPart;
@@ -73,12 +79,14 @@ class CompletedMovies extends Component {
                 arraySeenList.push(film);
             })
         });
+        arraySeenList = setFilmGenre(this.state.genres, arraySeenList);
         this.setState({ films: arraySeenList, isLoading: false });
 
     }
 
     render() {
-
+        console.log(this.state.films);
+        
         if (this.state.isLoading == true) {
             return <div><TopNavigation /><LoadingIndicator /></div>
         } if (this.state.seenList.length == 0) {
@@ -108,6 +116,7 @@ class CompletedMovies extends Component {
                                     key={film.id}
                                     inSeenList={this.state.seenList.includes(film.id) ? 1 : 0}
                                     inWatchList={this.state.watchList.includes(film.id) ? 1 : 0}
+                                    genres={film.genre}
                                 />
                             ))}
                         </div>

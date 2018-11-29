@@ -11,6 +11,7 @@ import MyWatchlist from "./_pages/MyWatchlist";
 import CompletedMovies from "./_pages/CompletedMovies";
 import Profile from "./_pages/Profile";
 import FilmDetail from "./_pages/FilmDetail";
+import MyLists from './_pages/MyLists';
 
 // redirecting to inside application or login
 function Auth({component: Component, ...rest}) {
@@ -33,10 +34,11 @@ class App extends Component {
 
 				{/* FOR LOGGED USERS */}
 				<Auth path={'/home'} component={Home} onEnter={Auth}/>
-				<Auth path={'/mywatchlist'} component={MyWatchlist}/>
 				<Auth path={'/film/:id?'} component={FilmDetail} />
+				<Auth path={'/mylists'} component={MyLists}/>
 				<Auth path={'/completedmovies'} component={CompletedMovies}/>
 				<Auth path={'/profile'} component={Profile}/>
+				<Auth path={'/mylists'} component={MyLists}/>
 			</div>
 		);
 	}
