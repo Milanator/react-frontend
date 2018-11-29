@@ -10,6 +10,7 @@ let getFilmsByFilterCriteria = movieDbDomain + "discover/movie" + movieApiKeyPar
 export default class FilterMenu extends Component {
 
     constructor(props) {
+
         super(props);
 
         // create array with years (1900 - 2018) for filter dropdown

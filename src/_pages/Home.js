@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Pagination} from 'semantic-ui-react';
 
 import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
+import { setFilmGenre } from '../_helpers/method';
 import '../css/main.css';
 
 import FilmModal from "../_components/FilmModal";
@@ -17,189 +18,165 @@ let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
 class Home extends Component {
 
-    constructor(props) {
+	constructor(props) {
 
-        super(props);
+		super(props);
 
-        let user = JSON.parse(localStorage.getItem('user'));
-        let userId = atob(user.id);
-        let userName = atob(user.name);
+		let user = JSON.parse(localStorage.getItem('user'));
+		let userId = atob(user.id);
+		let userName = atob(user.name);
 
-        this.state = {
-            name: userName,
-            films: [],
-            activePage: 1,
-            totalPages: null,
-            chosenYear: '',
-            chosenGenre: '',
-            userId: userId,
-            seenList: [],
-            watchList: [],
-            isLoading: true,
-            genres: []
-        };
+		this.state = {
+			name: userName,
+			films: [],
+			activePage: 1,
+			totalPages: null,
+			chosenYear: '',
+			chosenGenre: '',
+			userId: userId,
+			seenList: [],
+			watchList: [],
+			isLoading: true,
+			genres: []
+		};
+	}
 
-        this.handlePaginationChange = this.handlePaginationChange.bind(this);
-        this.setFilmGenre = this.setFilmGenre.bind(this);
-    }
+	// THIS IS FIRST ACTION ON PAGE
+	componentDidMount() {
 
-    // THIS IS FIRST ACTION ON PAGE
-    componentDidMount() {
+		let that = this;
+		let seenList, watchList;
+		let { userId } = this.state;
 
-        let that = this;
-        let seenList, watchList;
-        let { userId } = this.state;
+		axios.all([
 
-        axios.all([
+			// films
+			axios.get(apiUrl + '&primary_release_year=2018&page=' + this.state.activePage).then(res => {
+				const films = res.data.results;
+				const totalPages = res.data.total_pages;
+				that.setState({ films, totalPages });
+			}),
 
-            axios.get(apiUrl + '&primary_release_year=2018&page=' + this.state.activePage).then(res => {
-                const films = res.data.results;
-                const totalPages = res.data.total_pages;
-                that.setState({ films, totalPages });
-            }),
+			// genres
+			axios.get(genreApiUrl).then(res => {
+				let genresArray = res.data.genres;
+				genresArray.unshift({ id: 0, name: 'All' });
+				this.setState({ genres: genresArray });
+			}),
 
-            // genres
-            axios.get(genreApiUrl).then(res => {
-                this.setState({ genres: res.data.genres });
-            }),
+			// seenlist
+			axios.get(ourApiUrl + 'seenlist/user/' + userId).then(res => {
 
-            // seenlist
-            axios.get(ourApiUrl + 'seenlist/user/' + userId).then(res => {
+				let arraySeenList = [];
+				seenList = res.data;
 
-                let arraySeenList = [];
-                seenList = res.data;
+				seenList.forEach((item, key) => {
 
-                seenList.forEach((item, key) => {
+					arraySeenList.push(item.film_id);
+				});
+				that.setState({ seenList: arraySeenList });
+			}),
 
-                    arraySeenList.push(item.film_id);
-                });
-                that.setState({ seenList: arraySeenList });
-            }),
+			// watchlist
+			axios.get(ourApiUrl + 'watchlist/user/' + userId).then(res => {
 
-            // watchlist
-            axios.get(ourApiUrl + 'watchlist/user/' + userId).then(res => {
+				let arrayWatchList = [];
+				watchList = res.data;
 
-                let arrayWatchList = [];
-                watchList = res.data;
+				watchList.forEach((item, key) => {
 
-                watchList.forEach((item, key) => {
+					arrayWatchList.push(item.film_id);
+				});
+				that.setState({ watchList: arrayWatchList });
+			})
+		]).then(() => {
+			let films = setFilmGenre(this.state.genres, this.state.films);
+			this.setState({ films });
+		}).then(() => {
+			this.setState({ isLoading: false });
+		}).catch((err) => {
+			console.log(err);
+		});
+	}
 
-                    arrayWatchList.push(item.film_id);
-                });
-                that.setState({ watchList: arrayWatchList });
-            })
-        ]).then(() => {
-            let films = this.setFilmGenre(this.state.genres, this.state.films);
-            this.setState({ films });
-        }).then(() => {
-            this.setState({ isLoading: false });
-        }).catch((err) => {
-            console.log(err);
-        });
-    }
+	handlePaginationChange = (e, { activePage }) => {
+		this.setState({ isLoading: true });
 
-    handlePaginationChange = (e, { activePage }) => {
-        this.setState({ isLoading: true });
+		this.setState({ activePage }, () => {
+			let requestUrl = apiUrl + '&page=' + this.state.activePage;
 
-        this.setState({ activePage }, () => {
-            let requestUrl = apiUrl + '&page=' + this.state.activePage;
+			// create requestUrl with correct parameters
+			if (this.state.chosenGenre && this.state.chosenGenre.key !== 0) {
+				requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre.key;
+			}
 
-            if (this.state.chosenGenre) {
-                requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre;
-            }
+			if (this.state.chosenYear && this.state.chosenYear.key !== 0) {
+				requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear.key;
+			}
 
-            if (this.state.chosenYear) {
-                requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear;
-            }
+			// request film results for requested page
+			axios.get(requestUrl).then(res => {
+				let films = res.data.results;
+				films = setFilmGenre(this.state.genres, films);
+				this.setState({ films });
+			}).then(() => {
+				this.setState({ isLoading: false });
+			});
+		});
+	}
 
-            axios.get(requestUrl).then(res => {
-                let films = res.data.results;
-                films = this.setFilmGenre(this.state.genres, films);
-                this.setState({ films });
-            }).then(() => {
-                this.setState({ isLoading: false });
-            });
-        });
-    }
+	// handle any update of the filterMenu
+	onUpdate(result, totalPages, chosenGenre, chosenYear) {
+		result = setFilmGenre(this.state.genres, result);
+		this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear});
+	}
 
-    onUpdate(result, totalPages, chosenGenre, chosenYear) {
-        result = this.setFilmGenre(this.state.genres, result);
-        this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear });
-    }
+	render() {
+		if (this.state.films.length == 0 || this.state.isLoading || this.state.genres == 0) {
+			return (
+				<div>
+					<TopNavigation />
+					<LoadingIndicator />
+				</div>
+			);
+		} else {
+			return (
 
-    // set genres to film
-    setFilmGenre = (genres, films) => {
+				<div>
+					<TopNavigation />
+					<div className="container">
+						<PageTitle title="Find the Latest Movies on Movie Bot" />
+						<FilterMenu
+							onUpdate={this.onUpdate.bind(this)}
+							chosenGenre={this.state.chosenGenre}
+							chosenYear={this.state.chosenYear}
+							genres={this.state.genres} />
 
-        let genreArray = [];
-        // let films = this.state.films;
+						{this.state.films.map((film) => (
+							<FilmModal
+								id={film.id}
+								poster_path={film.poster_path}
+								rating={film.vote_average * 10}
+								title={film.title}
+								overview={film.overview}
+								original_language={film.original_language}
+								key={film.id}
+								inSeenList={this.state.seenList.includes(film.id) ? 1 : 0}
+								inWatchList={this.state.watchList.includes(film.id) ? 1 : 0}
+								genres={film.genre}
+							/>
+						))}
+					</div>
 
-        // set genre array, where ID is key and value is name
-        genres.forEach((genre, key) => {
+					<div className="pagination-component">
+						<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange.bind(this)} />
 
-            genreArray[genre.id] = genre.name;
-        });
+					</div>
+				</div>
 
-        // create and set parameter genre to this.state.films
-        films.forEach((film, key) => {
-
-            film.genre = [];
-
-            film.genre_ids.forEach((id, key) => {
-
-                film.genre.push(genreArray[id]);
-            });
-        });
-
-        return films;
-    }
-
-    render() {
-
-        if (this.state.films.length == 0 || this.state.isLoading || this.state.genres == 0) {
-            return (
-                <div>
-                    <TopNavigation />
-                    <LoadingIndicator />
-                </div>
-            );
-        } else {
-
-            return (
-
-                <div>
-                    <TopNavigation />
-                    <div className="container">
-                        <PageTitle title="Find the Latest Movies on Movie Bot" />
-                        <FilterMenu
-                            onUpdate={this.onUpdate.bind(this)}
-                            chosenGenre={this.state.chosenGenre}
-                            chosenYear={this.state.chosenYear} />
-
-                        {this.state.films.map((film) => (
-                            <FilmModal
-                                id={film.id}
-                                poster_path={film.poster_path}
-                                rating={film.vote_average * 10}
-                                title={film.title}
-                                overview={film.overview}
-                                original_language={film.original_language}
-                                key={film.id}
-                                inSeenList={this.state.seenList.includes(film.id) ? 1 : 0}
-                                inWatchList={this.state.watchList.includes(film.id) ? 1 : 0}
-                                genres={film.genre}
-                            />
-                        ))}
-                    </div>
-
-                    <div className="pagination-component">
-                        <Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange} />
-
-                    </div>
-                </div>
-
-            );
-        }
-    }
+			);
+		}
+	}
 
 }
 
