@@ -39,8 +39,6 @@ class Home extends Component {
 			isLoading: true,
 			genres: []
 		};
-
-		this.handlePaginationChange = this.handlePaginationChange.bind(this);
 	}
 
 	// THIS IS FIRST ACTION ON PAGE
@@ -52,6 +50,7 @@ class Home extends Component {
 
 		axios.all([
 
+			// films
 			axios.get(apiUrl + '&primary_release_year=2018&page=' + this.state.activePage).then(res => {
 				const films = res.data.results;
 				const totalPages = res.data.total_pages;
@@ -106,6 +105,7 @@ class Home extends Component {
 		this.setState({ activePage }, () => {
 			let requestUrl = apiUrl + '&page=' + this.state.activePage;
 
+			// create requestUrl with correct parameters
 			if (this.state.chosenGenre && this.state.chosenGenre.key !== 0) {
 				requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre.key;
 			}
@@ -114,6 +114,7 @@ class Home extends Component {
 				requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear.key;
 			}
 
+			// request film results for requested page
 			axios.get(requestUrl).then(res => {
 				let films = res.data.results;
 				films = setFilmGenre(this.state.genres, films);
@@ -124,9 +125,9 @@ class Home extends Component {
 		});
 	}
 
+	// handle any update of the filterMenu
 	onUpdate(result, totalPages, chosenGenre, chosenYear) {
 		result = setFilmGenre(this.state.genres, result);
-		console.log(chosenYear);
 		this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear});
 	}
 
@@ -168,7 +169,7 @@ class Home extends Component {
 					</div>
 
 					<div className="pagination-component">
-						<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange} />
+						<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange.bind(this)} />
 
 					</div>
 				</div>
