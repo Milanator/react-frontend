@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, Image, Grid, GridColumn, Search } from 'semantic-ui-react';
+import { Dropdown, Image, Grid, GridColumn, Search, DropdownDivider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import { baseUrl } from "../_helpers/variable";
@@ -36,22 +36,20 @@ class TopNavigation extends Component {
 			<div>
 				<div className="top-navigation">
 					<Grid columns="equal">
-						<GridColumn width={6}>
+						<GridColumn width={7}>
 							<Image src={logo} as={Link} to="/home" alt="logo" />
 						</GridColumn>
-						<GridColumn className="search-field" verticalAlign="middle" width={6}>
+						<GridColumn className="search-field" verticalAlign="middle" width={7}>
 							<SearchInput/>
-						</GridColumn>
-						<GridColumn verticalAlign="middle" textAlign="right" width={1}>
-							<Link to="/home">Home</Link>
 						</GridColumn>
 						<GridColumn verticalAlign="middle" width={2}>
 							<Dropdown trigger={<Image avatar src={this.state.user.profilePicture} />} className="top-navigation-dropdown">
 								<Dropdown.Menu direction="left">
+									<Dropdown.Item icon="film" as={Link} to="/home" text="Browse All" />
+									<Dropdown.Item icon="bookmark" as={Link} to="/mylists" text="My Lists" />
 									<Dropdown.Item icon="user" as={Link} to="/profile" text="My Profile" />
-									<Dropdown.Item icon="bookmark" as={Link} to="/mywatchlist" text="My Watchlist" />
-									<Dropdown.Item icon="check square" as={Link} to="/completedmovies" text="Completed Movies" />
-									<Dropdown.Item text="Logout" onClick={this.logOut} />
+									<DropdownDivider />
+									<Dropdown.Item icon="log out" text="Logout" onClick={this.logOut} />
 								</Dropdown.Menu>
 							</Dropdown>
 						</GridColumn>
