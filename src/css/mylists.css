@@ -1,0 +1,18 @@
+:root {
+    --prussian-blue: #003459;
+    --vivid-cerulean: #00A8E8;
+}
+
+.mylists-button-panel {
+    margin-top: 30px;
+    padding-right: 10px;
+    padding-left: 2px;
+}
+
+.slick-arrow.slick-prev::before, .slick-arrow.slick-next::before {
+    color: var(--prussian-blue);
+}
+
+.slider-container {
+    margin-bottom: 35px;
+}
