@@ -6,7 +6,9 @@ import '../css/filmcard.css';
 
 import {textLimit} from "../_helpers/helper";
 import {ourApiUrl} from "../_helpers/variable";
+
 import {Modal} from "semantic-ui-react/dist/commonjs/modules/Modal/Modal";
+
 
 class FilmCard extends Component {
 
@@ -62,7 +64,7 @@ class FilmCard extends Component {
 				that.setState({seenList: 1 - that.state.seenList});
 			}
 
-			// send data to FilmModal --> update seen and watch button
+			// send data to film modal --> update seen and watch button
 			that.props.sendWatchSeen(that.state.watchList,that.state.seenList)
 
 		}).catch(err => {
@@ -74,7 +76,9 @@ class FilmCard extends Component {
 
 		const {id, poster_path, rating, title, overview, original_language,genres, ...rest} = this.props;
 		const {userId,watchList,seenList} = this.state;
+
 		const ratingWidth = 75;
+
 
 		return (
 			<div className="card" {...rest} key={id}>
@@ -92,22 +96,19 @@ class FilmCard extends Component {
 							</div>
 						</Grid.Column>
 						<Grid.Column>
-							{watchList == 1 ? (
+
+							{watchList == 1 && (
 								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id} data-toggle="tooltip" data-placement="bottom" title="Add to Watchlist">
 									<Icon link color="blue"
 										  name={"bookmark" + (watchList ? "" : " outline")}
 										  className={'watchlist'} />
 								</a>
-							) : (
-								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'} data-toggle="tooltip" data-placement="bottom" title="Add to seenlist">
-									<Icon link color="blue"
-										  name={"bookmark" + (watchList ? "" : " outline")}
-										  className={'watchlist'}
-									/>
-								</a>
-							)}
+							)
+							}
+
 						</Grid.Column>
 						<Grid.Column>
+
 							{seenList == 1 ? (
 								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id} data-toggle="tooltip" data-placement="bottom" title="Add towatchlist">
 									<Icon link color="blue"
@@ -123,6 +124,7 @@ class FilmCard extends Component {
 									/>
 								</a>
 							)}
+
 						</Grid.Column>
 					</Grid>
 				</div>
@@ -135,11 +137,13 @@ class FilmCard extends Component {
 				<p>
 					language: {original_language}
 				</p>
+
 				<p>
 					{ genres && genres.map((genre) => (
 						<span className="badge badge-primary">{genre}</span>
 					))}
 				</p>
+
 			</div>
 		);
 	}

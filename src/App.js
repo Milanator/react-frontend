@@ -38,7 +38,7 @@ class App extends Component {
 				<Auth path={'/mylists'} component={MyLists}/>
 				<Auth path={'/completedmovies'} component={CompletedMovies}/>
 				<Auth path={'/profile'} component={Profile}/>
-				<Auth path={'/mylists'} component={MyLists}/>
+				<Auth path={'/mywatchlist'} component={MyWatchlist}/>
 			</div>
 		);
 	}

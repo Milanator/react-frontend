@@ -18,8 +18,8 @@ export default class FilterMenu extends Component {
             yearArray.push(year);
         }
 
-        // create (correctly formatted) array with genres for filter dropdown
-        for (let i = 0; i < this.props.genres.length; i++) {
+        // create (correctly format..ted) array with genres for filter dropdown
+       for (let i = 0; i < this.props.genres.length; i++) {
             var genre = { key: this.props.genres[i].id, value: this.props.genres[i].name, text: this.props.genres[i].name }
             genresArray.push(genre);
         }

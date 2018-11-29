@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Header, Image, Modal, Icon, Grid, Container, Label} from 'semantic-ui-react'
 import FilmCard from './FilmCard';
-import {ourApiUrl} from "../_helpers/variable";
+import {apikey, ourApiUrl} from "../_helpers/variable";
 import axios from "axios";
 
 class FilmModal extends Component {
@@ -33,6 +33,7 @@ class FilmModal extends Component {
         let anchorTag = icon.parentNode;
         let url = anchorTag.getAttribute('href');
         let inverseUrl = anchorTag.getAttribute('data-inverse-url');
+
 
         axios({
             method: 'get',
@@ -68,7 +69,6 @@ class FilmModal extends Component {
 
         const {id, poster_path, rating, title, overview, original_language,genres, ...rest} = this.props;
         const {userId,seenList,watchList} = this.state;
-
         return (
 
             <div>
@@ -155,7 +155,7 @@ class FilmModal extends Component {
                                 <p>Language: {original_language}</p>
                                 <p>
                                     {overview}
-                                </p>
+                                    </p>
                             </Container>
                         </Modal.Description>
                     </Modal.Content>
