@@ -132,10 +132,7 @@ class FilmCard extends Component {
 					{title}
 				</h3>
 				<p>
-					{textLimit(overview, 230)}
-				</p>
-				<p>
-					language: {original_language}
+					{textLimit(overview, 100)}
 				</p>
 
 				<p>

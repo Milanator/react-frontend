@@ -84,9 +84,7 @@ class CompletedMovies extends Component {
 
     }
 
-    render() {
-        console.log(this.state.films);
-        
+    render() {        
         if (this.state.isLoading == true) {
             return <div><TopNavigation /><LoadingIndicator /></div>
         } if (this.state.seenList.length == 0) {
