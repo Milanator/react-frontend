@@ -106,12 +106,12 @@ class Home extends Component {
 		this.setState({ activePage }, () => {
 			let requestUrl = apiUrl + '&page=' + this.state.activePage;
 
-			if (this.state.chosenGenre) {
-				requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre;
+			if (this.state.chosenGenre && this.state.chosenGenre.key !== 0) {
+				requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre.key;
 			}
 
-			if (this.state.chosenYear) {
-				requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear;
+			if (this.state.chosenYear && this.state.chosenYear.key !== 0) {
+				requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear.key;
 			}
 
 			axios.get(requestUrl).then(res => {
@@ -126,12 +126,11 @@ class Home extends Component {
 
 	onUpdate(result, totalPages, chosenGenre, chosenYear) {
 		result = setFilmGenre(this.state.genres, result);
-		this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear });
+		console.log(chosenYear);
+		this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear});
 	}
 
 	render() {
-		console.log(this.state.films);
-
 		if (this.state.films.length == 0 || this.state.isLoading || this.state.genres == 0) {
 			return (
 				<div>
@@ -140,7 +139,6 @@ class Home extends Component {
 				</div>
 			);
 		} else {
-
 			return (
 
 				<div>

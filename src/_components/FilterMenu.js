@@ -4,7 +4,6 @@ import axios from 'axios'
 import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
 
 let yearArray = [{ key: 0, value: 'All', text: 'All' }];
-let getGenresApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart + "&language=en-US";
 let getFilmsByFilterCriteria = movieDbDomain + "discover/movie" + movieApiKeyPart + "&language=en-US&sort_by=popularity.desc&page=1";
 
 export default class FilterMenu extends Component {
@@ -22,20 +21,23 @@ export default class FilterMenu extends Component {
             years: yearArray,
             films: [],
             chosenGenre: '',
-            chosenYear: '',
+            chosenYear: yearArray[0],
         }
 
     }
     
     handleFilterClick(e) {
         let requestUrl = getFilmsByFilterCriteria;
-        if(this.state.chosenGenre) {
-            requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre;
+
+        if(this.state.chosenGenre && this.state.chosenGenre.key !== 0) {
+            requestUrl = requestUrl + '&with_genres=' + this.state.chosenGenre.key;
         }
 
-        if(this.state.chosenYear) {
-            requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear;
+        if(this.state.chosenYear && this.state.chosenYear.key !== 0) {
+            requestUrl = requestUrl + '&primary_release_year=' + this.state.chosenYear.key;
         }
+
+        console.log(requestUrl);
 
         axios.get(requestUrl)
             .then(res => {
@@ -47,19 +49,27 @@ export default class FilterMenu extends Component {
 
     handleGenreChange(e, data) {
         const { value } = data;
-        let chosenGenre = data.options.find(o => o.value === value).key;
+        let chosenGenre = data.options.find(o => o.value === value);
         this.setState({ chosenGenre });
     }
 
     handleYearChange(e, data) {
         const { value } = data;
-        let chosenYear = data.options.find(o => o.value === value).key;
+        let chosenYear = data.options.find(o => o.value === value);
         this.setState({ chosenYear });
     }
 
     render() {
         const { value, years } = this.state;
         const { genres } = this.props;
+
+        let chosenYear = this.state.chosenYear;
+
+        if(this.props.chosenYear) {
+            chosenYear = this.props.chosenYear;
+        }
+
+        console.log(years.indexOf(this.props.chosenYear));
         return (
             <Menu borderless text compact size="small">
                 <Menu.Menu>
@@ -68,6 +78,7 @@ export default class FilterMenu extends Component {
                         search
                         selection
                         value={value}
+                        defaultValue={genres[0].name}
                         options={
                             genres.map(genre => ({
                             key: genre.id,
@@ -82,6 +93,7 @@ export default class FilterMenu extends Component {
                         search
                         selection
                         value={value}
+                        defaultValue={years[years.indexOf(chosenYear)].value}
                         options={years}
                         onChange={this.handleYearChange.bind(this)} />
                 </Menu.Menu>
