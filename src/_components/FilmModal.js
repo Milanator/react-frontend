@@ -3,6 +3,8 @@ import {Header, Image, Modal, Icon, Grid, Container, Label} from 'semantic-ui-re
 import FilmCard from './FilmCard';
 import {apikey, ourApiUrl} from "../_helpers/variable";
 import axios from "axios";
+import {Link} from "react-router-dom";
+import {Dropdown} from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
 
 class FilmModal extends Component {
 
@@ -121,7 +123,6 @@ class FilmModal extends Component {
                                                 />
                                             </a>
                                         )}
-
                                     </Grid.Column>
                                     <Grid.Column>
 
@@ -156,6 +157,7 @@ class FilmModal extends Component {
                                 <p>
                                     {overview}
                                     </p>
+                                <a class ="btn-primary" href={"film/"+ id}>see all details</a>
                             </Container>
                         </Modal.Description>
                     </Modal.Content>
