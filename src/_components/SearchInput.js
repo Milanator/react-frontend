@@ -11,6 +11,13 @@ let apiUrl = "https://api.themoviedb.org/3/search/movie?api_key=" + apikey + api
 
 export default class SearchInput extends Component {
 
+	constructor(props) {
+
+		super(props);
+
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
 	componentWillMount() {
 
 		this.resetComponent()
@@ -42,6 +49,7 @@ export default class SearchInput extends Component {
 			}).then((resp) => {
 
 				let data = resp.data.results;
+				let finalArray = [];
 				let moreFilms = false;
 				data = _.filter(data, isMatch);
 
@@ -50,24 +58,27 @@ export default class SearchInput extends Component {
 				}
 
 				// set correct format
-				data.forEach((value,key) => {
+				data.slice(0, 6).forEach((value,key) => {
 
 					// PRICE IS ID, BECAUSE SEMANTIC UI DOESNT WORK GOOD WITH OTHER PARAMETERS IN OBJECT - ID DIDNT WORK GOOD
-					data[key] = {
+					finalArray[key] = {
 						childKey: value.id,
 						price: value.id,
 						title: value.title,
 						description: textLimit(value.overview,30),
 						image: "https://image.tmdb.org/t/p/w500" + value.poster_path,
-						moreFilms: moreFilms
+						moreFilms: moreFilms,
+						orderNumber: key,
+						searchWord: this.state.value
 					};
 				});
 
+				console.log( finalArray );
+
 				this.setState({
 					isLoading: false,
-					results: data,
+					results: finalArray,
 				});
-
 
 			}).catch(err => {
 				console.log(err);
@@ -75,22 +86,40 @@ export default class SearchInput extends Component {
 		}, 800)
 	};
 
-	resultsWindow = ({price, title, image, moreFilms,description}) => {
+	handleSubmit = (event) => {
 
-		return (
-			<a href={baseUrl+'film/'+price}>
-				{ image &&
-				<div key='image' className='image' style={{'justifyContent':'center','display':'flex'}}>
-					<img srcSet={image || 'undefined'} alt="" style={{'margin':'0'}}/>
-				</div>
-				}
+		if(event.keyCode === 13 && event.shiftKey === false) {
+			window.location.href = baseUrl + 'film/search/' + this.state.value;
+		}
+	}
+
+	resultsWindow = ({price, title, image, moreFilms,description,orderNumber,searchWord}) => {
+
+		if( orderNumber < 5 ){
+
+			return (
+				<a href={baseUrl+'film/'+price}>
+					{ image &&
+					<div key='image' className='image' style={{'justifyContent':'center','display':'flex'}}>
+						<img srcSet={image || 'undefined'} alt="" style={{'margin':'0'}}/>
+					</div>
+					}
+					<div key={price}>
+						{title && <div className='title'>{title}</div>}
+						{description && <div className='description'>{description}</div>}
+					</div>
+				</a>
+			)
+		} else if( moreFilms ){
+
+			return (
 				<div key={price}>
-
-					{title && <div className='title'>{title}</div>}
-					{description && <div className='description'>{description}</div>}
+					<a href={baseUrl+'film/search/'+searchWord}>
+						{'More films'}
+					</a>
 				</div>
-			</a>
-		)
+			)
+		}
 	}
 
 	render() {
@@ -100,7 +129,6 @@ export default class SearchInput extends Component {
 		return (
 			<Grid>
 				<Grid.Column width={6}>
-
 					<Search
 						loading={isLoading}
 						onResultSelect={this.handleResultSelect}
@@ -108,10 +136,10 @@ export default class SearchInput extends Component {
 						results={results}
 						value={value}
 						placeholder={'Search...'}
+						onKeyDown={this.handleSubmit}
 						resultRenderer={this.resultsWindow}
 						{...this.props}
 					/>
-
 				</Grid.Column>
 			</Grid>
 		)

@@ -36,3 +36,13 @@ body {
 .ui.search>.results .result .image {
 	background: red;
 }
+
+.ui.dropdown.addToMyList{
+	display: flex;
+	justify-content: center; /* align horizontal */
+	align-items: center; /* align vertical */
+}
+
+i.icon.add{
+	color: #2185d0!important;
+}

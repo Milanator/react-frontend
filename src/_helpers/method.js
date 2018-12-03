@@ -1,4 +1,5 @@
 import axios from "axios";
+import MyLists from "../_pages/MyLists";
 
 export const addSeenWatchList = (event) => {
 
@@ -62,3 +63,61 @@ export const setFilmGenre = (genres, films) => {
 
 	return films;
 };
+
+// set new attribute to film, all lists idies, where is film added
+export const setMyListToMovie = (films,myLists) =>{
+
+	films.forEach((film,key) => {
+
+		film.inMyLists = [];
+
+		myLists.forEach((list,key) => {
+
+			if( film.id === list.movie_id ){
+
+				film.inMyLists.push(list.myList_id);
+			}
+		});
+	})
+
+	return films;
+};
+
+// set new attribute to film, is or is not in seen list
+export const isMovieInSeenList = (films,seenList) => {
+
+	films.forEach((film,key) => {
+
+		film.inSeenList = false;
+
+		seenList.forEach((seen,key) => {
+
+			if( seen.film_id === film.id ){
+
+				film.inSeenList = true;
+			}
+		});
+	})
+
+
+	return films;
+}
+
+// set new attribute to film, is or is not in watch list
+export const isMovieInWatchList = (films,watchList) => {
+
+	films.forEach((film,key) => {
+
+		film.inWatchList = false;
+
+		watchList.forEach((watch,key) => {
+
+			if( watch.film_id === film.id ){
+
+				film.inWatchList = true;
+			}
+		});
+	})
+
+	return films;
+}

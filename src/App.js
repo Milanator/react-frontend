@@ -12,6 +12,7 @@ import CompletedMovies from "./_pages/CompletedMovies";
 import Profile from "./_pages/Profile";
 import FilmDetail from "./_pages/FilmDetail";
 import MyLists from './_pages/MyLists';
+import SearchFilms from "./_pages/SearchFilms";
 
 // redirecting to inside application or login
 function Auth({component: Component, ...rest}) {
@@ -33,12 +34,13 @@ class App extends Component {
 				<Route exact path={'/register'} component={Register}/>
 
 				{/* FOR LOGGED USERS */}
-				<Auth path={'/home'} component={Home} onEnter={Auth}/>
-				<Auth path={'/film/:id?'} component={FilmDetail} />
-				<Auth path={'/mylists'} component={MyLists}/>
-				<Auth path={'/completedmovies'} component={CompletedMovies}/>
-				<Auth path={'/profile'} component={Profile}/>
-				<Auth path={'/mywatchlist'} component={MyWatchlist}/>
+				<Auth path={'/home'} exact component={Home} onEnter={Auth}/>
+				<Auth path={'/film/search/:value'} exact component={SearchFilms}/>
+				<Auth path={'/film/:id?'} exact component={FilmDetail} />
+				<Auth path={'/mylists'} exact component={MyLists}/>
+				<Auth path={'/completedmovies'} exact component={CompletedMovies}/>
+				<Auth path={'/profile'} exact component={Profile}/>
+				<Auth path={'/mywatchlist'} exact component={MyWatchlist}/>
 			</div>
 		);
 	}

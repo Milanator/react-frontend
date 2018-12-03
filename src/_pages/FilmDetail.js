@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from "axios";
-import {movieApiKeyPart, movieDbDomain,apikey} from "../_helpers/variable";
+import {movieApiKeyPart, movieDbDomain} from "../_helpers/variable";
 import LoadingIndicator from "../_components/LoadingIndicator";
 import TopNavigation from "../_components/TopNavigation";
 
 let apiUrl = movieDbDomain + 'movie';
-var that = this;
+
 class FilmDetail extends React.Component {
 
     constructor(props) {
@@ -36,7 +36,7 @@ class FilmDetail extends React.Component {
     }
 
     render() {
-        if (this.state.filmId == 0 || this.state.isLoading ||this.state.filmData ==0) {
+        if (this.state.filmId === 0 || this.state.isLoading ||this.state.filmData === 0) {
             return <LoadingIndicator/>;
         } else {
         	if (this.state.filmData.videos.results[0])

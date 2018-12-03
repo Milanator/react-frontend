@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, Image, Grid, GridColumn, Search, DropdownDivider } from 'semantic-ui-react';
+import { Dropdown, Image, Grid, GridColumn, DropdownDivider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import { baseUrl } from "../_helpers/variable";
