@@ -1,16 +1,9 @@
 :root {
-    --white: #ffffff;
-    --rich-black: #00171F;
-    --prussian-blue: #003459;
-    --cerulean: #007EA7;
-    --vivid-cerulean: #00A8E8;
     --text-heading-font-size: 30px;
-    --text-heading-font-weight: bold;
-    --text-menu: 20px;
   }
   
   .empty-list {
     text-align: center;
-    font-size: var(--text-heading);
+    font-size: var(--text-heading-font-size);
     margin-top: 200px;
 }

@@ -40,7 +40,7 @@ class CompletedMovies extends Component {
         await axios.get(ourApiUrl + 'watchlist/user/' + userId)
             .then(resp => {
 
-                let arrayWatchList = new Array();
+                let arrayWatchList = [];
                 watchList = resp.data;
 
                 watchList.forEach((item) => {
@@ -51,7 +51,7 @@ class CompletedMovies extends Component {
 
         await axios.get(ourApiUrl + 'seenlist/user/' + userId)
             .then(resp => {
-                let arraySeenList = new Array();
+                let arraySeenList = [];
                 seenList = resp.data;
 
                 seenList.forEach((item) => {
@@ -64,7 +64,7 @@ class CompletedMovies extends Component {
             this.setState({ genres: res.data.genres });
         });
 
-        let arrayWatchList = new Array();
+        let arrayWatchList = [];
         this.state.watchList.forEach(function (film) {
             const requestUrl = apiUrl + film + movieApiKeyPart;
             promises.push(axios.get(requestUrl));

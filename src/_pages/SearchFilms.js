@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Pagination} from 'semantic-ui-react';
 
-import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
+import {movieDbDomain, movieApiKeyPart, ourApiUrl, apikey} from '../_helpers/variable';
 import {isMovieInSeenList, isMovieInWatchList, setFilmGenre, setMyListToMovie} from '../_helpers/method';
 import '../css/main.css';
 
@@ -12,11 +12,11 @@ import PageTitle from '../_components/PageTitle';
 import FilterMenu from '../_components/FilterMenu';
 import LoadingIndicator from './../_components/LoadingIndicator';
 
-let apiUrlParams = "&language=en-US&sort_by=popularity.desc";
-let apiUrl = movieDbDomain + "discover/movie" + movieApiKeyPart + apiUrlParams;
+let apiUrlParams = "&page="+1+"&language=en-US&query=";
+let apiUrl = movieDbDomain + "search/movie?api_key=" + apikey + apiUrlParams;
 let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
-class Home extends Component {
+class SearchFilms extends Component {
 
 	constructor(props) {
 
@@ -36,7 +36,8 @@ class Home extends Component {
 			userId: userId,
 			userLists: [],
 			isLoading: true,
-			genres: []
+			genres: [],
+			searchWord: this.props.match.params.value
 		};
 
 	}
@@ -51,7 +52,7 @@ class Home extends Component {
 		axios.all([
 
 			// films
-			axios.get(apiUrl + '&primary_release_year=2018&page=' + this.state.activePage).then(res => {
+			axios.get(apiUrl + '&primary_release_year=2018&page=' + this.state.activePage + '&query=' + this.state.searchWord).then(res => {
 
 				const films = res.data.results;
 				const totalPages = res.data.total_pages;
@@ -63,7 +64,6 @@ class Home extends Component {
 
 				genresArray = res.data.genres;
 				genresArray.unshift({ id: 0, name: 'All' });
-
 			}).catch((error) => { console.log( error ); }),
 
 			// seenlist
@@ -88,7 +88,6 @@ class Home extends Component {
 			axios.get(ourApiUrl + "mylist/user/"+userId+"/all").then((res) => {
 
 				myListMovies = res.data;
-				// myListMovies = setMyListToMovie(this.state.films,myListMovies);
 			}).catch((error) => {
 
 				console.log( error );
@@ -96,7 +95,7 @@ class Home extends Component {
 
 		]).then(() => {
 
-			let films = setFilmGenre(genresArray, this.state.films);
+			let films = setFilmGenre(this.state.genres, this.state.films);
 			films = isMovieInSeenList(films,seenList);
 			films = isMovieInWatchList(films,watchList);
 			films = setMyListToMovie(films,myListMovies);
@@ -155,7 +154,7 @@ class Home extends Component {
 				<div>
 					<TopNavigation />
 					<div className="container">
-						<PageTitle title="Find the Latest Movies on Movie Bot" />
+						<PageTitle title={'Search for "' + this.state.searchWord + '"'} />
 						<FilterMenu
 							onUpdate={this.onUpdate.bind(this)}
 							chosenGenre={this.state.chosenGenre}
@@ -192,4 +191,4 @@ class Home extends Component {
 
 }
 
-export default Home;
+export default SearchFilms;

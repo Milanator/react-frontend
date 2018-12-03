@@ -16,9 +16,6 @@ class Profile extends Component {
 
 		let user = JSON.parse(localStorage.getItem('user'));
 
-		const exp = (user.expiration);
-		const ref = (user.refreshExpiration);
-
 		this.state = {
 			user: {
 				profilePicture: atob(user.profilePicture),
@@ -54,10 +51,12 @@ class Profile extends Component {
 		let {name,email,userId,newPassword,oldPassword,passwordConfirmation,profilePicture} = this.state.user;
 
 
+		// if user doesnt try to change password
 		if( !newPassword || !passwordConfirmation ){
 			newPassword = passwordConfirmation = oldPassword;
 		}
 
+		// different passwords
 		if (newPassword !== passwordConfirmation) {
 
 			that.setState({error: 'Different passwords!'});
@@ -77,10 +76,13 @@ class Profile extends Component {
 			}
 		}).then((resp) => {
 
-
+			// check, if password is not correct
 			if( resp.data.affectedRows == 0 ){
 
 				that.setState({error: 'Incorrect passwords!'});
+			} else if( resp.data.code === "ER_DATA_TOO_LONG" ){ // incorrect profile picture format
+
+				that.setState({error: 'Incorrect image format!'});
 			} else{
 
 				let days = 30;

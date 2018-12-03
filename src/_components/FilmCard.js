@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import {Icon, Grid, Label} from 'semantic-ui-react';
 import axios from "axios";
 
 import '../css/filmcard.css';
 
-import {textLimit} from "../_helpers/helper";
+import {getClosest, textLimit} from "../_helpers/helper";
 import {ourApiUrl} from "../_helpers/variable";
-
-import {Modal} from "semantic-ui-react/dist/commonjs/modules/Modal/Modal";
+import ListButtons from "./ListButtons";
 
 
 class FilmCard extends Component {
@@ -21,19 +19,26 @@ class FilmCard extends Component {
 		this.state = {
 			userId: userId,
 			// FROM FILM MODAL - after loading
-			seenList: this.props.inSeenList,
-			watchList: this.props.inWatchList
+			movieInMyLists: this.props.movieInMyLists,
+			inSeenList: this.props.inSeenList,
+			inWatchList: this.props.inWatchList,
+			myList: this.props.myList,
+			lists: [],
+			isLoading: true
 		};
 		this.addSeenWatchList = this.addSeenWatchList.bind(this);
+		this.addToMyList = this.addToMyList.bind(this);
 	}
 
 	// if props are updated, if data are changed
 	componentWillReceiveProps = (nextProps) => {
 
-		this.setState({watchList: nextProps.inWatchList});
-		this.setState({seenList: nextProps.inSeenList});
+		this.setState({inWatchList: nextProps.inWatchList});
+		this.setState({inSeenList: nextProps.inSeenList});
+		this.setState({movieInMyLists: nextProps.movieInMyLists});
 	};
 
+	// function for add to seen and watchlist list also
 	addSeenWatchList = (event) => {
 
 		event.preventDefault();
@@ -58,91 +63,116 @@ class FilmCard extends Component {
 
 			if (icon.classList.contains('watchlist')) {
 				// set opposite value
-				that.setState({watchList: 1 - that.state.watchList});
+				that.setState({inWatchList: 1 - that.state.inWatchList});
 			} else if (icon.classList.contains('seenlist')) {
 				// set opposite value
-				that.setState({seenList: 1 - that.state.seenList});
+				that.setState({inSeenList: 1 - that.state.inSeenList});
 			}
 
 			// send data to film modal --> update seen and watch button
-			that.props.sendWatchSeen(that.state.watchList,that.state.seenList)
+			that.props.sendWatchSeen(that.state.inWatchList,that.state.inSeenList,that.state.movieInMyLists)
 
 		}).catch(err => {
 			console.log(err);
 		});
 	};
 
+	// function for adding and removing to myList
+	addToMyList = (event) => {
+
+		let target = event.target;
+		target = getClosest(target,'.addToList');
+		let listId = Number(target.getAttribute('data-list-id'));
+		let data = {
+			listId: listId,
+			movieId: Number(target.getAttribute('data-movie-id')),
+			posterPath: target.getAttribute('data-poster-path'),
+			title: target.getAttribute('data-title'),
+			overview: target.getAttribute('data-overview'),
+			originalLanguage: target.getAttribute('data-original-language'),
+			myListId: listId
+		};
+		const {movieInMyLists} = this.state;
+		const index = movieInMyLists.indexOf(listId);
+		let that = this;
+		let url;
+
+		console.log( data );
+
+		// IF LIST CONTAINS MOVIE
+		if( index !== -1 ){
+
+			movieInMyLists.splice(index, 1);
+			url = ourApiUrl+'mylist/delete';
+		} else{		// IF LIST DOESNT CONTAIN MOVIE
+
+			movieInMyLists.push(listId);
+			url = ourApiUrl+'mylist/add';
+		}
+
+		axios({
+			method: 'post',
+			url: url,
+			data: data
+		}).then((res) => {
+
+			that.setState({movieInMyLists: movieInMyLists});
+			// send data to film modal --> update seen and watch button
+			that.props.sendWatchSeen(that.state.inWatchList,that.state.inSeenList,that.state.movieInMyLists)
+
+		}).catch(err => {
+			console.log(err);
+		});
+	}
+
 	render() {
 
-		const {id, poster_path, rating, title, overview, original_language,genres, ...rest} = this.props;
-		const {userId,watchList,seenList} = this.state;
-
-		const ratingWidth = 75;
-
+		const {id, poster_path, rating, title, overview, original_language,genres,userLists,movieInMyLists, ...rest} = this.props;
+		const {userId,inWatchList,inSeenList} = this.state;
 
 		return (
 			<div className="card" {...rest} key={id}>
-				<img src={"https://image.tmdb.org/t/p/w500" + poster_path} className={'poster-picture'} alt="movie poster"/>
-				<div className="marks">
-					<Grid verticalAlign="middle">
-						<Grid.Column textAlign="center" width={9}>
-							<div className="rating">
-								<div className={'stars'} style={{width:(ratingWidth/100)*rating}}>
-									<img srcSet={require('./../img/5-stars.png')} style={{width:ratingWidth}}/>
-								</div>
-								<div className={"rate"}>
-									{rating}%
-								</div>
-							</div>
-						</Grid.Column>
-						<Grid.Column>
+				{ poster_path ? (
+					<img src={"https://image.tmdb.org/t/p/w500" + poster_path} className={'poster-picture'} alt="movie poster"/>
+				) : (
+					<div className={'undefined-logo'}>
+						<img src={require('../img/Logo.png')} className={'poster-picture'} alt="movie poster"/>
+					</div>
+				) }
 
-							{watchList == 1 && (
-								<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + id} data-toggle="tooltip" data-placement="bottom" title="Add to Watchlist">
-									<Icon link color="blue"
-										  name={"bookmark" + (watchList ? "" : " outline")}
-										  className={'watchlist'} />
-								</a>
-							)
-							}
-
-						</Grid.Column>
-						<Grid.Column>
-
-							{seenList == 1 ? (
-								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id} data-toggle="tooltip" data-placement="bottom" title="Add towatchlist">
-									<Icon link color="blue"
-										  name={"check square" + (seenList ? "" : " outline")}
-										  className={'seenlist'}
-									/>
-								</a>
-							) : (
-								<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + id} onClick={this.addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + id + '/delete'} data-toggle="tooltip" data-placement="bottom" title="Add to seenlist">
-									<Icon link color="blue"
-										  name={"check square" + (seenList ? "" : " outline")}
-										  className={'seenlist'}
-									/>
-								</a>
-							)}
-
-						</Grid.Column>
-					</Grid>
-				</div>
+				<ListButtons
+					userLists={userLists}
+					movieInMyLists={movieInMyLists}
+					addToMyList={this.addToMyList}
+					addSeenWatchList={this.addSeenWatchList}
+					userId={userId}
+					inWatchList={inWatchList}
+					inSeenList={inSeenList}
+					filmId={id}
+					rating={rating}
+					poster_path={poster_path}
+					title={title}
+					overview={overview}
+					original_language={original_language}
+				/>
 				<h3>
 					{title}
 				</h3>
 				<p>
-					{textLimit(overview, 230)}
-				</p>
-				<p>
-					language: {original_language}
+					{textLimit(overview, 100)}
 				</p>
 
-				<p>
-					{ genres && genres.map((genre) => (
-						<span className="badge badge-primary">{genre}</span>
-					))}
-				</p>
+				<div className={'fix-bottom'}>
+					<p>
+						Language: {original_language}
+					</p>
+
+					<p>
+						{ genres && genres.map((genre) => (
+							<span className="badge badge-primary">{genre}</span>
+						))}
+					</p>
+				</div>
 
 			</div>
 		);

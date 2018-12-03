@@ -28,6 +28,7 @@ class Register extends Component {
 		let value = event.target.value;
 		let index = event.target.name;
 
+		// this.state.user[index] = value;
 		this.state.user[index] = value;
 	}
 
