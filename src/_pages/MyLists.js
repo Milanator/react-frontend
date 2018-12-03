@@ -2,113 +2,134 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Button, Icon } from 'semantic-ui-react';
 
-import '../css/mylists.css';
-
-import TopNavigation from '../_components/TopNavigation';
-import PageTitle from '../_components/PageTitle';
-import FilmModal from '../_components/FilmModal';
-import LoadingIndicator from '../_components/LoadingIndicator';
-
 import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
-import { setFilmGenre } from "../_helpers/method";
-import FilmCardSlider from '../_components/FilmCardSlider';
+import { isMovieInSeenList, isMovieInWatchList, setFilmGenre, setMyListToMovie } from '../_helpers/method';
+import '../css/main.css';
 
-let apiUrl = movieDbDomain + "movie/";
+import TopNavigation from './../_components/TopNavigation';
+import LoadingIndicator from './../_components/LoadingIndicator';
+import FilmCardSlider from './../_components/FilmCardSlider';
+import PageTitle from './../_components/PageTitle';
+
 let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
-class MyLists extends Component {
+class Home extends Component {
+
     constructor(props) {
+
         super(props);
 
-        let userId = atob(JSON.parse(localStorage.getItem('user')).id);
+        let user = JSON.parse(localStorage.getItem('user'));
+        let userId = atob(user.id);
+        let userName = atob(user.name);
 
         this.state = {
-            seenListFilms: [],
-            watchListFilms: [],
-            seenListIndices: [],
-            watchListIndices: [],
-            genres: [],
+            name: userName,
+            films: [],
+            userListsWithFilms: [],
             userId: userId,
-            isLoading: true
+            userLists: [],
+            isLoading: true,
+            genres: []
         };
+
     }
 
-    async componentDidMount() {
-        let seenListIndices, watchListIndices;
+    componentDidMount() {
+        let seenList, watchList, userLists, myListMovies, genresArray;
         let { userId } = this.state;
-        let watchListPromises = [];
-        let seenListPromises = [];
-        let film = {};
 
-        await axios.get(ourApiUrl + 'watchlist/user/' + userId)
-            .then(resp => {
+        axios.all([
 
-                let arrayWatchList = new Array();
-                watchListIndices = resp.data;
+            // films
+            axios.get(ourApiUrl + 'mylist/user/' + userId + '/all').then(res => {
+                console.log(res);
+                const films = res.data;
+                this.setState({ films });
+            }).catch((error) => { console.log(error); }),
 
-                watchListIndices.forEach((item) => {
-                    arrayWatchList.push(item.film_id);
-                });
-                this.setState({ watchListIndices: arrayWatchList });
-            });
+            // genres
+            axios.get(genreApiUrl).then(res => {
 
-        await axios.get(ourApiUrl + 'seenlist/user/' + userId)
-            .then(resp => {
-                let arraySeenList = new Array();
-                seenListIndices = resp.data;
+                genresArray = res.data.genres;
+                genresArray.unshift({ id: 0, name: 'All' });
 
-                seenListIndices.forEach((item) => {
-                    arraySeenList.push(item.film_id);
-                });
-                this.setState({ seenListIndices: arraySeenList });
-            });
+            }).catch((error) => { console.log(error); }),
 
-        await axios.get(genreApiUrl).then(res => {
-            this.setState({ genres: res.data.genres });
-        });
+            // seenlist
+            axios.get(ourApiUrl + 'seenlist/user/' + userId).then(res => {
 
-        // create list of films in watchlist
-        let arrayWatchList = new Array();
-        this.state.watchListIndices.forEach(function (film) {
-            const requestUrl = apiUrl + film + movieApiKeyPart;
-            watchListPromises.push(axios.get(requestUrl));
-        });
+                seenList = res.data;
+            }).catch((error) => { console.log(error); }),
 
-        await axios.all(watchListPromises).then(function (results) {
-            results.forEach(function (response) {
-                film = response.data;
-                arrayWatchList.push(film);
+            // watchlist
+            axios.get(ourApiUrl + 'watchlist/user/' + userId).then(res => {
+
+                watchList = res.data;
+            }).catch((error) => { console.log(error); }),
+
+            // get all names and IDs of lists
+            axios.get(ourApiUrl + "mylist/user/" + userId + "/category").then((res) => {
+
+                userLists = res.data;
+            }).catch((error) => { console.log(error); }),
+
+            // get all names and IDs of lists
+            axios.get(ourApiUrl + "mylist/user/" + userId + "/all").then((res) => {
+
+                myListMovies = res.data;
+                // myListMovies = setMyListToMovie(this.state.films,myListMovies);
+            }).catch((error) => {
+
+                console.log(error);
             })
+
+        ]).then(() => {
+
+            let films = setFilmGenre(genresArray, this.state.films);
+            films = isMovieInSeenList(films, seenList);
+            films = isMovieInWatchList(films, watchList);
+            films = setMyListToMovie(films, myListMovies);
+
+            this.setState({ films: films, userLists: userLists, genres: genresArray });
+        }).then(() => {
+            this.createUserListsWithFilms();
+        }).then(() => {
+            this.setState({ isLoading: false });
+        }).catch((err) => {
+            console.log(err);
         });
+    }
 
-        arrayWatchList = setFilmGenre(this.state.genres, arrayWatchList);
-        this.setState({ watchListFilms: arrayWatchList, isLoading: false });
-
-        // create list of already completed films
-        let arraySeenList = new Array();
-        this.state.seenListIndices.forEach(function (film) {
-            const requestUrl = apiUrl + film + movieApiKeyPart;
-            seenListPromises.push(axios.get(requestUrl));
+    createUserListsWithFilms() {
+        let userListsWithFilms = [];
+        this.state.userLists.map(list => {
+            let listFilms = [];
+            this.state.films.map(film => {
+                if (list.id == film.myList_id) {
+                    listFilms.push(film);
+                }
+            });
+            let newList = { 'id': list.id, 'name': list.name, films: listFilms };
+            userListsWithFilms.push(newList);
         });
-
-        await axios.all(seenListPromises).then(function (results) {
-            results.forEach(function (response) {
-                film = response.data;
-                arraySeenList.push(film);
-            })
-        });
-        arraySeenList = setFilmGenre(this.state.genres, arraySeenList);
-        this.setState({ seenListFilms: arraySeenList, isLoading: false });
-
+        this.setState({ userListsWithFilms });
     }
 
     render() {
-        const { watchListFilms, seenListFilms, seenListIndices, watchListIndices, genres } = this.state;
+        console.log(this.state);
+        const { userListsWithFilms, userLists, isLoading, genres } = this.state;
 
-        if (this.state.isLoading == true) {
-            return <div><TopNavigation /><LoadingIndicator /></div>
+        if (userListsWithFilms.length === 0 || isLoading || genres === 0) {
+            return (
+                <div>
+                    <TopNavigation />
+                    <LoadingIndicator />
+                </div>
+            );
         } else {
             return (
+
                 <div>
                     <TopNavigation />
 
@@ -124,33 +145,27 @@ class MyLists extends Component {
                             </Button>
                         </div>
 
+                        {userListsWithFilms.map(list => (
+                            <div>
+                                <PageTitle title={list.name} />
 
-                        <PageTitle title="Watchlist" />
-                        <div className="slider-container">
-                            <FilmCardSlider
-                                title='Watchlist'
-                                films={watchListFilms}
-                                watchListIndices={watchListIndices}
-                                seenListIndices={seenListIndices}
-                                genres={genres} />
-
-                        </div>
-
-
-                        <PageTitle title="Completed Movies" />
-                        <div className="slider-container">
-                            <FilmCardSlider
-                                title='Completed Movies'
-                                films={seenListFilms}
-                                watchListIndices={watchListIndices}
-                                seenListIndices={seenListIndices}
-                                genres={genres} />
-                        </div>
+                                <div className="slider-container">
+                                    <FilmCardSlider
+                                        films={list.films}
+                                        userLists={userLists}
+                                    />
+                                </div>
+                            </div>
+                        ))}
                     </div>
+
+
                 </div>
+
             );
         }
     }
+
 }
 
-export default MyLists;
+export default Home;
