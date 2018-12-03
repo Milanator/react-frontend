@@ -159,7 +159,7 @@ class FilmCard extends Component {
 					{title}
 				</h3>
 				<p>
-					{textLimit(overview, 200)}
+					{textLimit(overview, 100)}
 				</p>
 
 				<div className={'fix-bottom'}>
