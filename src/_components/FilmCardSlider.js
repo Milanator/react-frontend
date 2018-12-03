@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import Slider from 'react-slick';
 
 import FilmModal from '../_components/FilmModal';
-import { Icon } from 'semantic-ui-react';
+
+import '../css/mylists.css';
 
 
 class FilmCardSlider extends Component {
     render() {
-        const { films, watchListIndices, seenListIndices, title, genres } = this.props;
+        const { films, userLists } = this.props;
 
         const settings = {
             arrows: true,
@@ -30,8 +31,10 @@ class FilmCardSlider extends Component {
                                 overview={film.overview}
                                 original_language={film.original_language}
                                 key={film.id}
-                                inSeenList={seenListIndices.includes(film.id) ? 1 : 0}
-                                inWatchList={watchListIndices.includes(film.id) ? 1 : 0}
+                                inSeenList={film.inSeenList}
+                                inWatchList={film.inWatchList}
+                                movieInMyLists={film.inMyLists}
+                                userLists={userLists}
                                 genres={film.genre}
                             />
                         </div>
