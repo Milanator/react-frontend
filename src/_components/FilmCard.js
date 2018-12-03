@@ -90,7 +90,8 @@ class FilmCard extends Component {
 			title: target.getAttribute('data-title'),
 			overview: target.getAttribute('data-overview'),
 			originalLanguage: target.getAttribute('data-original-language'),
-			myListId: listId
+			myListId: listId,
+			rating: target.getAttribute('data-rating')
 		};
 		const {movieInMyLists} = this.state;
 		const index = movieInMyLists.indexOf(listId);

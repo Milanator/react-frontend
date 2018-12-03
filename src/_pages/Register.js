@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import axios from 'axios';
 
-import {ourApiUrl} from "../_helpers/variable";
+import {baseUrl, ourApiUrl} from "../_helpers/variable";
 
 class Register extends Component {
 
@@ -61,7 +61,8 @@ class Register extends Component {
 					that.setState({ error: resp.data.sqlMessage })
 				} else{
 
-					that.setState({ success: 'Successful registration!' })
+					window.location.href = baseUrl + 'login';
+					// that.setState({ success: 'Successful registration!' })
 				}
 			}).catch(err => {
 				console.log(err);

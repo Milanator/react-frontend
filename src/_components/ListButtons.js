@@ -29,7 +29,7 @@ class ListButtons extends Component {
 					</div>
 				</Grid.Column>
 				<Grid.Column>
-					<Dropdown text='' multiple icon='add' color="blue" className={'addToMyList'}>
+					<Dropdown text='' multiple icon='add' color="blue" className={'addToMyList blue'}>
 						<Dropdown.Menu>
 							<Dropdown.Menu scrolling>
 								{userLists.map(list =>
@@ -40,36 +40,22 @@ class ListButtons extends Component {
 												   data-title={title}
 												   data-overview={overview}
 												   data-original-language={original_language}
+												   data-rating={rating}
 												   onClick={addToMyList}
 												   className={'addToList'}
 												   text={ movieInMyLists && movieInMyLists.includes(list.id) ?
 										(
-											<span
-												// onClick={addToMyList}
-											>
-												<Icon link
-												  color="blue"
-												  name={"plus"}
-												  // data-list-id={list.id}
-												  // data-movie-id={filmId}
-												/>
+
+											<span>
+												<i className="fa fa-plus blue"></i>
 												{list.name}
 											</span>
 										)
 										: (
-											<span
-												// onClick={addToMyList}
-												// data-list-id={list.id}
-												// data-movie-id={filmId}
-											>
-											<Icon link
-												  color="blue"
-												  name={"plus square outline"}
-												  // data-list-id={list.id}
-												  // data-movie-id={filmId}
-											/>
+											<span>
+												<i className="fa fa-plus-square blue"></i>
 												{list.name}
-										</span>
+											</span>
 										)
 									}/>
 								)}
@@ -80,19 +66,13 @@ class ListButtons extends Component {
 				<Grid.Column>
 
 					{ inWatchList ? (
+
 						<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + filmId + '/delete'} onClick={addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + filmId} data-toggle="tooltip" data-placement="bottom" title="Remove from Watchlist">
-							<Icon link
-								  color="blue"
-								  name={"bookmark" + (inWatchList ? "" : " outline")}
-								  className={'watchlist'} />
+							<i className={"bookmark blue icon watchlist" + (inWatchList ? "" : " outline")} aria-hidden="true"></i>
 						</a>
 					) : (
 						<a href={ourApiUrl + "watchlist/user/" + userId + "/film/" + filmId} onClick={addSeenWatchList} data-inverse-url={ourApiUrl + "watchlist/user/" + userId + "/film/" + filmId + '/delete'} data-toggle="tooltip" data-placement="bottom" title="Add to Watchlist">
-							<Icon link
-								  color="blue"
-								  name={"bookmark" + (inWatchList ? "" : " outline")}
-								  className={'watchlist'}
-							/>
+							<i className={"bookmark blue icon watchlist"+(inWatchList ? "" : " outline")} aria-hidden="true"></i>
 						</a>
 					)
 					}
@@ -102,17 +82,12 @@ class ListButtons extends Component {
 
 					{inSeenList ? (
 						<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + filmId + '/delete'} onClick={addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + filmId} data-toggle="tooltip" data-placement="bottom" title="Remove from seenlist">
-							<Icon link color="blue"
-								  name={"check square" + (inSeenList ? "" : " outline")}
-								  className={'seenlist'}
-							/>
+							<i className={"check square blue link icon seenlist"+(inSeenList ? "" : " outline")} aria-hidden="true"></i>
 						</a>
 					) : (
 						<a href={ourApiUrl + "seenlist/user/" + userId + "/film/" + filmId} onClick={addSeenWatchList} data-inverse-url={ourApiUrl + "seenlist/user/" + userId + "/film/" + filmId + '/delete'} data-toggle="tooltip" data-placement="bottom" title="Add towatchlist">
-							<Icon link color="blue"
-								  name={"check square" + (inSeenList ? "" : " outline")}
-								  className={'seenlist'}
-							/>
+							<i className={"check square blue link icon seenlist"+(inSeenList ? "" : " outline")} aria-hidden="true"></i>
+
 						</a>
 					)}
 

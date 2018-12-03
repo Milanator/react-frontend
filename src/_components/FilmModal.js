@@ -168,7 +168,9 @@ class FilmModal extends Component {
                                 <p>
                                     {overview}
                                     </p>
-                                <a class ="btn-primary" href={"film/"+ id}>see all details</a>
+                                <a className={"btn btn-primary"} href={"film/"+ id}>
+									See all details
+								</a>
                             </Container>
                         </Modal.Description>
                     </Modal.Content>
