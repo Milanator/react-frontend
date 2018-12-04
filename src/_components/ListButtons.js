@@ -32,7 +32,7 @@ class ListButtons extends Component {
 					</div>
 				</Grid.Column>
 				<Grid.Column textAlign="right" width={3}>
-					<Dropdown text='' multiple icon='add' color="blue" className={'addToMyList blue'}>
+					<Dropdown text='' multiple icon='add' color="blue" className={'addToMyList blue-icon'}>
 						<Dropdown.Menu>
 							<Dropdown.Menu scrolling>
 								{userLists.map(list =>
@@ -44,13 +44,13 @@ class ListButtons extends Component {
 										(
 
 											<span>
-												<i className="fa fa-plus blue"></i>
+												<i className="fa fa-plus blue-icon"></i>
 												{list.name}
 											</span>
 										)
 										: (
 											<span>
-												<i className="fa fa-plus-square blue"></i>
+												<i className="fa fa-plus-square blue-icon"></i>
 												{list.name}
 											</span>
 										)
