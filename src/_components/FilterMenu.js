@@ -111,7 +111,6 @@ export default class FilterMenu extends Component {
                 </Menu.Menu>
                 <Button
                     icon='right arrow'
-                    inverted
                     color='blue'
                     onClick={this.handleFilterClick.bind(this)} />
             </Menu>
