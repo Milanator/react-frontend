@@ -5,7 +5,7 @@ class ListButtons extends Component {
 
 	render() {
 
-		const { userLists,movieInMyLists,addToMyList,rating, movieId,posterPath,title,overview,originalLanguage } = this.props;
+		const { userLists,movieInMyLists,addToMyList,rating, movieId,poster_path,title,overview,original_language,genres, ...rest } = this.props;
 		const ratingWidth = 75;
 
 		return (
@@ -13,10 +13,10 @@ class ListButtons extends Component {
 
 				<div className={'hidden-data'} style={{display:'none'}}>
 					<input type="hidden" name="movieId" value={movieId}/>
-					<input type="hidden" name="posterPath" value={posterPath}/>
+					<input type="hidden" name="posterPath" value={poster_path}/>
 					<input type="hidden" name="title" value={title}/>
 					<input type="hidden" name="overview" value={overview}/>
-					<input type="hidden" name="originalLanguage" value={originalLanguage}/>
+					<input type="hidden" name="originalLanguage" value={original_language}/>
 					<input type="hidden" name="rating" value={rating}/>
 				</div>
 
@@ -32,7 +32,7 @@ class ListButtons extends Component {
 					</div>
 				</Grid.Column>
 				<Grid.Column textAlign="right" width={3}>
-					<Dropdown text='' multiple icon='add' color="blue" className={'addToMyList blue'}>
+					<Dropdown text='' multiple icon='bookmark' color="blue" className={'addToMyList blue-content'}>
 						<Dropdown.Menu>
 							<Dropdown.Menu scrolling>
 								{userLists.map(list =>
@@ -43,14 +43,14 @@ class ListButtons extends Component {
 												   text={ movieInMyLists && movieInMyLists.includes(list.id) ?
 										(
 
-											<span>
-												<i className="fa fa-plus blue"></i>
+											<span className={'blue-content'}>
+												<i className="fa fa-plus"></i>
 												{list.name}
 											</span>
 										)
 										: (
-											<span>
-												<i className="fa fa-plus-square blue"></i>
+											<span className={'grey-content'}>
+												<i className="fa fa-plus"></i>
 												{list.name}
 											</span>
 										)

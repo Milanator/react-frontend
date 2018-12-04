@@ -4,7 +4,7 @@ import {ourApiUrl} from "./variable";
 import $ from "jquery";
 
 // set genres to film
-export const setFilmGenre = (genres, films) => {
+export const setFilmGenre = (genres,films,fromMyList=0) => {
 
 	let genreArray = [];
 
@@ -30,7 +30,11 @@ export const setFilmGenre = (genres, films) => {
 				film.genre.push(genreArray[res.id]);
 			});
 		}
+
+		console.log(film)
 	});
+
+	console.log(genres)
 
 	return films;
 };
@@ -153,13 +157,13 @@ export const addSeenWatchList = (event,that,fromFilmModal = 0) => {
 const setRequestDataToMyList = (hiddenData, listId=null) => {
 
 	return {
-		listId: listId,
 		movieId: Number(hiddenData.find("input[name='movieId']")[0].getAttribute('value') ),
 		posterPath: hiddenData.find("input[name='posterPath']")[0].getAttribute('value'),
 		title: hiddenData.find("input[name='title']")[0].getAttribute('value'),
 		overview: hiddenData.find("input[name='overview']")[0].getAttribute('value'),
 		originalLanguage: hiddenData.find("input[name='originalLanguage']")[0].getAttribute('value'),
 		myListId: listId,
+		listId: listId,
 		voteAverage: Number(hiddenData.find("input[name='rating']")[0].getAttribute('value'))
 	}
 }
