@@ -35,7 +35,7 @@ class FilmCardSlider extends Component {
                                 inWatchList={film.inWatchList}
                                 movieInMyLists={film.inMyLists}
                                 userLists={userLists}
-                                genres={film.genre}
+                                genres={film.genres}
                             />
                         </div>
                     ))}

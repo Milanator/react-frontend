@@ -75,8 +75,14 @@ class Home extends Component {
 
         ]).then(() => {
 
-            let films = setFilmGenre(genresArray, this.state.films);
-            films = setMyListToMovie(films, myListMovies,1);
+            let films = setMyListToMovie(this.state.films, myListMovies,1);
+
+            // set genres from json to array
+            films.forEach((film) => {
+
+            	film.genres = JSON.parse(film.genres)
+			})
+
             this.setState({ films: films, userLists: userLists, genres: genresArray });
         }).then(() => {
 
