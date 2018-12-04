@@ -18,6 +18,7 @@ class ListButtons extends Component {
 					<input type="hidden" name="overview" value={overview}/>
 					<input type="hidden" name="originalLanguage" value={original_language}/>
 					<input type="hidden" name="rating" value={rating}/>
+					<input type="hidden" name="genres" value={JSON.stringify(genres)}/>
 				</div>
 
 				<Grid verticalAlign="middle">

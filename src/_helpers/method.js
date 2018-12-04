@@ -164,6 +164,7 @@ const setRequestDataToMyList = (hiddenData, listId=null) => {
 		originalLanguage: hiddenData.find("input[name='originalLanguage']")[0].getAttribute('value'),
 		myListId: listId,
 		listId: listId,
-		voteAverage: Number(hiddenData.find("input[name='rating']")[0].getAttribute('value'))
+		voteAverage: Number(hiddenData.find("input[name='rating']")[0].getAttribute('value')),
+		genres: hiddenData.find("input[name='genres']")[0].getAttribute('value')
 	}
 }
