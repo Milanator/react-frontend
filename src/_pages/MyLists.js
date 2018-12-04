@@ -4,13 +4,14 @@ import { Button, Icon } from 'semantic-ui-react';
 
 import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
 import { setFilmGenre, setMyListToMovie } from '../_helpers/method';
+
 import '../css/main.css';
 
 import TopNavigation from './../_components/TopNavigation';
 import LoadingIndicator from './../_components/LoadingIndicator';
 import FilmCardSlider from './../_components/FilmCardSlider';
-import PageTitle from './../_components/PageTitle';
 import AddListModal from './../_components/AddListModal';
+
 
 let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
@@ -95,7 +96,6 @@ class Home extends Component {
     }
 
     createUserListsWithFilms() {
-
         let userListsWithFilms = [];
         this.state.userLists.map(list => {
             let listFilms = [];
@@ -132,33 +132,32 @@ class Home extends Component {
 
                         {userListsWithFilms.map(list => (
 
-                            <div className="slider-component">
+                            <div>
 
-                                <div className="list-title">
-                                    {list.name}
+                                <div className="list-header">
+
+                                    <div className="list-title">
+                                        {list.name}
+                                    </div>
+
+                                    <div className="list-actions">
+
+                                        <Button.Group >
+                                            <Button icon >
+                                                <Icon
+                                                    name='pencil alternate'
+                                                    className={'addToMyList blue-icon'} />
+                                            </Button>
+                                            <Button icon >
+                                                <Icon
+                                                    name='trash'
+                                                    className={'addToMyList blue-icon'} />
+                                            </Button>
+                                        </Button.Group>
+                                    </div>
                                 </div>
-
-                                <div className="list-actions">
-
-                                    <span>
-                                        <i className="fas fa-pen blue-icon" aria-hidden="true"></i>
-                                        
-                                    </span>
-
-                                    {/* <Button.Group >
-                                    <Button icon >
-                                        <Icon 
-                                            name='pencil alternate'
-                                            className={'addToMyList blue-icon'}/>
-                                    </Button>
-                                    <Button icon >
-                                        <Icon 
-                                            name='trash'
-                                            className={'addToMyList blue-icon'}/>
-                                    </Button>
-                                    </Button.Group> */}
-                                </div>
-
+                                
+                                <hr className="slider-divider" />
 
                                 <FilmCardSlider
                                     films={list.films}
@@ -166,10 +165,8 @@ class Home extends Component {
                                 />
 
                             </div>
-
                         ))}
                     </div>
-
 
                 </div>
 

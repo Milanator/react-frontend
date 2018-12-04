@@ -43,19 +43,24 @@ export const setFilmGenre = (genres,films,fromMyList=0) => {
 // fromMyList - MyList.js file
 export const setMyListToMovie = (films,myLists,fromMyList=0) =>{
 
-	films.forEach((film,key) => {
+	console.log(myLists)
 
-		film.inMyLists = [];
-		let filmId = fromMyList ? film.movie_id : film.id;
+	if( myLists ){
 
-		myLists.forEach((list,key) => {
+        films.forEach((film,key) => {
 
-			if( filmId === list.movie_id ){
+            film.inMyLists = [];
+            let filmId = fromMyList ? film.movie_id : film.id;
 
-				film.inMyLists.push(list.myList_id);
-			}
-		});
-	})
+            myLists.forEach((list,key) => {
+
+                if( filmId === list.movie_id ){
+
+                    film.inMyLists.push(list.myList_id);
+                }
+            });
+        })
+	}
 
 	return films;
 };
