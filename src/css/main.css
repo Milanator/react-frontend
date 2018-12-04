@@ -3,8 +3,7 @@
     --rich-black: #00171F;
     --prussian-blue: #003459;
     --cerulean: #007EA7;
-    --vivid-cerulean: #00A8E8;
-    --standard-blue: #4d9dd9;
+    --standard-blue: #2185d0;
     --text-heading-font-size: 40px;
     --text-menu: 20px;
   }
@@ -15,7 +14,7 @@
 }
 
 .blue-content{
-	color: #2185d0!important;
+	color: var(--standard-blue) !important;
 }
 
 .grey-content{
@@ -31,9 +30,13 @@ body {
     text-align: left;
     font-size: var(--text-heading-font-size);
     margin-top: 40px;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
     text-transform: uppercase;
-    color: var(--vivid-cerulean);
+    color: var(--standard-blue);
+}
+
+#loading-indicator {
+    margin-top: 100px;
 }
 
 .pagination-component {
