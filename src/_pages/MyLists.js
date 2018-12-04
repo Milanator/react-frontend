@@ -10,6 +10,7 @@ import TopNavigation from './../_components/TopNavigation';
 import LoadingIndicator from './../_components/LoadingIndicator';
 import FilmCardSlider from './../_components/FilmCardSlider';
 import PageTitle from './../_components/PageTitle';
+import AddListModal from './../_components/AddListModal';
 
 let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
@@ -123,28 +124,45 @@ class Home extends Component {
                     <TopNavigation />
 
                     <div className="container sliders">
-
-                        <div className="mylists-button-panel">
-                            <Button
-                                icon
-                                inverted
-                                labelPosition='left'
-                                color='blue'>
-                                <Icon name='plus' />New List
-                            </Button>
-                        </div>
+                        <AddListModal />
 
                         {userListsWithFilms.map(list => (
-                            <div>
-                                <PageTitle title={list.name} />
 
-                                <div className="slider-container">
-                                    <FilmCardSlider
-                                        films={list.films}
-                                        userLists={userLists}
-                                    />
+                            <div className="slider-component">
+
+                                <div className="list-title">
+                                    {list.name}
                                 </div>
+
+                                <div className="list-actions">
+
+                                    <span>
+                                        <i className="fas fa-pen blue-icon" aria-hidden="true"></i>
+                                        
+                                    </span>
+
+                                    {/* <Button.Group >
+                                    <Button icon >
+                                        <Icon 
+                                            name='pencil alternate'
+                                            className={'addToMyList blue-icon'}/>
+                                    </Button>
+                                    <Button icon >
+                                        <Icon 
+                                            name='trash'
+                                            className={'addToMyList blue-icon'}/>
+                                    </Button>
+                                    </Button.Group> */}
+                                </div>
+
+
+                                <FilmCardSlider
+                                    films={list.films}
+                                    userLists={userLists}
+                                />
+
                             </div>
+
                         ))}
                     </div>
 
