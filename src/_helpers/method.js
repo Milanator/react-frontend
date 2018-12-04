@@ -36,74 +36,25 @@ export const setFilmGenre = (genres, films) => {
 };
 
 // set new attribute to film, all lists idies, where is film added
-export const setMyListToMovie = (films,myLists) =>{
+// fromMyList - MyList.js file
+export const setMyListToMovie = (films,myLists,fromMyList=0) =>{
 
 	films.forEach((film,key) => {
 
 		film.inMyLists = [];
-		film.inSeenList = false;
-		film.inWatchList = false;
+		let filmId = fromMyList ? film.movie_id : film.id;
 
 		myLists.forEach((list,key) => {
 
-			if( film.id === list.movie_id ){
+			if( filmId === list.movie_id ){
 
 				film.inMyLists.push(list.myList_id);
-
-				if( list.shortcut === 'seen' ){
-					film.inSeenList = true;
-				} else if( list.shortcut === 'watch' ){
-					film.inWatchList = true;
-				}
 			}
 		});
 	})
 
 	return films;
 };
-
-// set new attribute to film, is or is not in seen list
-export const isMovieInSeenList = (films,myLists) => {
-
-	films.forEach((film,key) => {
-
-		film.inSeenList = false;
-
-		myLists.forEach((myList,key) => {
-
-			if( myList.movie_id === film.id ){
-
-				film.inSeenList = {
-					id: myList.myList_id
-				};
-
-			}
-		});
-	})
-
-	return films;
-}
-
-// set new attribute to film, is or is not in watch list
-export const isMovieInWatchList = (films,myLists) => {
-
-	films.forEach((film,key) => {
-
-		film.inWatchList = false;
-
-		myLists.forEach((myList,key) => {
-
-			if( myList.movie_id === film.id ){
-
-				film.inWatchList = {
-					id: myList.myList_id
-				};
-			}
-		});
-	})
-
-	return films;
-}
 
 // function for adding and removing to myList
 export const addMyList = (event,that, fromFilmModal=0) => {

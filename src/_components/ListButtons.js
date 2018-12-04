@@ -5,10 +5,7 @@ class ListButtons extends Component {
 
 	render() {
 
-		const {
-			userLists,movieInMyLists,addToMyList,rating,
-			movieId,poster_path,title,overview,original_language
-		} = this.props;
+		const { userLists,movieInMyLists,addToMyList,rating, movieId,posterPath,title,overview,originalLanguage } = this.props;
 		const ratingWidth = 75;
 
 		return (
@@ -16,10 +13,10 @@ class ListButtons extends Component {
 
 				<div className={'hidden-data'} style={{display:'none'}}>
 					<input type="hidden" name="movieId" value={movieId}/>
-					<input type="hidden" name="posterPath" value={poster_path}/>
+					<input type="hidden" name="posterPath" value={posterPath}/>
 					<input type="hidden" name="title" value={title}/>
 					<input type="hidden" name="overview" value={overview}/>
-					<input type="hidden" name="originalLanguage" value={original_language}/>
+					<input type="hidden" name="originalLanguage" value={originalLanguage}/>
 					<input type="hidden" name="rating" value={rating}/>
 				</div>
 
@@ -41,12 +38,6 @@ class ListButtons extends Component {
 								{userLists.map(list =>
 									<Dropdown.Item key={list.id}
 												   data-list-id={list.id}
-												   data-movie-id={movieId}
-												   data-poster-path={poster_path}
-												   data-title={title}
-												   data-overview={overview}
-												   data-original-language={original_language}
-												   data-rating={rating}
 												   onClick={addToMyList}
 												   className={'addToList'}
 												   text={ movieInMyLists && movieInMyLists.includes(list.id) ?

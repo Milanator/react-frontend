@@ -7,8 +7,6 @@ import Login from './_pages/Login.js';
 import Home from "./_pages/Home";
 import Register from "./_pages/Register";
 
-import MyWatchlist from "./_pages/MyWatchlist";
-import CompletedMovies from "./_pages/CompletedMovies";
 import Profile from "./_pages/Profile";
 import FilmDetail from "./_pages/FilmDetail";
 import MyLists from './_pages/MyLists';
@@ -39,9 +37,7 @@ class App extends Component {
 				<Auth path={'/film/search/:value'} exact component={SearchFilms}/>
 				<Auth path={'/film/:id?'} exact component={FilmDetail} />
 				<Auth path={'/mylists'} exact component={MyLists}/>
-				<Auth path={'/completedmovies'} exact component={CompletedMovies}/>
 				<Auth path={'/profile'} exact component={Profile}/>
-				<Auth path={'/mywatchlist'} exact component={MyWatchlist}/>
 			</div>
 		);
 	}

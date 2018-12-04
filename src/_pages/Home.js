@@ -95,6 +95,7 @@ class Home extends Component {
 	}
 
 	handlePaginationChange = (e, { activePage }) => {
+
 		this.setState({ isLoading: true });
 
 		this.setState({ activePage }, () => {

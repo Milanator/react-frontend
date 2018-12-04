@@ -75,7 +75,7 @@ class Home extends Component {
         ]).then(() => {
 
             let films = setFilmGenre(genresArray, this.state.films);
-            films = setMyListToMovie(films, myListMovies);
+            films = setMyListToMovie(films, myListMovies,1);
 
             this.setState({ films: films, userLists: userLists, genres: genresArray });
         }).then(() => {
@@ -101,12 +101,10 @@ class Home extends Component {
             userListsWithFilms.push(newList);
         });
 
-        console.log(userListsWithFilms)
         this.setState({ userListsWithFilms });
     }
 
     render() {
-        console.log(this.state);
         const { userListsWithFilms, userLists, isLoading, genres } = this.state;
 
         if (userListsWithFilms.length === 0 || isLoading || genres === 0) {

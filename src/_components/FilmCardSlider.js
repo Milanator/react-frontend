@@ -24,7 +24,7 @@ class FilmCardSlider extends Component {
                     {films.map(film => (
                         <div>
                             <FilmModal
-                                id={film.id}
+                                movieId={film.movie_id}
                                 poster_path={film.poster_path}
                                 rating={film.vote_average}
                                 title={film.title}
