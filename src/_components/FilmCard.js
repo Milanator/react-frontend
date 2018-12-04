@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import '../css/filmcard.css';
 
-import {getClosest, textLimit} from "../_helpers/helper";
+import {textLimit} from "../_helpers/helper";
 import ListButtons from "./ListButtons";
 import {addMyList, addSeenWatchList} from "../_helpers/method";
 
@@ -54,8 +54,6 @@ class FilmCard extends Component {
 		const {movieId, poster_path, rating, title, overview, original_language,genres,userLists,movieInMyLists, ...rest} = this.props;
 		const {userId,inWatchList,inSeenList} = this.state;
 
-		console.log( this.props )
-
 		return (
 			<div className="card" {...rest} key={movieId}>
 				{ poster_path ? (
@@ -80,6 +78,7 @@ class FilmCard extends Component {
 					title={title}
 					overview={overview}
 					original_language={original_language}
+					genres={genres}
 				/>
 				<h3>
 					{title}

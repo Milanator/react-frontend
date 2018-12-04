@@ -87,6 +87,7 @@ class FilmModal extends Component {
 										poster_path={poster_path}
 										title={title}
 										overview={overview}
+										genres={genres}
 										original_language={original_language}
 									/>
                                 </Grid>

@@ -9,9 +9,17 @@
     --text-menu: 20px;
   }
 
-.blue-icon {
+.blue-content > i,
+.grey-content > i{
+	margin-right: 4px;
+}
+
+.blue-content{
 	color: #2185d0!important;
-	margin-right: 2px;
+}
+
+.grey-content{
+	color: #4d4e4d;
 }
 
 body {

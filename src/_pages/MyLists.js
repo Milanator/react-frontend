@@ -77,7 +77,6 @@ class Home extends Component {
 
             let films = setFilmGenre(genresArray, this.state.films);
             films = setMyListToMovie(films, myListMovies,1);
-
             this.setState({ films: films, userLists: userLists, genres: genresArray });
         }).then(() => {
 
@@ -90,6 +89,7 @@ class Home extends Component {
     }
 
     createUserListsWithFilms() {
+
         let userListsWithFilms = [];
         this.state.userLists.map(list => {
             let listFilms = [];
