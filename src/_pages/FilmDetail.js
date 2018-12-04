@@ -7,7 +7,7 @@ import "../css/FilmDetail.css"
 import ListButtons from "../_components/ListButtons";
 import"../_helpers/method"
 import ImageSlider from "../_components/ImageSlider";
-import {isMovieInSeenList, isMovieInWatchList, setFilmGenre, setMyListToMovie} from "../_helpers/method";
+import {setFilmGenre, setMyListToMovie} from "../_helpers/method";
 import FilmCardSlider from "../_components/FilmCardSlider";
 
 let apiUrl = movieDbDomain + 'movie';
@@ -79,8 +79,6 @@ class FilmDetail extends React.Component {
         ]).then(() => {
 
             let films = setFilmGenre(genresArray, this.state.films);
-            films = isMovieInSeenList(films,seenList);
-            films = isMovieInWatchList(films,watchList);
             films = setMyListToMovie(films,myListMovies);
 
             this.setState({ films:films,userLists:userLists,genres: genresArray });
