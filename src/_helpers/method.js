@@ -1,36 +1,7 @@
 import axios from "axios";
-import MyLists from "../_pages/MyLists";
-
-export const addSeenWatchList = (event) => {
-
-	event.preventDefault();
-	event.stopPropagation();
-
-	let anchorTag = event.target.parentNode;
-	let url = anchorTag.getAttribute('href');
-	let inverseUrl = anchorTag.getAttribute('data-inverse-url');
-	let icon = event.target;
-	let that = this;
-
-	axios({
-		method: 'get',
-		url: url
-	}).then(() => {
-
-		icon.classList.toggle('outline');
-		anchorTag.setAttribute('href', inverseUrl);
-		anchorTag.setAttribute('data-inverse-url', url);
-
-		if (icon.classList.contains('watchlist')) {
-			that.setState({ watchList: 1 - that.state.watchList() });
-		} else if (icon.classList.contains('seenlist')) {
-			that.setState({ seenList: 1 - that.state.seenList });
-		}
-
-	}).catch(err => {
-		console.log(err);
-	});
-};
+import {getClosest} from "./helper";
+import {ourApiUrl} from "./variable";
+import $ from "jquery";
 
 // set genres to film
 export const setFilmGenre = (genres, films) => {
@@ -65,15 +36,17 @@ export const setFilmGenre = (genres, films) => {
 };
 
 // set new attribute to film, all lists idies, where is film added
-export const setMyListToMovie = (films,myLists) =>{
+// fromMyList - MyList.js file
+export const setMyListToMovie = (films,myLists,fromMyList=0) =>{
 
 	films.forEach((film,key) => {
 
 		film.inMyLists = [];
+		let filmId = fromMyList ? film.movie_id : film.id;
 
 		myLists.forEach((list,key) => {
 
-			if( film.id === list.movie_id ){
+			if( filmId === list.movie_id ){
 
 				film.inMyLists.push(list.myList_id);
 			}
@@ -83,41 +56,110 @@ export const setMyListToMovie = (films,myLists) =>{
 	return films;
 };
 
-// set new attribute to film, is or is not in seen list
-export const isMovieInSeenList = (films,seenList) => {
+// function for adding and removing to myList
+export const addMyList = (event,that, fromFilmModal=0) => {
 
-	films.forEach((film,key) => {
+	let movieInMyLists;
+	let target = $(event.target);
+	let hiddenData = target.closest('.marks').find('.hidden-data');
+	let listId = Number(target.closest('.addToList').attr('data-list-id'));
+	let data = setRequestDataToMyList(hiddenData, listId);
 
-		film.inSeenList = false;
+	if( fromFilmModal ){
 
-		seenList.forEach((seen,key) => {
+		movieInMyLists = that.props.movieInMyLists;
+	} else {
 
-			if( seen.film_id === film.id ){
+		movieInMyLists = that.state.movieInMyLists;
+	}
 
-				film.inSeenList = true;
-			}
-		});
-	})
+	const index = movieInMyLists.indexOf(listId);
+	let url;
 
+	// IF LIST CONTAINS MOVIE
+	if( index !== -1 ){
 
-	return films;
+		movieInMyLists.splice(index, 1);
+		url = ourApiUrl+'mylist/delete';
+	} else{		// IF LIST DOESNT CONTAIN MOVIE
+
+		movieInMyLists.push(listId);
+		url = ourApiUrl+'mylist/add';
+	}
+
+	axios({
+		method: 'post',
+		url: url,
+		data: data
+	}).then((res) => {
+
+		that.setState({movieInMyLists: movieInMyLists});
+		if( !fromFilmModal ){
+			// send data to film modal --> update seen and watch button
+			that.props.sendWatchSeen(that.state.inWatchList,that.state.inSeenList,that.state.movieInMyLists)
+		}
+
+	}).catch(err => {
+		console.log(err);
+	});
 }
 
-// set new attribute to film, is or is not in watch list
-export const isMovieInWatchList = (films,watchList) => {
+// function for add to seen and watchlist list also
+export const addSeenWatchList = (event,that,fromFilmModal = 0) => {
 
-	films.forEach((film,key) => {
+	event.preventDefault();
+	event.stopPropagation();
 
-		film.inWatchList = false;
+	let icon = $(event.target);
+	let hiddenData = icon.closest('.marks').find('.hidden-data');
+	let listId = Number(icon.closest('.addToList')[0].getAttribute('data-list-id'));
+	let data = setRequestDataToMyList(hiddenData, listId);
+	let anchorTag = icon.parent();
+	let url = anchorTag.attr('href');
+	let inverseUrl = anchorTag.attr('data-inverse-url');
 
-		watchList.forEach((watch,key) => {
+	console.log( icon.closest('.addToList')[0] );
 
-			if( watch.film_id === film.id ){
+	axios({
+		method: 'post',
+		url: url,
+		data: data
+	}).then((resp) => {
 
-				film.inWatchList = true;
-			}
-		});
-	})
+		// change visual of icon
+		icon.toggleClass('outline');
+		// change href of anchors
+		anchorTag.attr('href',inverseUrl);
+		anchorTag.attr('data-inverse-url',url);
 
-	return films;
+		if (icon.hasClass('watchlist')) {
+			// set opposite value
+			that.setState({inWatchList: 1 - that.state.inWatchList});
+		} else if (icon.hasClass('seenlist')) {
+			// set opposite value
+			that.setState({inSeenList: 1 - that.state.inSeenList});
+		}
+
+		if( !fromFilmModal ){
+			// send data to film modal --> update seen and watch button
+			that.props.sendWatchSeen(that.state.inWatchList,that.state.inSeenList,that.state.movieInMyLists)
+		}
+
+	}).catch(err => {
+		console.log(err);
+	});
+};
+
+const setRequestDataToMyList = (hiddenData, listId=null) => {
+
+	return {
+		listId: listId,
+		movieId: Number(hiddenData.find("input[name='movieId']")[0].getAttribute('value') ),
+		posterPath: hiddenData.find("input[name='posterPath']")[0].getAttribute('value'),
+		title: hiddenData.find("input[name='title']")[0].getAttribute('value'),
+		overview: hiddenData.find("input[name='overview']")[0].getAttribute('value'),
+		originalLanguage: hiddenData.find("input[name='originalLanguage']")[0].getAttribute('value'),
+		myListId: listId,
+		voteAverage: Number(hiddenData.find("input[name='rating']")[0].getAttribute('value'))
+	}
 }

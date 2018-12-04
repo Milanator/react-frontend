@@ -60,14 +60,15 @@ class Login extends Component {
 		}).then(resp => {
 
 			let response = resp.data[0];
-			let profilePicture = response.profile_picture || '';
-			let name = response.name;
-			let id = response.id;
-			let days = 30;
 			// check existance and correctness of login user data
 			let isUser = response != undefined;
 
 			if (isUser) {
+
+				let profilePicture = response.profile_picture || '';
+				let name = response.name;
+				let id = response.id;
+				let days = 30;
 				// with expiration
 				setUserInBrowserStorage(email,days,profilePicture,name,id);
 				// redirect

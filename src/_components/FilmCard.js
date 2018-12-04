@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import axios from "axios";
 
 import '../css/filmcard.css';
 
 import {getClosest, textLimit} from "../_helpers/helper";
-import {ourApiUrl} from "../_helpers/variable";
 import ListButtons from "./ListButtons";
+import {addMyList, addSeenWatchList} from "../_helpers/method";
 
 
 class FilmCard extends Component {
@@ -41,98 +40,24 @@ class FilmCard extends Component {
 	// function for add to seen and watchlist list also
 	addSeenWatchList = (event) => {
 
-		event.preventDefault();
-		event.stopPropagation();
-
-		let that = this;
-		let icon = event.target;
-		let anchorTag = icon.parentNode;
-		let url = anchorTag.getAttribute('href');
-		let inverseUrl = anchorTag.getAttribute('data-inverse-url');
-
-		axios({
-			method: 'get',
-			url: url
-		}).then(() => {
-
-			// change visual of icon
-			icon.classList.toggle('outline');
-			// change href of anchors
-			anchorTag.setAttribute('href',inverseUrl);
-			anchorTag.setAttribute('data-inverse-url',url);
-
-			if (icon.classList.contains('watchlist')) {
-				// set opposite value
-				that.setState({inWatchList: 1 - that.state.inWatchList});
-			} else if (icon.classList.contains('seenlist')) {
-				// set opposite value
-				that.setState({inSeenList: 1 - that.state.inSeenList});
-			}
-
-			// send data to film modal --> update seen and watch button
-			that.props.sendWatchSeen(that.state.inWatchList,that.state.inSeenList,that.state.movieInMyLists)
-
-		}).catch(err => {
-			console.log(err);
-		});
-	};
+		addSeenWatchList(event,this,0)
+	}
 
 	// function for adding and removing to myList
-	addToMyList = (event) => {
+	addToMyList = (event) => {
 
-		let target = event.target;
-		target = getClosest(target,'.addToList');
-		let listId = Number(target.getAttribute('data-list-id'));
-		let data = {
-			listId: listId,
-			movieId: Number(target.getAttribute('data-movie-id')),
-			posterPath: target.getAttribute('data-poster-path'),
-			title: target.getAttribute('data-title'),
-			overview: target.getAttribute('data-overview'),
-			originalLanguage: target.getAttribute('data-original-language'),
-			myListId: listId,
-			rating: target.getAttribute('data-rating')
-		};
-		const {movieInMyLists} = this.state;
-		const index = movieInMyLists.indexOf(listId);
-		let that = this;
-		let url;
-
-		console.log( data );
-
-		// IF LIST CONTAINS MOVIE
-		if( index !== -1 ){
-
-			movieInMyLists.splice(index, 1);
-			url = ourApiUrl+'mylist/delete';
-		} else{		// IF LIST DOESNT CONTAIN MOVIE
-
-			movieInMyLists.push(listId);
-			url = ourApiUrl+'mylist/add';
-		}
-
-		axios({
-			method: 'post',
-			url: url,
-			data: data
-		}).then((res) => {
-
-			that.setState({movieInMyLists: movieInMyLists});
-			// send data to film modal --> update seen and watch button
-			that.props.sendWatchSeen(that.state.inWatchList,that.state.inSeenList,that.state.movieInMyLists)
-
-		}).catch(err => {
-			console.log(err);
-		});
+		addMyList(event,this,0);
 	}
 
 	render() {
 
-		const {id, poster_path, rating, title, overview, original_language,genres,userLists,movieInMyLists, ...rest} = this.props;
+		const {movieId, poster_path, rating, title, overview, original_language,genres,userLists,movieInMyLists, ...rest} = this.props;
 		const {userId,inWatchList,inSeenList} = this.state;
 
+		console.log( this.props )
+
 		return (
-			<div className="card" {...rest} key={id}>
+			<div className="card" {...rest} key={movieId}>
 				{ poster_path ? (
 					<img src={"https://image.tmdb.org/t/p/w500" + poster_path} className={'poster-picture'} alt="movie poster"/>
 				) : (
@@ -149,7 +74,7 @@ class FilmCard extends Component {
 					userId={userId}
 					inWatchList={inWatchList}
 					inSeenList={inSeenList}
-					filmId={id}
+					movieId={movieId}
 					rating={rating}
 					poster_path={poster_path}
 					title={title}

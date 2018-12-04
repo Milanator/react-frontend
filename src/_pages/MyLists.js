@@ -3,13 +3,14 @@ import axios from 'axios';
 import { Button, Icon } from 'semantic-ui-react';
 
 import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
-import { isMovieInSeenList, isMovieInWatchList, setFilmGenre, setMyListToMovie } from '../_helpers/method';
+import { setFilmGenre, setMyListToMovie } from '../_helpers/method';
 import '../css/main.css';
 
 import TopNavigation from './../_components/TopNavigation';
 import LoadingIndicator from './../_components/LoadingIndicator';
 import FilmCardSlider from './../_components/FilmCardSlider';
 import PageTitle from './../_components/PageTitle';
+import AddListModal from './../_components/AddListModal';
 
 let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
@@ -36,14 +37,15 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        let seenList, watchList, userLists, myListMovies, genresArray;
+
+        let userLists, myListMovies, genresArray;
         let { userId } = this.state;
 
         axios.all([
 
             // films
             axios.get(ourApiUrl + 'mylist/user/' + userId + '/all').then(res => {
-                console.log(res);
+
                 const films = res.data;
                 this.setState({ films });
             }).catch((error) => { console.log(error); }),
@@ -56,18 +58,6 @@ class Home extends Component {
 
             }).catch((error) => { console.log(error); }),
 
-            // seenlist
-            axios.get(ourApiUrl + 'seenlist/user/' + userId).then(res => {
-
-                seenList = res.data;
-            }).catch((error) => { console.log(error); }),
-
-            // watchlist
-            axios.get(ourApiUrl + 'watchlist/user/' + userId).then(res => {
-
-                watchList = res.data;
-            }).catch((error) => { console.log(error); }),
-
             // get all names and IDs of lists
             axios.get(ourApiUrl + "mylist/user/" + userId + "/category").then((res) => {
 
@@ -78,7 +68,6 @@ class Home extends Component {
             axios.get(ourApiUrl + "mylist/user/" + userId + "/all").then((res) => {
 
                 myListMovies = res.data;
-                // myListMovies = setMyListToMovie(this.state.films,myListMovies);
             }).catch((error) => {
 
                 console.log(error);
@@ -87,12 +76,11 @@ class Home extends Component {
         ]).then(() => {
 
             let films = setFilmGenre(genresArray, this.state.films);
-            films = isMovieInSeenList(films, seenList);
-            films = isMovieInWatchList(films, watchList);
-            films = setMyListToMovie(films, myListMovies);
+            films = setMyListToMovie(films, myListMovies,1);
 
             this.setState({ films: films, userLists: userLists, genres: genresArray });
         }).then(() => {
+
             this.createUserListsWithFilms();
         }).then(() => {
             this.setState({ isLoading: false });
@@ -113,11 +101,11 @@ class Home extends Component {
             let newList = { 'id': list.id, 'name': list.name, films: listFilms };
             userListsWithFilms.push(newList);
         });
+
         this.setState({ userListsWithFilms });
     }
 
     render() {
-        console.log(this.state);
         const { userListsWithFilms, userLists, isLoading, genres } = this.state;
 
         if (userListsWithFilms.length === 0 || isLoading || genres === 0) {
@@ -133,29 +121,46 @@ class Home extends Component {
                 <div>
                     <TopNavigation />
 
-                    <div className="container">
-
-                        <div className="mylists-button-panel">
-                            <Button
-                                icon
-                                inverted
-                                labelPosition='left'
-                                color='blue'>
-                                <Icon name='plus' />New List
-                            </Button>
-                        </div>
+                    <div className="container sliders">
+                        <AddListModal />
 
                         {userListsWithFilms.map(list => (
-                            <div>
-                                <PageTitle title={list.name} />
 
-                                <div className="slider-container">
-                                    <FilmCardSlider
-                                        films={list.films}
-                                        userLists={userLists}
-                                    />
+                            <div className="slider-component">
+
+                                <div className="list-title">
+                                    {list.name}
                                 </div>
+
+                                <div className="list-actions">
+
+                                    <span>
+                                        <i className="fas fa-pen blue-icon" aria-hidden="true"></i>
+                                        
+                                    </span>
+
+                                    {/* <Button.Group >
+                                    <Button icon >
+                                        <Icon 
+                                            name='pencil alternate'
+                                            className={'addToMyList blue-icon'}/>
+                                    </Button>
+                                    <Button icon >
+                                        <Icon 
+                                            name='trash'
+                                            className={'addToMyList blue-icon'}/>
+                                    </Button>
+                                    </Button.Group> */}
+                                </div>
+
+
+                                <FilmCardSlider
+                                    films={list.films}
+                                    userLists={userLists}
+                                />
+
                             </div>
+
                         ))}
                     </div>
 

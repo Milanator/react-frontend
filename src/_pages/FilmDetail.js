@@ -6,9 +6,12 @@ import TopNavigation from "../_components/TopNavigation";
 import "../css/FilmDetail.css"
 import ListButtons from "../_components/ListButtons";
 import"../_helpers/method"
+import ImageSlider from "../_components/ImageSlider";
 import {isMovieInSeenList, isMovieInWatchList, setFilmGenre, setMyListToMovie} from "../_helpers/method";
+import FilmCardSlider from "../_components/FilmCardSlider";
 
 let apiUrl = movieDbDomain + 'movie';
+var imageurl = "https://api.themoviedb.org/3/movie/";
 class FilmDetail extends React.Component {
 
     constructor(props) {
@@ -20,6 +23,7 @@ class FilmDetail extends React.Component {
             filmData: [],
             inSeenList:"",
             userLists: [],
+            images:[],
 
         }
        }
@@ -28,7 +32,7 @@ class FilmDetail extends React.Component {
 
         let filmId = this.state.filmId;
         let url = apiUrl + '/' + filmId + movieApiKeyPart;
-console.log(url);
+
         axios.get(url + "&append_to_response=videos")
             .then(res => {
                 console.log(res);
@@ -38,14 +42,17 @@ console.log(url);
         });
 
         let that = this;
-        let seenList, watchList, userLists, myListMovies, genresArray;
+        let seenList, watchList, userLists, myListMovies, genresArray,images;
         let { userId } = this.state;
         axios.all([
-            // seenlist
-            axios.get(ourApiUrl + 'seenlist/user/' + userId).then(res => {
-
-                seenList = res.data;
-            }).catch((error) => { console.log( error ); }),
+            //images
+            axios.get (imageurl +filmId+"/images?api_key=" + apikey)
+                .then(res => {
+                    console.log(res);
+                    this.setState({images: res.data})
+                }).catch(err => {
+                console.log(err);
+            }),
 
             // watchlist
             axios.get(ourApiUrl + 'watchlist/user/' + userId).then(res => {
@@ -86,26 +93,19 @@ console.log(url);
     }
 
     render() {
+        const {filmId, filmData, inSeenList, inWatchList,userLists,images} = this.state;
 
-        const {filmId, filmData, title, overview, poster_path, original_language,
-                vote_average,genres,inSeenList, inWatchList,userLists} = this.state;
-
-
-
-        if (filmId == 0 ||filmData ==0) {
+        if (filmId == 0 ||filmData ==0||images==0) {
             return <LoadingIndicator/>;
         } else {
             if (filmData.videos.results[0])
                 return(
                     <div>
-
                         <TopNavigation/>
                         <div className={"content"}>
-
-                            <img src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
+                            {console.log(images.backdrops)}
+                            <img className={"FilmDetailImage"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
                             <h1>{filmData.original_title}</h1>
-
-                            {console.log(filmData.poster_path)}
 
                                 <ListButtons
                                     id={filmData.filmId}
@@ -120,10 +120,44 @@ console.log(url);
                             <p>{filmData.overview}</p>
                             <p>Original language : {filmData.original_language}</p>
 
-
                             <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
                             </iframe>
 
+                            <table className="table">
+                                <tr>
+                                    <th>Release year</th>
+                                    <td>{filmData.release_date}</td>
+                                </tr>
+                                     <tbody>
+                                        <tr>
+                                            <th>Runtime</th>
+                                            <td>{filmData.runtime}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Status</th>
+                                            <td>{filmData.status}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Average vote</th>
+                                            <td>{filmData.vote_average *10}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Vote count</th>
+                                            <td>{filmData.vote_count}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Budget</th>
+                                            <td>{filmData.budget}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Revenue</th>
+                                            <td>{filmData.revenue}</td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                            <ImageSlider
+                                images={images.backdrops}
+                                />
                         </div>
                     </div>
                 );

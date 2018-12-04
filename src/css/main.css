@@ -9,7 +9,7 @@
     --text-menu: 20px;
   }
 
-.blue{
+.blue-icon {
 	color: #2185d0!important;
 	margin-right: 2px;
 }
@@ -51,4 +51,9 @@ body {
 .modal i.icon.add{
 	height: 30px;
 	display: inline-block;
+}
+
+.ui.dropdown>.dropdown.icon{
+	top: 12px;
+	margin-left: 6px !important;
 }
