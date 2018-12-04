@@ -9,6 +9,11 @@
     --text-menu: 20px;
   }
 
+.blue{
+	color: #2185d0!important;
+	margin-right: 2px;
+}
+
 body {
     background-color: var(--white);
     color: var(--rich-black);
@@ -43,6 +48,7 @@ body {
 	align-items: center; /* align vertical */
 }
 
-i.icon.add{
-	color: #2185d0!important;
+.modal i.icon.add{
+	height: 30px;
+	display: inline-block;
 }
