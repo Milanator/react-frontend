@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button, Icon } from 'semantic-ui-react';
 
 import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
-import { isMovieInSeenList, isMovieInWatchList, setFilmGenre, setMyListToMovie } from '../_helpers/method';
+import { setFilmGenre, setMyListToMovie } from '../_helpers/method';
 import '../css/main.css';
 
 import TopNavigation from './../_components/TopNavigation';
@@ -36,14 +36,15 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        let seenList, watchList, userLists, myListMovies, genresArray;
+
+        let userLists, myListMovies, genresArray;
         let { userId } = this.state;
 
         axios.all([
 
             // films
             axios.get(ourApiUrl + 'mylist/user/' + userId + '/all').then(res => {
-                console.log(res);
+
                 const films = res.data;
                 this.setState({ films });
             }).catch((error) => { console.log(error); }),
@@ -56,18 +57,6 @@ class Home extends Component {
 
             }).catch((error) => { console.log(error); }),
 
-            // seenlist
-            axios.get(ourApiUrl + 'seenlist/user/' + userId).then(res => {
-
-                seenList = res.data;
-            }).catch((error) => { console.log(error); }),
-
-            // watchlist
-            axios.get(ourApiUrl + 'watchlist/user/' + userId).then(res => {
-
-                watchList = res.data;
-            }).catch((error) => { console.log(error); }),
-
             // get all names and IDs of lists
             axios.get(ourApiUrl + "mylist/user/" + userId + "/category").then((res) => {
 
@@ -78,7 +67,6 @@ class Home extends Component {
             axios.get(ourApiUrl + "mylist/user/" + userId + "/all").then((res) => {
 
                 myListMovies = res.data;
-                // myListMovies = setMyListToMovie(this.state.films,myListMovies);
             }).catch((error) => {
 
                 console.log(error);
@@ -87,12 +75,11 @@ class Home extends Component {
         ]).then(() => {
 
             let films = setFilmGenre(genresArray, this.state.films);
-            films = isMovieInSeenList(films, seenList);
-            films = isMovieInWatchList(films, watchList);
             films = setMyListToMovie(films, myListMovies);
 
             this.setState({ films: films, userLists: userLists, genres: genresArray });
         }).then(() => {
+
             this.createUserListsWithFilms();
         }).then(() => {
             this.setState({ isLoading: false });
@@ -113,6 +100,8 @@ class Home extends Component {
             let newList = { 'id': list.id, 'name': list.name, films: listFilms };
             userListsWithFilms.push(newList);
         });
+
+        console.log(userListsWithFilms)
         this.setState({ userListsWithFilms });
     }
 
@@ -133,7 +122,7 @@ class Home extends Component {
                 <div>
                     <TopNavigation />
 
-                    <div className="container">
+                    <div className="container sliders">
 
                         <div className="mylists-button-panel">
                             <Button

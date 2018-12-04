@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Pagination} from 'semantic-ui-react';
 
 import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
-import {isMovieInSeenList, isMovieInWatchList, setFilmGenre, setMyListToMovie} from '../_helpers/method';
+import {setFilmGenre, setMyListToMovie} from '../_helpers/method';
 import '../css/main.css';
 
 import FilmModal from "../_components/FilmModal";
@@ -45,7 +45,7 @@ class Home extends Component {
 	componentDidMount() {
 
 		let that = this;
-		let seenList, watchList, userLists, myListMovies, genresArray;
+		let  userLists, myListMovies, genresArray;
 		let { userId } = this.state;
 
 		axios.all([
@@ -66,18 +66,6 @@ class Home extends Component {
 
 			}).catch((error) => { console.log( error ); }),
 
-			// seenlist
-			axios.get(ourApiUrl + 'seenlist/user/' + userId).then(res => {
-
-				seenList = res.data;
-			}).catch((error) => { console.log( error ); }),
-
-			// watchlist
-			axios.get(ourApiUrl + 'watchlist/user/' + userId).then(res => {
-
-				watchList = res.data;
-			}).catch((error) => { console.log( error ); }),
-
 			// get all names and idies lists
 			axios.get(ourApiUrl + "mylist/user/"+userId+"/category").then((res) => {
 
@@ -88,7 +76,6 @@ class Home extends Component {
 			axios.get(ourApiUrl + "mylist/user/"+userId+"/all").then((res) => {
 
 				myListMovies = res.data;
-				// myListMovies = setMyListToMovie(this.state.films,myListMovies);
 			}).catch((error) => {
 
 				console.log( error );
@@ -97,8 +84,6 @@ class Home extends Component {
 		]).then(() => {
 
 			let films = setFilmGenre(genresArray, this.state.films);
-			films = isMovieInSeenList(films,seenList);
-			films = isMovieInWatchList(films,watchList);
 			films = setMyListToMovie(films,myListMovies);
 
 			this.setState({ films:films,userLists:userLists,genres: genresArray });
@@ -126,6 +111,7 @@ class Home extends Component {
 
 			// request film results for requested page
 			axios.get(requestUrl).then(res => {
+
 				let films = res.data.results;
 				films = setFilmGenre(this.state.genres, films);
 				this.setState({ films });
@@ -162,20 +148,20 @@ class Home extends Component {
 							chosenYear={this.state.chosenYear}
 							genres={this.state.genres} />
 
-						{this.state.films.map((film) => (
+						{this.state.films.map((movie) => (
 							<FilmModal
-								id={film.id}
-								poster_path={film.poster_path}
-								rating={film.vote_average * 10}
-								title={film.title}
-								overview={film.overview}
-								original_language={film.original_language}
-								key={film.id}
-								inSeenList={film.inSeenList}
-								inWatchList={film.inWatchList}
-								movieInMyLists={film.inMyLists}
+								movieId={movie.id}
+								poster_path={movie.poster_path}
+								rating={movie.vote_average}
+								title={movie.title}
+								overview={movie.overview}
+								original_language={movie.original_language}
+								key={movie.id}
+								inSeenList={movie.inSeenList}
+								inWatchList={movie.inWatchList}
+								movieInMyLists={movie.inMyLists}
 								userLists={this.state.userLists}
-								genres={film.genre}
+								genres={movie.genre}
 							/>
 						))}
 					</div>

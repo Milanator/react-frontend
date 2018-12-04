@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Pagination} from 'semantic-ui-react';
 
 import {movieDbDomain, movieApiKeyPart, ourApiUrl, apikey} from '../_helpers/variable';
-import {isMovieInSeenList, isMovieInWatchList, setFilmGenre, setMyListToMovie} from '../_helpers/method';
+import {setFilmGenre, setMyListToMovie} from '../_helpers/method';
 import '../css/main.css';
 
 import FilmModal from "../_components/FilmModal";
@@ -96,8 +96,6 @@ class SearchFilms extends Component {
 		]).then(() => {
 
 			let films = setFilmGenre(this.state.genres, this.state.films);
-			films = isMovieInSeenList(films,seenList);
-			films = isMovieInWatchList(films,watchList);
 			films = setMyListToMovie(films,myListMovies);
 
 			this.setState({ films:films,userLists:userLists,genres: genresArray });

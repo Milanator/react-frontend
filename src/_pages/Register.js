@@ -21,6 +21,7 @@ class Register extends Component {
 		};
 		this.userRegister = this.userRegister.bind(this);
 		this.onChangeInput = this.onChangeInput.bind(this);
+		this.createWatchSeenList = this.createWatchSeenList.bind(this);
 	}
 
 	onChangeInput = (event) => {
@@ -30,6 +31,40 @@ class Register extends Component {
 
 		// this.state.user[index] = value;
 		this.state.user[index] = value;
+	}
+
+	createWatchSeenList = (userId) => {
+
+		let url = ourApiUrl+'mylist/create';
+
+		axios.all([
+			axios({
+				method: 'post',
+				url: url,
+				data: {
+					userId: userId,
+					name: 'Watch list',
+					first: 1,
+					shortcut: 'watch'
+				}
+			}),
+			axios({
+				method: 'post',
+				url: url,
+				data: {
+					userId: userId,
+					name: 'Seen list',
+					first: 1,
+					shortcut: 'seen'
+				}
+			}),
+
+		]).then((resp) => {
+			console.log( resp );
+
+		}).catch((error) => {
+			console.log( error )
+		})
 	}
 
 	userRegister = (event) => {
@@ -61,9 +96,12 @@ class Register extends Component {
 					that.setState({ error: resp.data.sqlMessage })
 				} else{
 
-					window.location.href = baseUrl + 'login';
-					// that.setState({ success: 'Successful registration!' })
+					let userId = resp.data.insertId;
+					this.createWatchSeenList(userId);
+					that.setState({ success: 'Successful registration!' })
 				}
+			}).then(() => {
+				window.location.href = baseUrl + 'login';
 			}).catch(err => {
 				console.log(err);
 			})

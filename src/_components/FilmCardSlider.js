@@ -26,7 +26,7 @@ class FilmCardSlider extends Component {
                             <FilmModal
                                 id={film.id}
                                 poster_path={film.poster_path}
-                                rating={film.vote_average * 10}
+                                rating={film.vote_average}
                                 title={film.title}
                                 overview={film.overview}
                                 original_language={film.original_language}

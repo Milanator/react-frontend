@@ -10,7 +10,7 @@
 
 .card {
     float: left;
-    width: calc(25% - 8px) !important;
+    width: calc(25% - 8px);
     margin: 4px 4px;
     height: 570px;
 	padding: 0 15px;
@@ -98,4 +98,9 @@ card #p-bottom {
 	right: 0;
 	padding: 0 15px;
 	margin: 4px 0px 12px 0px;
+}
+
+.sliders .card{
+	float: none;
+	width: calc(100% - 8px);
 }

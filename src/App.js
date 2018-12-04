@@ -30,7 +30,8 @@ class App extends Component {
 	render() {
 		return (
 			<div className={'app-routes'}>
-				<Route exact path={['/login','/']} component={Login}/>
+				<Route exact path={'/login'} component={Login}/>
+				<Route exact path={'/'} component={Login}/>
 				<Route exact path={'/register'} component={Register}/>
 
 				{/* FOR LOGGED USERS */}
