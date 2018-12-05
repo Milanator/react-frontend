@@ -8,6 +8,8 @@ import ListButtons from "../_components/ListButtons";
 import"../_helpers/method"
 import ImageSlider from "../_components/ImageSlider";
 import {setFilmGenre, setMyListToMovie} from "../_helpers/method";
+import FilmCardSlider from "../_components/FilmCardSlider";
+import ImageLightbox from "../_components/ImageLightbox";
 import CommentBlock from "../_components/CommentBlock";
 
 let apiUrl = movieDbDomain + 'movie';
@@ -95,18 +97,17 @@ class FilmDetail extends React.Component {
         if ( filmId == 0 || filmData == 0 || images == 0 ) {
             return <LoadingIndicator/>;
         } else {
-            if (filmData.videos.results[0])
                 return(
                     <div>
                         <TopNavigation/>
                         <div className={"content"}>
                             {console.log(images.backdrops)}
-                            <img className={"FilmDetailImage"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
+                            <img className="filmdetailimg" src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
                             <h1>{filmData.original_title}</h1>
 
                                 <ListButtons
                                     id={filmData.filmId}
-                                    rating={filmData.vote_average *10}
+                                    rating={filmData.vote_average }
                                     inSeenList={inSeenList}
                                     inWatchList={inWatchList}
                                     sendWatchSeen={this.setWatchSeen}
@@ -116,9 +117,9 @@ class FilmDetail extends React.Component {
 
                             <p>{filmData.overview}</p>
                             <p>Original language : {filmData.original_language}</p>
-
+                                {filmData.videos.results[0] && (
                             <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
-                            </iframe>
+                            </iframe>)}
 
                             <table className="table">
                                 <tr>
@@ -128,7 +129,7 @@ class FilmDetail extends React.Component {
                                      <tbody>
                                         <tr>
                                             <th>Runtime</th>
-                                            <td>{filmData.runtime}</td>
+                                            <td>{filmData.runtime} minutes</td>
                                         </tr>
                                         <tr>
                                             <th>Status</th>
@@ -136,7 +137,7 @@ class FilmDetail extends React.Component {
                                         </tr>
                                         <tr>
                                             <th>Average vote</th>
-                                            <td>{filmData.vote_average *10}</td>
+                                            <td>{filmData.vote_average *10}%</td>
                                         </tr>
                                         <tr>
                                             <th>Vote count</th>
@@ -144,43 +145,20 @@ class FilmDetail extends React.Component {
                                         </tr>
                                         <tr>
                                             <th>Budget</th>
-                                            <td>{filmData.budget}</td>
+                                            <td>{filmData.budget}$</td>
                                         </tr>
                                         <tr>
                                             <th>Revenue</th>
-                                            <td>{filmData.revenue}</td>
+                                            <td>{filmData.revenue}$</td>
                                         </tr>
                                 </tbody>
                             </table>
                             <ImageSlider
                                 images={images.backdrops}
                                 />
+                            <ImageLightbox image = {images.backdrops} />
+
 							<CommentBlock/>
-                        </div>
-                    </div>
-                );
-            else{
-                return(
-                    <div>
-
-                        <TopNavigation/>
-                        <div className={"content"}>
-
-                            <img src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
-                            <h1>{filmData.original_title}</h1>
-
-                            <ListButtons
-                                id={filmData.filmId}
-                                rating={filmData.vote_average *10}
-                                inSeenList={inSeenList}
-                                inWatchList={inWatchList}
-                                sendWatchSeen={this.setWatchSeen}
-                                userLists={userLists}
-                            />
-
-
-                            <p>{filmData.overview}</p>
-                            <p>Original language : {filmData.original_language}</p>
 
                         </div>
                     </div>
@@ -188,7 +166,7 @@ class FilmDetail extends React.Component {
             }
 
         }
-    }
+
 }
 
 
