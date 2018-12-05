@@ -16,7 +16,6 @@ class AddListModal extends Component {
     }
 
     saveList(event) {
-        console.log(this.inputListName.inputRef.value);
 
         axios.post(ourApiUrl + 'mylist/create', {
             userId: this.state.userId,
@@ -30,9 +29,6 @@ class AddListModal extends Component {
           .catch(function (error) {
             console.log(error);
           });
-
-            //body.userId,body.name,body.first,body.shortcut
-
     }
 
     render() {

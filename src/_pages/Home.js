@@ -142,7 +142,7 @@ class Home extends Component {
 				<div>
 					<TopNavigation />
 					<div className="container">
-						<PageTitle title="Find the Latest Movies on Movie Bot" />
+						<PageTitle title="Discover New Movies" />
 						<FilterMenu
 							onUpdate={this.onUpdate.bind(this)}
 							chosenGenre={this.state.chosenGenre}

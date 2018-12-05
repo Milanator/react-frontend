@@ -11,6 +11,7 @@ import TopNavigation from './../_components/TopNavigation';
 import LoadingIndicator from './../_components/LoadingIndicator';
 import FilmCardSlider from './../_components/FilmCardSlider';
 import AddListModal from './../_components/AddListModal';
+import EditListModal from './../_components/EditListModal';
 
 
 let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
@@ -35,6 +36,8 @@ class Home extends Component {
             genres: []
         };
 
+        this.deleteList = this.deleteList.bind(this);
+
     }
 
     componentDidMount() {
@@ -46,7 +49,6 @@ class Home extends Component {
 
             // films
             axios.get(ourApiUrl + 'mylist/user/' + userId + '/all').then(res => {
-
                 const films = res.data;
                 this.setState({ films });
             }).catch((error) => { console.log(error); }),
@@ -61,7 +63,6 @@ class Home extends Component {
 
             // get all names and IDs of lists
             axios.get(ourApiUrl + "mylist/user/" + userId + "/category").then((res) => {
-
                 userLists = res.data;
             }).catch((error) => { console.log(error); }),
 
@@ -110,14 +111,35 @@ class Home extends Component {
             });
 
             let newList = { 'id': list.id, 'name': list.name, films: listFilms };
+
+            let newList = { 'id': list.id, 'name': list.name, 'first': list.first, films: listFilms };
+
             userListsWithFilms.push(newList);
         });
 
         this.setState({ userListsWithFilms });
     }
 
+    deleteList(id) {
+        axios({
+            data: {
+                myListId: id
+            },
+            method: 'delete',
+            url: ourApiUrl + 'mylist/delete'
+        })
+            .then(function (response) {
+                console.log(response);
+                window.location.reload();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
     render() {
         const { userListsWithFilms, userLists, isLoading, genres } = this.state;
+        var disabled;
 
         if (userListsWithFilms.length === 0 || isLoading || genres === 0) {
             return (
@@ -135,8 +157,15 @@ class Home extends Component {
                     <div className="container sliders">
                         <AddListModal />
 
-                        {userListsWithFilms.map(list => (
+                        {userListsWithFilms.map(list => {
 
+                            if(list.first == 1) {
+                                disabled = 'disabled';
+                            } else {
+                                disabled = '';
+                            }
+
+                            return(
                             <div>
 
                                 <div className="list-header">
@@ -146,22 +175,24 @@ class Home extends Component {
                                     </div>
 
                                     <div className="list-actions">
+                                        <EditListModal 
+                                            myListId={list.id}
+                                            myListName={list.name}
+                                            disabled={disabled}
+                                        />
 
-                                        <Button.Group >
-                                            <Button icon >
-                                                <Icon
-                                                    name='pencil alternate'
-                                                    className={'addToMyList blue-icon'} />
-                                            </Button>
-                                            <Button icon >
-                                                <Icon
-                                                    name='trash'
-                                                    className={'addToMyList blue-icon'} />
-                                            </Button>
-                                        </Button.Group>
+                                        <Button
+                                            disabled={disabled}
+                                            className="second-delete"
+                                            icon
+                                            onClick={() => this.deleteList(list.id)}  >
+                                            <Icon
+                                                name='trash'
+                                                className={'addToMyList blue-icon'} />
+                                        </Button>
                                     </div>
                                 </div>
-                                
+
                                 <hr className="slider-divider" />
 
                                 <FilmCardSlider
@@ -170,7 +201,8 @@ class Home extends Component {
                                 />
 
                             </div>
-                        ))}
+                            )
+                        })}
                     </div>
 
                 </div>
