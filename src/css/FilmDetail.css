@@ -1,0 +1,15 @@
+.filmdetailimg {
+    float: left;
+    display: block;
+    margin-right: 15px;
+}
+
+.content{
+}
+
+.table{
+    border:1px solid #dee2e6;
+    width: 300px;
+
+}
+
