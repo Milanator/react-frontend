@@ -29,8 +29,8 @@ body {
 .page-title {
     text-align: left;
     font-size: var(--text-heading-font-size);
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 60px;
+    margin-bottom: 70px;
     text-transform: uppercase;
     color: var(--standard-blue);
 }
