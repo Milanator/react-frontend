@@ -82,7 +82,7 @@ class Home extends Component {
             // set genres from json to array
             films.forEach((film) => {
 
-            	film.genres = JSON.parse(film.genres)
+                film.genres = film.genres ? JSON.parse(film.genres) : []
 			})
 
             this.setState({ films: films, userLists: userLists, genres: genresArray });
@@ -109,8 +109,6 @@ class Home extends Component {
                     listFilms.push(film);
                 }
             });
-
-            let newList = { 'id': list.id, 'name': list.name, films: listFilms };
 
             let newList = { 'id': list.id, 'name': list.name, 'first': list.first, films: listFilms };
 
