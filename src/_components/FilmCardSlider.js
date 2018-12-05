@@ -60,12 +60,6 @@ class FilmCardSlider extends Component {
                         color="blue"
                         content="Find Movies"
                         />
-                        <Button 
-                        as={ Link } 
-                        to={'/home'}
-                        color="blue"
-                        content="Find Movies"
-                        />
                     </p>
                 </div>
             )
