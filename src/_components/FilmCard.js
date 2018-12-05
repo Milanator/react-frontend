@@ -5,6 +5,7 @@ import '../css/filmcard.css';
 import {textLimit} from "../_helpers/helper";
 import ListButtons from "./ListButtons";
 import {addMyList, addSeenWatchList} from "../_helpers/method";
+import {capitalize} from "lodash/string";
 
 
 class FilmCard extends Component {
@@ -89,7 +90,7 @@ class FilmCard extends Component {
 
 				<div className={'fix-bottom'}>
 					<p>
-						Language: {original_language}
+						Language: {capitalize(original_language)}
 					</p>
 
 					<p>

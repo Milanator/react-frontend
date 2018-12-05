@@ -68,4 +68,3 @@ export function textLimit(str,count) {
 		str.substring(0, count) + "..."
 }
 
-

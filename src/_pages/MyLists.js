@@ -137,7 +137,7 @@ class Home extends Component {
 
                         {userListsWithFilms.map(list => (
 
-                            <div>
+                            <div key={list.id}>
 
                                 <div className="list-header">
 

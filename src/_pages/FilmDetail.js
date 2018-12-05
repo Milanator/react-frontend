@@ -8,10 +8,10 @@ import ListButtons from "../_components/ListButtons";
 import"../_helpers/method"
 import ImageSlider from "../_components/ImageSlider";
 import {setFilmGenre, setMyListToMovie} from "../_helpers/method";
-import FilmCardSlider from "../_components/FilmCardSlider";
+import CommentBlock from "../_components/CommentBlock";
 
 let apiUrl = movieDbDomain + 'movie';
-var imageurl = "https://api.themoviedb.org/3/movie/";
+let imageurl = "https://api.themoviedb.org/3/movie/";
 class FilmDetail extends React.Component {
 
     constructor(props) {
@@ -41,8 +41,7 @@ class FilmDetail extends React.Component {
             console.log(err);
         });
 
-        let that = this;
-        let seenList, watchList, userLists, myListMovies, genresArray,images;
+        let watchList, userLists, myListMovies, genresArray;
         let { userId } = this.state;
         axios.all([
             //images
@@ -93,7 +92,7 @@ class FilmDetail extends React.Component {
     render() {
         const {filmId, filmData, inSeenList, inWatchList,userLists,images} = this.state;
 
-        if (filmId == 0 ||filmData ==0||images==0) {
+        if ( filmId == 0 || filmData == 0 || images == 0 ) {
             return <LoadingIndicator/>;
         } else {
             if (filmData.videos.results[0])
@@ -156,6 +155,7 @@ class FilmDetail extends React.Component {
                             <ImageSlider
                                 images={images.backdrops}
                                 />
+							<CommentBlock/>
                         </div>
                     </div>
                 );

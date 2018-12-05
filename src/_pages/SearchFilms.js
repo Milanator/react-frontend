@@ -66,18 +66,6 @@ class SearchFilms extends Component {
 				genresArray.unshift({ id: 0, name: 'All' });
 			}).catch((error) => { console.log( error ); }),
 
-			// seenlist
-			axios.get(ourApiUrl + 'seenlist/user/' + userId).then(res => {
-
-				seenList = res.data;
-			}).catch((error) => { console.log( error ); }),
-
-			// watchlist
-			axios.get(ourApiUrl + 'watchlist/user/' + userId).then(res => {
-
-				watchList = res.data;
-			}).catch((error) => { console.log( error ); }),
-
 			// get all names and idies lists
 			axios.get(ourApiUrl + "mylist/user/"+userId+"/category").then((res) => {
 
@@ -95,8 +83,10 @@ class SearchFilms extends Component {
 
 		]).then(() => {
 
-			let films = setFilmGenre(this.state.genres, this.state.films);
+			let films = setFilmGenre(genresArray, this.state.films);
 			films = setMyListToMovie(films,myListMovies);
+
+			console.log( films );
 
 			this.setState({ films:films,userLists:userLists,genres: genresArray });
 		}).then(() => {
@@ -163,7 +153,7 @@ class SearchFilms extends Component {
 							<FilmModal
 								id={film.id}
 								poster_path={film.poster_path}
-								rating={film.vote_average * 10}
+								rating={film.vote_average}
 								title={film.title}
 								overview={film.overview}
 								original_language={film.original_language}
