@@ -1,5 +1,6 @@
 :root{
-    --rich-black: #00171F;
+    --prussian-blue: #003459;
+    --standard-blue: #2185d0;
 }
 
 #picture img{
@@ -13,7 +14,7 @@
     height: 270px;
     width: 100%;
     text-align: center;
-    background-color: var(--rich-black);
+    background-color: var(--prussian-blue);
     color: white;
 }
 
@@ -22,6 +23,13 @@
     min-height: 400px;
     background-color: #f4f5f7;
     padding: 20px;
-    box-shadow: 5px 5px 10px #00171F;
 }
 
+#informations > p {
+    color: darkred;
+}
+
+.btn.btn-primary {
+    background-color: var(--standard-blue) !important;
+    border-color: var(--standard-blue) !important;
+}

@@ -55,6 +55,12 @@ class FilmCardSlider extends Component {
                     You Haven't Added Any Movies to This List
                     </p>
                     <p>
+                    <Button 
+                        as={ Link } 
+                        to={'/home'}
+                        color="blue"
+                        content="Find Movies"
+                        />
                         <Button 
                         as={ Link } 
                         to={'/home'}
