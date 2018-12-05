@@ -34,7 +34,7 @@ class App extends Component {
 
 				{/* FOR LOGGED USERS */}
 				<Auth path={'/home'} exact component={Home} onEnter={Auth}/>
-				<Auth path={'/film/search/:value'} exact component={SearchFilms}/>
+				<Auth path={'/movie/search/:value'} exact component={SearchFilms}/>
 				<Auth path={'/film/:id?'} exact component={FilmDetail} />
 				<Auth path={'/mylists'} exact component={MyLists}/>
 				<Auth path={'/profile'} exact component={Profile}/>

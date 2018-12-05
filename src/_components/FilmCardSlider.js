@@ -9,6 +9,7 @@ import { Button } from 'semantic-ui-react';
 
 
 class FilmCardSlider extends Component {
+
     render() {
         const { films, userLists } = this.props;
 
@@ -38,7 +39,7 @@ class FilmCardSlider extends Component {
                                     inWatchList={film.inWatchList}
                                     movieInMyLists={film.inMyLists}
                                     userLists={userLists}
-                                    genres={film.genre}
+                                    genres={film.genres}
                                 />
                             </div>
                         ))}

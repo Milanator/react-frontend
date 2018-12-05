@@ -68,3 +68,11 @@ body {
 	top: 12px;
 	margin-left: 6px !important;
 }
+
+.ui.pagination.menu{
+	margin: 15px 0 !important;
+}
+
+.container.sliders{
+	margin-bottom: 10px;
+}

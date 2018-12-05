@@ -82,7 +82,7 @@ class FilmModal extends Component {
 										userId={userId}
 										inWatchList={inWatchList}
 										inSeenList={inSeenList}
-										filmId={movieId}
+										movieId={movieId}
 										rating={rating}
 										poster_path={poster_path}
 										title={title}

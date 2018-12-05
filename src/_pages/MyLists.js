@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button, Icon } from 'semantic-ui-react';
 
 import { movieDbDomain, movieApiKeyPart, ourApiUrl } from '../_helpers/variable';
-import { setFilmGenre, setMyListToMovie } from '../_helpers/method';
+import { setMyListToMovie } from '../_helpers/method';
 
 import '../css/main.css';
 
@@ -96,14 +96,19 @@ class Home extends Component {
     }
 
     createUserListsWithFilms() {
+
         let userListsWithFilms = [];
+
         this.state.userLists.map(list => {
+
             let listFilms = [];
             this.state.films.map(film => {
+
                 if (list.id == film.myList_id) {
                     listFilms.push(film);
                 }
             });
+
             let newList = { 'id': list.id, 'name': list.name, films: listFilms };
             userListsWithFilms.push(newList);
         });

@@ -169,7 +169,6 @@ class Home extends Component {
 
 					<div className="pagination-component">
 						<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange.bind(this)} />
-
 					</div>
 				</div>
 
