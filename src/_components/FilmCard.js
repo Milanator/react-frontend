@@ -53,7 +53,7 @@ class FilmCard extends Component {
 	render() {
 
 		const {movieId, poster_path, rating, title, overview, original_language,genres,userLists,movieInMyLists, ...rest} = this.props;
-		const {userId,inWatchList,inSeenList} = this.state;
+		const {userId} = this.state;
 
 		return (
 			<div className="card" {...rest} key={movieId}>
@@ -69,10 +69,7 @@ class FilmCard extends Component {
 					userLists={userLists}
 					movieInMyLists={movieInMyLists}
 					addToMyList={this.addToMyList}
-					addSeenWatchList={this.addSeenWatchList}
 					userId={userId}
-					inWatchList={inWatchList}
-					inSeenList={inSeenList}
 					movieId={movieId}
 					rating={rating}
 					poster_path={poster_path}

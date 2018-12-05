@@ -11,6 +11,7 @@ import TopNavigation from './../_components/TopNavigation';
 import PageTitle from '../_components/PageTitle';
 import FilterMenu from '../_components/FilterMenu';
 import LoadingIndicator from './../_components/LoadingIndicator';
+import {unSlugify} from "../_helpers/helper";
 
 let apiUrlParams = "&page="+1+"&language=en-US&query=";
 let apiUrl = movieDbDomain + "search/movie?api_key=" + apikey + apiUrlParams;
@@ -37,7 +38,7 @@ class SearchFilms extends Component {
 			userLists: [],
 			isLoading: true,
 			genres: [],
-			searchWord: this.props.match.params.value
+			searchWord: unSlugify(this.props.match.params.value)
 		};
 
 	}
@@ -46,8 +47,9 @@ class SearchFilms extends Component {
 	componentDidMount() {
 
 		let that = this;
-		let seenList, watchList, userLists, myListMovies, genresArray;
+		let userLists, myListMovies, genresArray;
 		let { userId } = this.state;
+
 
 		axios.all([
 

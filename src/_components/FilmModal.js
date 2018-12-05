@@ -8,7 +8,6 @@ import { addMyList, addSeenWatchList } from "../_helpers/method";
 import FilmCard from './FilmCard';
 import ListButtons from "./ListButtons";
 import {capitalize} from "lodash/string";
-
 class FilmModal extends Component {
 
     constructor(props) {
