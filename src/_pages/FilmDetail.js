@@ -8,7 +8,6 @@ import ListButtons from "../_components/ListButtons";
 import"../_helpers/method"
 import ImageSlider from "../_components/ImageSlider";
 import {setFilmGenre, setMyListToMovie} from "../_helpers/method";
-import FilmCardSlider from "../_components/FilmCardSlider";
 import ImageLightbox from "../_components/ImageLightbox";
 import CommentBlock from "../_components/CommentBlock";
 

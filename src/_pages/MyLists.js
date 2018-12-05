@@ -136,10 +136,10 @@ class Home extends Component {
     }
 
     render() {
-        const { userListsWithFilms, userLists, isLoading, genres } = this.state;
-        var disabled;
+        const { userListsWithFilms, userLists, isLoading } = this.state;
+        let disabled;
 
-        if (userListsWithFilms.length === 0 || isLoading || genres === 0) {
+        if ( isLoading ) {
             return (
                 <div>
                     <TopNavigation />
