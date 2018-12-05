@@ -1,11 +1,12 @@
 :root {
   --rich-black: #00171F;
-  --standard-blue: #4d9dd9;
+  --standard-blue: #2185d0;
+  --prussian-blue: #003459;
   --text-menu: 20px;
 }
 
 .top-navigation {
-  background-color: var(--rich-black);
+  background-color: var(--prussian-blue);
   height: 100px;
   font-size: var(--text-menu);
   color: var(--standard-blue);

@@ -127,8 +127,6 @@ export const addSeenWatchList = (event,that,fromFilmModal = 0) => {
 	let url = anchorTag.attr('href');
 	let inverseUrl = anchorTag.attr('data-inverse-url');
 
-	console.log( icon.closest('.addToList')[0] );
-
 	axios({
 		method: 'post',
 		url: url,

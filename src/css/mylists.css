@@ -1,6 +1,7 @@
 :root {
     --prussian-blue: #003459;
-    --vivid-cerulean: #00A8E8;
+    --standard-blue: #2185d0;
+    --text-menu: 20px;
 }
 
 .mylists-button-panel {
@@ -17,16 +18,25 @@
     height: 208px;
 }
 
-.list-title {
-    text-align: left;
-    font-size: var(--text-heading-font-size);
-    margin-top: 40px;
-    margin-bottom: 25px;
-    text-transform: uppercase;
-    color: var(--vivid-cerulean);
+.list-header {
+    overflow: hidden;
 }
 
-.slider-component {
+.list-title {
+    height: 40px;
+    float: left;
+    text-align: left;
+    font-size: var(--text-heading-font-size);
+    margin-top: 50px;
+    text-transform: uppercase;
+    color: var(--standard-blue);
+}
+
+.list-actions {
+    height: 40px;
+    float: right;
+    overflow: hidden;
+    margin-top: 45px;
 }
 
 .image-prps{

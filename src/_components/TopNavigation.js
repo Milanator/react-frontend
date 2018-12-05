@@ -36,10 +36,10 @@ class TopNavigation extends Component {
 			<div>
 				<div className="top-navigation">
 					<Grid columns="equal">
-						<GridColumn width={7}>
+						<GridColumn width={11}>
 							<Image src={logo} as={Link} to="/home" alt="logo" />
 						</GridColumn>
-						<GridColumn className="search-field" verticalAlign="middle" width={7}>
+						<GridColumn className="search-field" verticalAlign="middle" width={3}>
 							<SearchInput/>
 						</GridColumn>
 						<GridColumn verticalAlign="middle" width={2}>

@@ -1,5 +1,5 @@
 :root {
-    --standard-blue: #4d9dd9;
+    --standard-blue: #2185d0;
   }
 
 .content {
@@ -12,8 +12,8 @@
     float: left;
     width: calc(25% - 8px);
     margin: 4px 4px;
-    height: 570px;
-	padding: 0 15px;
+    height: 520px;
+	padding: 15px 15px;
 }
 
 .card img.poster-picture,

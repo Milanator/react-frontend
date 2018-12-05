@@ -152,7 +152,7 @@ class SearchFilms extends Component {
 				<div>
 					<TopNavigation />
 					<div className="container">
-						<PageTitle title={'Search for "' + this.state.searchWord + '"'} />
+						<PageTitle title={'Results for "' + this.state.searchWord + '"'} />
 						<FilterMenu
 							onUpdate={this.onUpdate.bind(this)}
 							chosenGenre={this.state.chosenGenre}

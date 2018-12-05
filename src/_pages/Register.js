@@ -43,7 +43,7 @@ class Register extends Component {
 				url: url,
 				data: {
 					userId: userId,
-					name: 'Watch list',
+					name: 'Watchlist',
 					first: 1,
 					shortcut: 'watch'
 				}
@@ -53,7 +53,7 @@ class Register extends Component {
 				url: url,
 				data: {
 					userId: userId,
-					name: 'Seen list',
+					name: 'Completed movies',
 					first: 1,
 					shortcut: 'seen'
 				}

@@ -89,7 +89,7 @@ export default class SearchInput extends Component {
 	handleSubmit = (event) => {
 
 		if(event.keyCode === 13 && event.shiftKey === false) {
-			window.location.href = baseUrl + 'film/search/' + this.state.value;
+			window.location.href = baseUrl + 'movie/search/' + this.state.value;
 		}
 	}
 
@@ -114,7 +114,7 @@ export default class SearchInput extends Component {
 
 			return (
 				<div key={price}>
-					<a href={baseUrl+'film/search/'+searchWord}>
+					<a href={baseUrl+'movie/search/'+searchWord}>
 						{'More films'}
 					</a>
 				</div>

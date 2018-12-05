@@ -114,8 +114,8 @@ class Profile extends Component {
 						<div className={'alert alert-danger'}><p>{this.state.error}</p></div>
 					}
 					<div id="informations">
-						<h1> Informations</h1>
-						<p>for each change you have to enter correct current password. </p>
+						<h1>Your Profile</h1>
+						<p>Attention: For each change in profile you have to enter your current password. </p>
 						<input type="hidden" name="userId" value={userId}/>
 						<div className="form-group">
 							<label htmlFor="name">Name</label>
@@ -126,22 +126,22 @@ class Profile extends Component {
 							<input type="email" className="form-control" id="email" placeholder="Enter email" name={'email'} defaultValue={email} onChange={this.onChangeInput}/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="profilePicture">Link on profile picture</label>
+							<label htmlFor="profilePicture">Link to profile picture</label>
 							<input type="test" className="form-control" id="profilePicture" placeholder="Enter link on profile picture" name={'profilePicture'} defaultValue={profilePicture} onChange={this.onChangeInput}/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="newPassword">New password</label>
+							<label htmlFor="newPassword">New Password</label>
 							<input type="password" className="form-control" id="newPassword" placeholder="Enter password" name={'newPassword'} defaultValue={newPassword} onChange={this.onChangeInput}/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="passwordConfirmation">Password confirmation</label>
+							<label htmlFor="passwordConfirmation">Password Confirmation</label>
 							<input type="password" className="form-control" id="passwordConfirmation" placeholder="Enter password" name={'passwordConfirmation'} defaultValue={passwordConfirmation} onChange={this.onChangeInput}/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="oldPassword">Current password</label>
+							<label htmlFor="oldPassword">Current Password</label>
 							<input type="password" className="form-control" id="oldPassword" placeholder="Enter password" name={'oldPassword'} defaultValue={oldPassword} onChange={this.onChangeInput}/>
 						</div>
-						<button id="edit-profile" className="btn btn-dark">Save profile</button>
+						<button id="edit-profile" className="btn btn-primary">Save Profile</button>
 					</div>
 				</form>
 			</div>

@@ -3,8 +3,7 @@
     --rich-black: #00171F;
     --prussian-blue: #003459;
     --cerulean: #007EA7;
-    --vivid-cerulean: #00A8E8;
-    --standard-blue: #4d9dd9;
+    --standard-blue: #2185d0;
     --text-heading-font-size: 40px;
     --text-menu: 20px;
   }
@@ -15,11 +14,11 @@
 }
 
 .blue-content{
-	color: #2185d0!important;
+	color: var(--standard-blue) !important;
 }
 
 .grey-content{
-	color: #4d4e4d;
+	color: #cacbcd;
 }
 
 body {
@@ -30,10 +29,14 @@ body {
 .page-title {
     text-align: left;
     font-size: var(--text-heading-font-size);
-    margin-top: 40px;
-    margin-bottom: 25px;
+    margin-top: 60px;
+    margin-bottom: 70px;
     text-transform: uppercase;
-    color: var(--vivid-cerulean);
+    color: var(--standard-blue);
+}
+
+#loading-indicator {
+    margin-top: 100px;
 }
 
 .pagination-component {
@@ -64,4 +67,12 @@ body {
 .ui.dropdown>.dropdown.icon{
 	top: 12px;
 	margin-left: 6px !important;
+}
+
+.ui.pagination.menu{
+	margin: 15px 0 !important;
+}
+
+.container.sliders{
+	margin-bottom: 10px;
 }
