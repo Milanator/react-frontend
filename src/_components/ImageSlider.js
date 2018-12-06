@@ -27,8 +27,6 @@ class ImageSlider extends Component {
         const { photoIndex, isOpen, images } = this.state;
         const prefix = "https://image.tmdb.org/t/p/w780/";
 
-        console.log( images )
-
         const settings = {
             arrows: true,
             infinite: true,

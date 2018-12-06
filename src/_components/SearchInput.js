@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import {Search,Grid} from 'semantic-ui-react'
 
-import {textLimit} from "../_helpers/helper";
+import {slugify, textLimit} from "../_helpers/helper";
 import {apikey,baseUrl} from "../_helpers/variable";
 
 let apiUrlParams = "&language=en-US&query=";
@@ -73,8 +73,6 @@ export default class SearchInput extends Component {
 					};
 				});
 
-				console.log( finalArray );
-
 				this.setState({
 					isLoading: false,
 					results: finalArray,
@@ -89,7 +87,7 @@ export default class SearchInput extends Component {
 	handleSubmit = (event) => {
 
 		if(event.keyCode === 13 && event.shiftKey === false) {
-			window.location.href = baseUrl + 'movie/search/' + this.state.value;
+			window.location.href = baseUrl + 'movie/search/' + slugify(this.state.value);
 		}
 	}
 
@@ -114,7 +112,7 @@ export default class SearchInput extends Component {
 
 			return (
 				<div key={price}>
-					<a href={baseUrl+'movie/search/'+searchWord}>
+					<a href={baseUrl+'movie/search/'+slugify(searchWord)}>
 						{'More films'}
 					</a>
 				</div>

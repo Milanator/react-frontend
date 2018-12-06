@@ -142,7 +142,7 @@ class Home extends Component {
 				<div>
 					<TopNavigation />
 					<div className="container">
-						<PageTitle title="Find the Latest Movies on Movie Bot" />
+						<PageTitle title="Discover New Movies" />
 						<FilterMenu
 							onUpdate={this.onUpdate.bind(this)}
 							chosenGenre={this.state.chosenGenre}
@@ -158,11 +158,9 @@ class Home extends Component {
 								overview={movie.overview}
 								original_language={movie.original_language}
 								key={movie.id}
-								inSeenList={movie.inSeenList}
-								inWatchList={movie.inWatchList}
 								movieInMyLists={movie.inMyLists}
 								userLists={this.state.userLists}
-								genres={movie.genre}
+								genres={movie.genres}
 							/>
 						))}
 					</div>

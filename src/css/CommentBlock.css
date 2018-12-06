@@ -1,0 +1,135 @@
+.comment-block{
+	margin: 20px 0;
+}
+
+.comment-block > div{
+	margin: 0 auto;
+}
+
+.comment-block .comment{
+	text-align: left;
+	border-bottom: 1px solid rgba(0,0,0,.1);
+	padding: 10px 10px;
+	margin: 0;
+}
+
+.comment-block .comment.highlight,
+.comment-block #add-button.highlight{
+	animation: highlight 1s;
+}
+
+.comment-block .comment .text-muted{
+	float: right;
+}
+
+.comment-block .new-comment #userComment{
+	resize: none;
+}
+
+.comment-block .comment .content{
+	text-align: left;
+	margin: 0;
+}
+
+.comment-block .new-comment a{
+	height: 100%;
+	display: flex;
+	align-items: center;
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+}
+
+.comment-block .profile-picture{
+	width: 35px;
+	background-position: center;
+	background-size: cover;
+	border-bottom-left-radius: .2rem;
+	border-top-left-radius: .2rem;
+}
+
+li.ui-state-default{
+	background:#fff0;
+	border:none;
+	border-bottom:1px solid #ddd;
+	text-align: left;
+	padding-bottom: 10px;
+}
+
+li.ui-state-default:last-child{
+	border-bottom:none;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400);
+
+.btn,.form-control,.well {
+	border-radius:1px;
+	box-shadow:0 0 0;
+}
+
+.form-control {
+	border-color:#d7d7d7;
+}
+
+.btn-primary {
+	border-color:transparent;
+}
+
+.btn-primary, .list-group-item.active:focus {
+	background-color:#4285f4;
+}
+
+.btn-plus {
+	background-color:#ffffff;
+	border-width:1px;
+	border-color:#dddddd;
+	box-shadow:1px 1px 0 #999999;
+	border-radius:3px;color:#666666;
+	text-shadow:0 0 1px #bbbbbb;
+}
+
+.well,.panel {
+	border-color:#d2d2d2;
+	box-shadow:0 1px 0 #cfcfcf;
+	border-radius:3px;
+}
+
+hr {
+	border-color:#ececec;
+}
+
+button {
+	outline: 0;
+}
+
+.btn span{
+	color:#666666;
+}
+
+.list-group-item:first-child,.list-group-item:last-child {
+	border-radius:0;
+}
+
+h3 {
+	border:0 solid #efefef;
+	border-bottom-width:1px;
+	padding-bottom:10px;
+}
+
+.btn-primary:hover {
+	color: #fff;
+	background-color: #0069d9;
+	border-color: #0062cc;
+}
+
+.btn:not(:disabled):not(.disabled) {
+	cursor: pointer;
+}
+
+@keyframes highlight {
+	0% {
+		background: #00bd00;
+	}
+	100% {
+		background: var(--standard-blue) !important;
+	}
+}

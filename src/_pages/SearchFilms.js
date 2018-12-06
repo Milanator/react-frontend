@@ -11,6 +11,7 @@ import TopNavigation from './../_components/TopNavigation';
 import PageTitle from '../_components/PageTitle';
 import FilterMenu from '../_components/FilterMenu';
 import LoadingIndicator from './../_components/LoadingIndicator';
+import {unSlugify} from "../_helpers/helper";
 
 let apiUrlParams = "&page="+1+"&language=en-US&query=";
 let apiUrl = movieDbDomain + "search/movie?api_key=" + apikey + apiUrlParams;
@@ -37,7 +38,7 @@ class SearchFilms extends Component {
 			userLists: [],
 			isLoading: true,
 			genres: [],
-			searchWord: this.props.match.params.value
+			searchWord: unSlugify(this.props.match.params.value)
 		};
 
 	}
@@ -46,8 +47,9 @@ class SearchFilms extends Component {
 	componentDidMount() {
 
 		let that = this;
-		let seenList, watchList, userLists, myListMovies, genresArray;
+		let userLists, myListMovies, genresArray;
 		let { userId } = this.state;
+
 
 		axios.all([
 
@@ -64,18 +66,6 @@ class SearchFilms extends Component {
 
 				genresArray = res.data.genres;
 				genresArray.unshift({ id: 0, name: 'All' });
-			}).catch((error) => { console.log( error ); }),
-
-			// seenlist
-			axios.get(ourApiUrl + 'seenlist/user/' + userId).then(res => {
-
-				seenList = res.data;
-			}).catch((error) => { console.log( error ); }),
-
-			// watchlist
-			axios.get(ourApiUrl + 'watchlist/user/' + userId).then(res => {
-
-				watchList = res.data;
 			}).catch((error) => { console.log( error ); }),
 
 			// get all names and idies lists
@@ -95,8 +85,10 @@ class SearchFilms extends Component {
 
 		]).then(() => {
 
-			let films = setFilmGenre(this.state.genres, this.state.films);
+			let films = setFilmGenre(genresArray, this.state.films);
 			films = setMyListToMovie(films,myListMovies);
+
+			console.log( films );
 
 			this.setState({ films:films,userLists:userLists,genres: genresArray });
 		}).then(() => {
@@ -163,7 +155,7 @@ class SearchFilms extends Component {
 							<FilmModal
 								id={film.id}
 								poster_path={film.poster_path}
-								rating={film.vote_average * 10}
+								rating={film.vote_average}
 								title={film.title}
 								overview={film.overview}
 								original_language={film.original_language}

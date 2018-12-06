@@ -29,6 +29,7 @@
     font-size: var(--text-heading-font-size);
     margin-top: 50px;
     text-transform: uppercase;
+    letter-spacing:0.1em;
     color: var(--standard-blue);
 }
 
