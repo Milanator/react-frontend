@@ -1,0 +1,23 @@
+:root {
+    --rich-black: #00171F;
+    --standard-blue: #2185d0;
+    --prussian-blue: #003459;
+    --text-menu: 20px;
+}
+
+#footer{
+    background-color: var( --prussian-blue);
+    max-height: 150px;
+    min-height: 150px;
+    width:100%;
+
+}
+
+#footer p{
+    color:white;
+    text-align: center;
+    line-height:125px;
+
+}
+
+
