@@ -64,7 +64,7 @@ export function movieApiUrl(str) {
 }
 
 export function textLimit(str,count) {
-	return str.length < count ? str :
+	return str && str.length < count ? str :
 		str.substring(0, count) + "..."
 }
 
