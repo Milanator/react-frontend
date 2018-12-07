@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import '../css/CommentBlock.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from "axios";
-import {ourApiUrl} from "../_helpers/variable";
+import {ourApiUrl,movieDbDomain} from "../_helpers/variable";
 import moment from 'moment'
 import $ from 'jquery'
+
+let apiUrl = movieDbDomain + 'movie';
 
 class CommentBlock extends Component {
 
@@ -22,6 +24,7 @@ class CommentBlock extends Component {
 		}
 
 		this.addCommentToDB = this.addCommentToDB.bind(this)
+		this.moreComments = this.moreComments.bind(this)
 	}
 
 	addComment = (event) => {
@@ -51,17 +54,7 @@ class CommentBlock extends Component {
 
 			let comments = $('.comments')
 			let addButton = $('#add-button')
-			let commentTemplate = `
-				<ul class="list-unstyled ui-sortable comment highlight">
-					<strong class="primary-font user-name">${userName}</strong>
-					<small class="text-muted created-at">
-						<span class="glyphicon glyphicon-time">${moment().format('DD.MM.YY h:mma')}</span>
-					</small>
-					<li>
-						<p class='content'>${content}</p>
-					</li>
-				</ul>
-			`
+			let commentTemplate = this.commentTemplate(userName,content)
 
 			if(addButton.hasClass('highlight'))
 				addButton.removeClass('highlight')
@@ -77,13 +70,56 @@ class CommentBlock extends Component {
 		})
 	}
 
+	moreComments = (event) => {
+
+		event.preventDefault()
+
+		let {DBoffest,movieId} = this.state;
+		let comments = $('.comments')
+		DBoffest += 3
+		this.setState({DBoffest:DBoffest})
+
+		// get next 5 comments
+		axios.get(ourApiUrl + "comment/movie/"+movieId+"/"+DBoffest).then((res) => {
+			
+			let nextComments = res.data.reverse();
+			let commentsTemplate = '';
+
+			if( nextComments.length < 3 )
+				$('.more-comments').text('Nothing else').css('color','black')
+
+			nextComments.forEach((comment) => {
+				
+				commentsTemplate += this.commentTemplate(comment.name,comment.content,comment.created_at)
+			});
+
+			comments.prepend(commentsTemplate)
+
+		}).catch((error) => { console.log( error ); })
+	}
+
+	commentTemplate = (userName,content,createdAt=null) => {
+
+		return `
+					<ul class="list-unstyled ui-sortable comment highlight">
+						<strong class="primary-font user-name">${userName}</strong>
+						<small class="text-muted created-at">
+							<span class="glyphicon glyphicon-time">${createdAt ? moment(createdAt).format('DD.MM.YY h:mma') : moment().format('DD.MM.YY h:mma')}</span>
+						</small>
+						<li>
+							<p class='content'>${content}</p>
+						</li>
+					</ul>
+				`
+	}
+
 	render() {
 
-		const {profilePicture, comments} = this.state
+		const {profilePicture,comments,DBoffest,movieId} = this.state
 
 		return (
-			<div className="container comment-block">
-				<div className="col-lg-6 col-lg-offset-3 col-sm-6 text-center">
+			<div className="container comment-block col-lg-8 col-sm-6">
+				<div>
 					<div>
 						<form action="#" onSubmit={this.addComment}>
 							<h4>What do you think about film?</h4>
@@ -96,7 +132,12 @@ class CommentBlock extends Component {
 								</a>
 							</span>
 							</div>
-							<hr style={{ margin:'10px 0 0 0' }}/>
+							{ comments.length > 2 && (
+								<div className={'more-comments'}>
+									<a href={ourApiUrl+'comment/movie/'+movieId+'/'+DBoffest} onClick={this.moreComments}>More comments</a>
+								</div>
+							)}
+							<hr/>
 							<div className={'comments'}>
 								{comments.map((comment, key) => (
 									<ul className={"list-unstyled ui-sortable comment"}>

@@ -37,14 +37,13 @@ class ImageSlider extends Component {
         };
 
         return (
-            <div className={ImageSlider}>
+            <div className={'image-slider'}>
                 <Slider {...settings}>
                     {images.map( (image,key) => (
                         <div>
                             <img src={"https://image.tmdb.org/t/p/w500/"+image.file_path}
                                  onClick={this.setLightbox} data-key={key}
                                  />
-
                         </div>
                     ))}
                 </Slider>

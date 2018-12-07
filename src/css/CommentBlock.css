@@ -1,9 +1,6 @@
 .comment-block{
 	margin: 20px 0;
-}
-
-.comment-block > div{
-	margin: 0 auto;
+	float: left;
 }
 
 .comment-block .comment{
@@ -45,6 +42,19 @@
 	background-size: cover;
 	border-bottom-left-radius: .2rem;
 	border-top-left-radius: .2rem;
+}
+
+.comment-block .comments{
+	max-height: 150px;
+    overflow: auto;
+}
+
+.comment-block .more-comments{
+	margin-top: 5px;
+}
+
+.comment-block hr{
+	margin-top: 7px;
 }
 
 li.ui-state-default{

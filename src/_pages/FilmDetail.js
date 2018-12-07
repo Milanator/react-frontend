@@ -85,7 +85,8 @@ class FilmDetail extends React.Component {
 			// get comments by movie id
 			axios.get(ourApiUrl + "comment/movie/"+movieId+"/"+DBoffest).then((res) => {
 
-				comments = res.data;
+                comments = res.data;
+                DBoffest += 3;
 			}).catch((error) => { console.log( error ); })
 
 
@@ -122,26 +123,33 @@ class FilmDetail extends React.Component {
                         <TopNavigation/>
                         <div className={"content"}>
                             <div className={'main-detail clearfix'}>
-                                <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
-                                <h1>{filmData.original_title}</h1>
+                                <div className={'image'}>
+                                    <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
+                                </div>
+                                <div className={'description'}>
+                                    <h1 className={'title'}>{filmData.original_title}</h1>
 
-                                    <ListButtons
-                                        userLists={userLists}
-                                        rating={filmData.vote_average}
-                                        movieInMyLists={this.state.movieInMyLists}
-                                        addToMyList={this.addToMyList}
-                                        userId={userId}
-                                        movieId={filmData.id}
-                                        poster_path={filmData.poster_path}
-                                        title={filmData.title}
-                                        overview={filmData.overview}
-                                        original_language={filmData.original_language}
-                                        genres={filmData.genres}
-                                    />
+                                        <ListButtons
+                                            userLists={userLists}
+                                            rating={filmData.vote_average}
+                                            movieInMyLists={this.state.movieInMyLists}
+                                            addToMyList={this.addToMyList}
+                                            userId={userId}
+                                            movieId={filmData.id}
+                                            poster_path={filmData.poster_path}
+                                            title={filmData.title}
+                                            overview={filmData.overview}
+                                            original_language={filmData.original_language}
+                                            genres={filmData.genres}
+                                        />
 
 
-                                <p>{filmData.overview}</p>
-                                <p>Original language: {filmData.original_language}</p>
+                                    <p>{filmData.overview}</p>
+                                    <p>Original language: {filmData.original_language}</p>
+                                </div>
+                            </div>
+
+                            <div className={'video'}>
                                 {filmData.videos.results[0] && (
                                     <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
                                     </iframe>
@@ -155,7 +163,7 @@ class FilmDetail extends React.Component {
                                 image={images.backdrops} 
                                 />
 
-                            <table className={"table"}>
+                            <table className={"table col-4"}>
                                 <tr>
                                     <th>Release year</th>
                                     <td>{filmData.release_date}</td>

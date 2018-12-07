@@ -1,15 +1,45 @@
-.filmdetailimg {
-    float: left;
-    display: block;
-    margin-right: 15px;
+.content .main-detail{
+    margin-top: 10px;
 }
 
-.content .main-detail{
-    margin: 20px 0;
+.content .main-detail .image{
+    width: 33.33%;
+    display: inline-block;
+    float: left;
+}
+
+.content .main-detail .image .filmdetailimg{
+    max-height: 370px;
+}
+
+.content .main-detail .description{
+    float: left;
+    width: 66.66%;
+    text-align: left;
+}
+
+.content .main-detail .description .title{
+    text-align: center;
+}
+.content .main-detail .description > .title,
+.content .main-detail .description > p{
+    padding: 0 20px;
+}
+
+.content .main-detail .description .ui.grid{
+    margin: 0;
+}
+
+.content .video{
+    margin-top: 10px;
 }
 
 .table{
     border:1px solid #dee2e6;
-    width: 300px;
+    float: left;
+}
+
+.content .image-slider{
+    margin: 10px 0; 
 }
 
