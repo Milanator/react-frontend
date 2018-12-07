@@ -153,7 +153,7 @@ class SearchFilms extends Component {
 
 						{this.state.films.map((film) => (
 							<FilmModal
-								id={film.id}
+								movieId={film.id}
 								poster_path={film.poster_path}
 								rating={film.vote_average}
 								title={film.title}
@@ -164,7 +164,7 @@ class SearchFilms extends Component {
 								inWatchList={film.inWatchList}
 								movieInMyLists={film.inMyLists}
 								userLists={this.state.userLists}
-								genres={film.genre}
+								genres={film.genres}
 							/>
 						))}
 					</div>

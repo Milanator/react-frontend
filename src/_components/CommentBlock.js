@@ -96,7 +96,7 @@ class CommentBlock extends Component {
 								</a>
 							</span>
 							</div>
-							<hr/>
+							<hr style={{ margin:'10px 0 0 0' }}/>
 							<div className={'comments'}>
 								{comments.map((comment, key) => (
 									<ul className={"list-unstyled ui-sortable comment"}>

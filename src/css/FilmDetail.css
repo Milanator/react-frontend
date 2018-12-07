@@ -4,12 +4,12 @@
     margin-right: 15px;
 }
 
-.content{
+.content .main-detail{
+    margin: 20px 0;
 }
 
 .table{
     border:1px solid #dee2e6;
     width: 300px;
-
 }
 

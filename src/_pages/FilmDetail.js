@@ -40,7 +40,7 @@ class FilmDetail extends React.Component {
 			movieInMyLists: [],
 			comments: [],
 			isLoading: true,
-			DBoffest: 1
+			DBoffest: 0
         }
 
         this.addToMyList = this.addToMyList.bind(this);
@@ -121,31 +121,41 @@ class FilmDetail extends React.Component {
                     <div>
                         <TopNavigation/>
                         <div className={"content"}>
-                            <img className="filmdetailimg" src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
-                            <h1>{filmData.original_title}</h1>
+                            <div className={'main-detail clearfix'}>
+                                <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
+                                <h1>{filmData.original_title}</h1>
 
-                                <ListButtons
-									userLists={userLists}
-									rating={filmData.vote_average}
-									movieInMyLists={this.state.movieInMyLists}
-									addToMyList={this.addToMyList}
-									userId={userId}
-									movieId={filmData.id}
-									poster_path={filmData.poster_path}
-									title={filmData.title}
-									overview={filmData.overview}
-									original_language={filmData.original_language}
-									genres={filmData.genres}
-                                 />
+                                    <ListButtons
+                                        userLists={userLists}
+                                        rating={filmData.vote_average}
+                                        movieInMyLists={this.state.movieInMyLists}
+                                        addToMyList={this.addToMyList}
+                                        userId={userId}
+                                        movieId={filmData.id}
+                                        poster_path={filmData.poster_path}
+                                        title={filmData.title}
+                                        overview={filmData.overview}
+                                        original_language={filmData.original_language}
+                                        genres={filmData.genres}
+                                    />
 
 
-                            <p>{filmData.overview}</p>
-                            <p>Original language: {filmData.original_language}</p>
+                                <p>{filmData.overview}</p>
+                                <p>Original language: {filmData.original_language}</p>
                                 {filmData.videos.results[0] && (
-                            <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
-                            </iframe>)}
+                                    <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
+                                    </iframe>
+                                )}
+                            </div>
 
-                            <table className="table">
+                            <ImageSlider
+                                images={images.backdrops}
+                                />
+                            <ImageLightbox 
+                                image={images.backdrops} 
+                                />
+
+                            <table className={"table"}>
                                 <tr>
                                     <th>Release year</th>
                                     <td>{filmData.release_date}</td>
@@ -177,10 +187,6 @@ class FilmDetail extends React.Component {
                                         </tr>
                                 </tbody>
                             </table>
-                            <ImageSlider
-                                images={images.backdrops}
-                                />
-                            <ImageLightbox image = {images.backdrops} />
 
 							<CommentBlock
 								movieId={movieId}

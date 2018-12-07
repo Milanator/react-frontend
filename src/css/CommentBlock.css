@@ -127,7 +127,7 @@ h3 {
 
 @keyframes highlight {
 	0% {
-		background: #00bd00;
+		background: #4285f4;
 	}
 	100% {
 		background: var(--standard-blue) !important;

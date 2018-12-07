@@ -6,7 +6,19 @@
     --standard-blue: #2185d0;
     --text-heading-font-size: 40px;
     --text-menu: 20px;
-  }
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+} 
+.clearfix:after {
+  clear: both;
+}
+.clearfix {
+  zoom: 1; /* For IE 6/7 (trigger hasLayout) */
+}
 
 .blue-content > i,
 .grey-content > i{

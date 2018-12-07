@@ -46,8 +46,10 @@ class FilmModal extends Component {
 
     render() {
 
-        const { movieId, poster_path, rating, title, overview, original_language, genres, userLists, movieInMyLists, ...rest } = this.props;
+        const { movieId, poster_path, rating, title, overview, original_language, genres, userLists, movieInMyLists } = this.props;
         const { userId, inSeenList, inWatchList } = this.state;
+
+        console.log( this.props )
 
         return (
 
