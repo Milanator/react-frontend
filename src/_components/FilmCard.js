@@ -92,6 +92,7 @@ class FilmCard extends Component {
 
 					<p>
 						{ genres && genres.map((genre) => (
+							
 							<span className="badge badge-primary">{genre}</span>
 						))}
 					</p>

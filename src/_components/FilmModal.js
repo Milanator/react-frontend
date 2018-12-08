@@ -49,8 +49,6 @@ class FilmModal extends Component {
         const { movieId, poster_path, rating, title, overview, original_language, genres, userLists, movieInMyLists } = this.props;
         const { userId, inSeenList, inWatchList } = this.state;
 
-        console.log( this.props )
-
         return (
 
             <div>

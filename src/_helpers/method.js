@@ -24,11 +24,13 @@ export const setFilmGenre = (genres,films,fromMyList=0) => {
 				film.genres.push(genreArray[id]);
 			});
 		}
-		if (film.genres) {
+
+		/* if (film.genres) {
 			film.genres.forEach(res => {
 				film.genres.push(genreArray[res.id]);
+				// console.log(genreArray[res.id])
 			});
-		}
+		} */
 	});
 
 	return films;
