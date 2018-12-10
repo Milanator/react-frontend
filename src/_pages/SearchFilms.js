@@ -13,7 +13,7 @@ import FilterMenu from '../_components/FilterMenu';
 import LoadingIndicator from './../_components/LoadingIndicator';
 import {unSlugify} from "../_helpers/helper";
 
-let apiUrlParams = "&page="+1+"&language=en-US&query=";
+let apiUrlParams = "&language=en-US";
 let apiUrl = movieDbDomain + "search/movie?api_key=" + apikey + apiUrlParams;
 let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
@@ -145,11 +145,6 @@ class SearchFilms extends Component {
 					<TopNavigation />
 					<div className="container">
 						<PageTitle title={'Results for "' + this.state.searchWord + '"'} />
-						<FilterMenu
-							onUpdate={this.onUpdate.bind(this)}
-							chosenGenre={this.state.chosenGenre}
-							chosenYear={this.state.chosenYear}
-							genres={this.state.genres} />
 
 						{this.state.films.map((film) => (
 							<FilmModal
