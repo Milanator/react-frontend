@@ -35,13 +35,13 @@ class FilmDetail extends React.Component {
             inSeenList:"",
             userLists: [],
             images:[],
-            userId: userId,
-            userName: userName,
-            profilePicture: profilePicture,
-            movieInMyLists: [],
-            comments: [],
-            isLoading: true,
-            DBoffest: 1
+			userId: userId,
+			userName: userName,
+			profilePicture: profilePicture,
+			movieInMyLists: [],
+			comments: [],
+			isLoading: true,
+			DBoffest: 0
         }
 
         this.addToMyList = this.addToMyList.bind(this);
@@ -87,7 +87,8 @@ class FilmDetail extends React.Component {
             axios.get(ourApiUrl + "comment/movie/"+movieId+"/"+DBoffest).then((res) => {
 
                 comments = res.data;
-            }).catch((error) => { console.log( error ); })
+                DBoffest += 3;
+			}).catch((error) => { console.log( error ); })
 
 
         ]).then(() => {
@@ -118,43 +119,83 @@ class FilmDetail extends React.Component {
         if ( movieId == 0 || filmData == 0 || images == 0 || isLoading ) {
             return <LoadingIndicator/>;
         } else {
-            return(
-                <div>
-                    <TopNavigation/>
-                    <div className={"content"}>
-                        <div className={'main-detail clearfix'}>
-                            <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
-                            <h1>{filmData.original_title}</h1>
+                return(
+                    <div>
+                        <TopNavigation/>
+                        <div className={"content"}>
+                            <div className={'main-detail clearfix'}>
+                                <div className={'image'}>
+                                    <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
+                                </div>
+                                <div className={'description'}>
+                                    <h1 className={'title'}>{filmData.original_title}</h1>
 
-                            <ListButtons
-                                userLists={userLists}
-                                rating={filmData.vote_average}
-                                movieInMyLists={this.state.movieInMyLists}
-                                addToMyList={this.addToMyList}
-                                userId={userId}
-                                movieId={filmData.id}
-                                poster_path={filmData.poster_path}
-                                title={filmData.title}
-                                overview={filmData.overview}
-                                original_language={filmData.original_language}
-                                genres={filmData.genres}
-                            />
+                                        <ListButtons
+                                            userLists={userLists}
+                                            rating={filmData.vote_average}
+                                            movieInMyLists={this.state.movieInMyLists}
+                                            addToMyList={this.addToMyList}
+                                            userId={userId}
+                                            movieId={filmData.id}
+                                            poster_path={filmData.poster_path}
+                                            title={filmData.title}
+                                            overview={filmData.overview}
+                                            original_language={filmData.original_language}
+                                            genres={filmData.genres}
+                                        />
 
 
-                            <p>{filmData.overview}</p>
-                            <p>Original language: {filmData.original_language}</p>
-                            {filmData.videos.results[0] && (
-                                <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
-                                </iframe>
-                            )}
-                        </div>
+                                    <p>{filmData.overview}</p>
+                                    <p>Original language: {filmData.original_language}</p>
+                                </div>
+                            </div>
 
-                        <ImageSlider
-                            images={images.backdrops}
-                        />
-                        <ImageLightbox
-                            image={images.backdrops}
-                        />
+                            <div className={'video'}>
+                                {filmData.videos.results[0] && (
+                                    <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
+                                    </iframe>
+                                )}
+                            </div>
+
+                            <ImageSlider
+                                images={images.backdrops}
+                                />
+                            <ImageLightbox 
+                                image={images.backdrops} 
+                                />
+
+                            <table className={"table col-4"}>
+                                <tr>
+                                    <th>Release year</th>
+                                    <td>{filmData.release_date}</td>
+                                </tr>
+                                     <tbody>
+                                        <tr>
+                                            <th>Runtime</th>
+                                            <td>{filmData.runtime} minutes</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Status</th>
+                                            <td>{filmData.status}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Average vote</th>
+                                            <td>{filmData.vote_average *10}%</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Vote count</th>
+                                            <td>{filmData.vote_count}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Budget</th>
+                                            <td>{filmData.budget}$</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Revenue</th>
+                                            <td>{filmData.revenue}$</td>
+                                        </tr>
+                                </tbody>
+                            </table>
 
                         <table className={"table"}>
                             <tr>
