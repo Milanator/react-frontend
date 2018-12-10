@@ -54,7 +54,7 @@ class SearchFilms extends Component {
 		axios.all([
 
 			// films
-			axios.get(apiUrl + '&primary_release_year=2018&page=' + this.state.activePage + '&query=' + this.state.searchWord).then(res => {
+			axios.get(apiUrl + '&page=' + this.state.activePage + '&query=' + this.state.searchWord).then(res => {
 
 				const films = res.data.results;
 				const totalPages = res.data.total_pages;
@@ -102,7 +102,7 @@ class SearchFilms extends Component {
 		this.setState({ isLoading: true });
 
 		this.setState({ activePage }, () => {
-			let requestUrl = apiUrl + '&page=' + this.state.activePage;
+			let requestUrl = apiUrl + '&page=' + this.state.activePage + '&query=' + this.state.searchWord;
 
 			// create requestUrl with correct parameters
 			if (this.state.chosenGenre && this.state.chosenGenre.key !== 0) {
