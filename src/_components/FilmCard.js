@@ -5,6 +5,7 @@ import '../css/filmcard.css';
 import {textLimit} from "../_helpers/helper";
 import ListButtons from "./ListButtons";
 import {addMyList, addSeenWatchList} from "../_helpers/method";
+import {capitalize} from "lodash/string";
 
 
 class FilmCard extends Component {
@@ -52,7 +53,7 @@ class FilmCard extends Component {
 	render() {
 
 		const {movieId, poster_path, rating, title, overview, original_language,genres,userLists,movieInMyLists, ...rest} = this.props;
-		const {userId,inWatchList,inSeenList} = this.state;
+		const {userId} = this.state;
 
 		return (
 			<div className="card" {...rest} key={movieId}>
@@ -68,10 +69,7 @@ class FilmCard extends Component {
 					userLists={userLists}
 					movieInMyLists={movieInMyLists}
 					addToMyList={this.addToMyList}
-					addSeenWatchList={this.addSeenWatchList}
 					userId={userId}
-					inWatchList={inWatchList}
-					inSeenList={inSeenList}
 					movieId={movieId}
 					rating={rating}
 					poster_path={poster_path}
@@ -89,11 +87,12 @@ class FilmCard extends Component {
 
 				<div className={'fix-bottom'}>
 					<p>
-						Language: {original_language}
+						Language: {capitalize(original_language)}
 					</p>
 
 					<p>
 						{ genres && genres.map((genre) => (
+							
 							<span className="badge badge-primary">{genre}</span>
 						))}
 					</p>

@@ -27,26 +27,23 @@ class ImageSlider extends Component {
         const { photoIndex, isOpen, images } = this.state;
         const prefix = "https://image.tmdb.org/t/p/w780/";
 
-        console.log( images )
-
         const settings = {
             arrows: true,
             infinite: true,
             speed: 500,
-            slidesToShow: 2,
+            slidesToShow: 3,
             slidesToScroll: 1,
 
         };
 
         return (
-            <div className={ImageSlider}>
+            <div className={'image-slider'}>
                 <Slider {...settings}>
                     {images.map( (image,key) => (
                         <div>
                             <img src={"https://image.tmdb.org/t/p/w500/"+image.file_path}
                                  onClick={this.setLightbox} data-key={key}
                                  />
-
                         </div>
                     ))}
                 </Slider>

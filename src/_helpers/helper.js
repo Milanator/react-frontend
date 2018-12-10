@@ -64,8 +64,22 @@ export function movieApiUrl(str) {
 }
 
 export function textLimit(str,count) {
-	return str.length < count ? str :
+	return str && str.length < count ? str :
 		str.substring(0, count) + "..."
 }
 
+export function slugify(text) {
+
+	return text.toString().toLowerCase()
+		.replace(/\s+/g, '-')           // Replace spaces with -
+		.replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+		.replace(/\-\-+/g, '-')         // Replace multiple - with single -
+		.replace(/^-+/, '')             // Trim - from start of text
+		.replace(/-+$/, '');            // Trim - from end of text
+}
+
+export function unSlugify(text) {
+
+	return text.toString().replace('-',' ');
+}
 

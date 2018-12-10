@@ -1,5 +1,4 @@
 import axios from "axios";
-import {getClosest} from "./helper";
 import {ourApiUrl} from "./variable";
 import $ from "jquery";
 
@@ -17,24 +16,22 @@ export const setFilmGenre = (genres,films,fromMyList=0) => {
 	// create and set parameter genre to this.state.films
 	films.forEach((film, key) => {
 
-		film.genre = [];
+		film.genres = [];
 
 		if (film.genre_ids) {
 			film.genre_ids.forEach((id, key) => {
 
-				film.genre.push(genreArray[id]);
+				film.genres.push(genreArray[id]);
 			});
 		}
-		if (film.genres) {
+
+		/* if (film.genres) {
 			film.genres.forEach(res => {
-				film.genre.push(genreArray[res.id]);
+				film.genres.push(genreArray[res.id]);
+				// console.log(genreArray[res.id])
 			});
-		}
-
-		console.log(film)
+		} */
 	});
-
-	console.log(genres)
 
 	return films;
 };
@@ -42,8 +39,6 @@ export const setFilmGenre = (genres,films,fromMyList=0) => {
 // set new attribute to film, all lists idies, where is film added
 // fromMyList - MyList.js file
 export const setMyListToMovie = (films,myLists,fromMyList=0) =>{
-
-	console.log(myLists)
 
 	if( myLists ){
 
@@ -66,7 +61,7 @@ export const setMyListToMovie = (films,myLists,fromMyList=0) =>{
 };
 
 // function for adding and removing to myList
-export const addMyList = (event,that, fromFilmModal=0) => {
+export const addMyList = (event,that, fromFilmModal=0,) => {
 
 	let movieInMyLists;
 	let target = $(event.target);

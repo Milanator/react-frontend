@@ -28,7 +28,6 @@ class EditListModal extends Component {
             url: ourApiUrl + 'mylist/update'
         })
             .then(function (response) {
-                console.log(response);
                 window.location.reload();
             })
             .catch(function (error) {
@@ -37,8 +36,8 @@ class EditListModal extends Component {
     }
 
     render() {
+        
         const { myListName, disabled } = this.props;
-        console.log(this.state);
 
         return (
             <Modal

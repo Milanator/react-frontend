@@ -83,7 +83,7 @@ class Home extends Component {
             films.forEach((film) => {
 
                 film.genres = film.genres ? JSON.parse(film.genres) : []
-			})
+            })
 
             this.setState({ films: films, userLists: userLists, genres: genresArray });
         }).then(() => {
@@ -136,10 +136,10 @@ class Home extends Component {
     }
 
     render() {
-        const { userListsWithFilms, userLists, isLoading, genres } = this.state;
-        var disabled;
+        const { userListsWithFilms, userLists, isLoading } = this.state;
+        let disabled;
 
-        if (userListsWithFilms.length === 0 || isLoading || genres === 0) {
+        if ( isLoading ) {
             return (
                 <div>
                     <TopNavigation />

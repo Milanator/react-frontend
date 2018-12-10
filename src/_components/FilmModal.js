@@ -7,7 +7,7 @@ import { addMyList, addSeenWatchList } from "../_helpers/method";
 
 import FilmCard from './FilmCard';
 import ListButtons from "./ListButtons";
-
+import {capitalize} from "lodash/string";
 class FilmModal extends Component {
 
     constructor(props) {
@@ -46,7 +46,7 @@ class FilmModal extends Component {
 
     render() {
 
-        const { movieId, poster_path, rating, title, overview, original_language, genres, userLists, movieInMyLists, ...rest } = this.props;
+        const { movieId, poster_path, rating, title, overview, original_language, genres, userLists, movieInMyLists } = this.props;
         const { userId, inSeenList, inWatchList } = this.state;
 
         return (
@@ -97,7 +97,7 @@ class FilmModal extends Component {
                                 </Grid>
                             </Header>
                             <Container textAlign="left">
-                                <p>Language: {original_language}</p>
+                                <p>Language: {capitalize(original_language)}</p>
                                 <p>
                                     {overview}
                                 </p>

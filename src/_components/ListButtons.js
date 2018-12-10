@@ -24,9 +24,13 @@ class ListButtons extends Component {
 				<Grid verticalAlign="middle">
 				<Grid.Column textAlign="center" width={9}>
 					<div className="rating">
-						<div className={'stars'} style={{width:(ratingWidth/100)*(rating*10)}}>
-							<img srcSet={require('./../img/5-stars.png')} style={{width:ratingWidth}}/>
-						</div>
+						{ rating ? (
+							<div className={'stars'} style={{width:(ratingWidth/100)*(rating*10)}}>
+								<img srcSet={require('./../img/5-stars.png')} style={{width:ratingWidth}}/>
+							</div>
+						) : (
+							<div style={{marginTop:'6px'}}></div>
+						)}
 						<div className={"rate"}>
 							{rating*10}%
 						</div>
