@@ -122,13 +122,15 @@ class FilmDetail extends React.Component {
                 return(
                     <div>
                         <TopNavigation/>
-                        <div className={"content"}>
+
                             <div className={'main-detail clearfix'}>
+                                <h1 className={'title'}>{filmData.original_title}</h1>
+                                <hr></hr>
                                 <div className={'image'}>
                                     <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
                                 </div>
-                                <div className={'description'}>
-                                    <h1 className={'title'}>{filmData.original_title}</h1>
+                                <div className={'description detail-description'}>
+
 
                                         <ListButtons
                                             userLists={userLists}
@@ -148,8 +150,40 @@ class FilmDetail extends React.Component {
                                     <p>{filmData.overview}</p>
                                     <p>Original language: {filmData.original_language}</p>
                                 </div>
+                                <table className={"table col-4"}>
+                                    <tr>
+                                        <th>Release year:</th>
+                                        <td>{filmData.release_date}</td>
+                                    </tr>
+                                    <tbody>
+                                    <tr>
+                                        <th>Runtime:</th>
+                                        <td>{filmData.runtime} minutes</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status:</th>
+                                        <td>{filmData.status}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Average vote:</th>
+                                        <td>{filmData.vote_average *10}%</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Vote count:</th>
+                                        <td>{filmData.vote_count}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Budget:</th>
+                                        <td>{filmData.budget}$</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Revenue:</th>
+                                        <td>{filmData.revenue}$</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
-
+                        <div className={"content"}>
                             <div className={'video'}>
                                 {filmData.videos.results[0] && (
                                     <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
@@ -164,71 +198,6 @@ class FilmDetail extends React.Component {
                                 image={images.backdrops} 
                                 />
 
-                            <table className={"table col-4"}>
-                                <tr>
-                                    <th>Release year</th>
-                                    <td>{filmData.release_date}</td>
-                                </tr>
-                                     <tbody>
-                                        <tr>
-                                            <th>Runtime</th>
-                                            <td>{filmData.runtime} minutes</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Status</th>
-                                            <td>{filmData.status}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Average vote</th>
-                                            <td>{filmData.vote_average *10}%</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Vote count</th>
-                                            <td>{filmData.vote_count}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Budget</th>
-                                            <td>{filmData.budget}$</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Revenue</th>
-                                            <td>{filmData.revenue}$</td>
-                                        </tr>
-                                </tbody>
-                            </table>
-
-                        <table className={"table"}>
-                            <tr>
-                                <th>Release year</th>
-                                <td>{filmData.release_date}</td>
-                            </tr>
-                            <tbody>
-                            <tr>
-                                <th>Runtime</th>
-                                <td>{filmData.runtime} minutes</td>
-                            </tr>
-                            <tr>
-                                <th>Status</th>
-                                <td>{filmData.status}</td>
-                            </tr>
-                            <tr>
-                                <th>Average vote</th>
-                                <td>{filmData.vote_average *10}%</td>
-                            </tr>
-                            <tr>
-                                <th>Vote count</th>
-                                <td>{filmData.vote_count}</td>
-                            </tr>
-                            <tr>
-                                <th>Budget</th>
-                                <td>{filmData.budget}$</td>
-                            </tr>
-                            <tr>
-                                <th>Revenue</th>
-                                <td>{filmData.revenue}$</td>
-                            </tr>
-                            </tbody>
-                        </table>
 
                         <CommentBlock
                             movieId={movieId}
@@ -240,7 +209,8 @@ class FilmDetail extends React.Component {
                         />
 
                     </div>
-                    <Footer/>
+
+
                 </div>
             );
         }
