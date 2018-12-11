@@ -2,27 +2,36 @@
     margin-top: 10px;
 }
 
-.content .main-detail .image{
-    width: 33.33%;
+ .image{
+     margin-top: 10px;
+     margin-left: 10px;
     display: inline-block;
     float: left;
 }
 
-.content .main-detail .image .filmdetailimg{
+  .image .filmdetailimg{
     max-height: 370px;
 }
 
-.content .main-detail .description{
+ .description{
     float: left;
-    width: 66.66%;
+    width: 43%;
     text-align: left;
-}
 
-.content .main-detail .description .title{
+
+}
+.main-detail{
+padding: 0 5%;
+    padding-bottom:20px;
+
+    margin-bottom: 20px;
+    background-color: #003459;
+}
+ .main-detail .description .title{
     text-align: center;
 }
 .content .main-detail .description > .title,
-.content .main-detail .description > p{
+ .main-detail .description > p{
     padding: 0 20px;
 }
 
@@ -35,11 +44,23 @@
 }
 
 .table{
+    margin-top:20px;
+    max-width:370px;
+    margin-right:10px;
     border:1px solid #dee2e6;
-    float: left;
+    float: right;
+    text-align: center;
+    color: white;
 }
 
 .content .image-slider{
-    margin: 10px 0 20px 0; 
+    margin: 10px 0 20px 0;
+}
+h1{
+    text-align: center;
+    color: white;
+}
+.detail-description{
+    color: white;
 }
 

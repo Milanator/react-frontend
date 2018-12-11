@@ -14,7 +14,6 @@ import FlashMessage from '../_components/FlashMessage';
 
 import"../_helpers/method"
 import "../css/FilmDetail.css"
-import "bootstrap"
 
 let apiUrl = movieDbDomain + 'movie';
 let imageUrl = "https://api.themoviedb.org/3/movie/";
@@ -25,10 +24,10 @@ class FilmDetail extends React.Component {
 
         super(props);
 
-		let user = JSON.parse(localStorage.getItem('user'));
-		let userId = atob(user.id);
-		let profilePicture = atob(user.profilePicture);
-		let userName = atob(user.name);
+        let user = JSON.parse(localStorage.getItem('user'));
+        let userId = atob(user.id);
+        let profilePicture = atob(user.profilePicture);
+        let userName = atob(user.name);
 
         this.state = {
             movieId: this.props.match.params.id,
@@ -58,14 +57,14 @@ class FilmDetail extends React.Component {
 
         axios.all([
 
-        	// film with video
-			axios.get(url + "&append_to_response=videos")
-				.then(res => {
+            // film with video
+            axios.get(url + "&append_to_response=videos")
+                .then(res => {
 
-					let filmData = [];
-					filmData.push(res.data);
-					this.setState({filmData: filmData})
-				}).catch(err => { console.log(err); }),
+                    let filmData = [];
+                    filmData.push(res.data);
+                    this.setState({filmData: filmData})
+                }).catch(err => { console.log(err); }),
 
             //images
             axios.get (imageUrl +movieId+"/images?api_key=" + apikey)
@@ -85,8 +84,8 @@ class FilmDetail extends React.Component {
                 myListMovies = res.data;
             }).catch((error) => { console.log( error ); }),
 
-			// get comments by movie id
-			axios.get(ourApiUrl + "comment/movie/"+movieId+"/"+DBoffest).then((res) => {
+            // get comments by movie id
+            axios.get(ourApiUrl + "comment/movie/"+movieId+"/"+DBoffest).then((res) => {
 
                 comments = res.data;
                 DBoffest += 3;
@@ -107,7 +106,7 @@ class FilmDetail extends React.Component {
 
     }
 
-	addToMyList = (event) => {
+    addToMyList = (event) => {
 
 		addMyList(event, this, 0, 1)
     }
@@ -129,18 +128,20 @@ class FilmDetail extends React.Component {
                 return(
                     <div>
                         <TopNavigation/>
-                        <div className={"content"}>
+
 
                             { flashMessage && 
                                 <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }}/>
                             }
                             
                             <div className={'main-detail clearfix'}>
+                                <h1 className={'title'}>{filmData.original_title}</h1>
+                                <hr></hr>
                                 <div className={'image'}>
                                     <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
                                 </div>
-                                <div className={'description'}>
-                                    <h1 className={'title'}>{filmData.original_title}</h1>
+                                <div className={'description detail-description'}>
+
 
                                         <ListButtons
                                             userLists={userLists}
@@ -160,8 +161,41 @@ class FilmDetail extends React.Component {
                                     <p>{filmData.overview}</p>
                                     <p>Original language: {filmData.original_language}</p>
                                 </div>
+                                <table className={"table col-4"}>
+                                    <tr>
+                                        <th>Release year:</th>
+                                        <td>{filmData.release_date}</td>
+                                    </tr>
+                                    <tbody>
+                                    <tr>
+                                        <th>Runtime:</th>
+                                        <td>{filmData.runtime} minutes</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status:</th>
+                                        <td>{filmData.status}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Average vote:</th>
+                                        <td>{filmData.vote_average *10}%</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Vote count:</th>
+                                        <td>{filmData.vote_count}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Budget:</th>
+                                        <td>{filmData.budget}$</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Revenue:</th>
+                                        <td>{filmData.revenue}$</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
-
+                        <div className={"content"}>
+                        <div className={"content"}>
                             <div className={'video'}>
                                 {filmData.videos.results[0] && (
                                     <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
@@ -176,54 +210,25 @@ class FilmDetail extends React.Component {
                                 image={images.backdrops} 
                                 />
 
-                            <table className={"table col-4"}>
-                                <tr>
-                                    <th>Release year</th>
-                                    <td>{filmData.release_date}</td>
-                                </tr>
-                                     <tbody>
-                                        <tr>
-                                            <th>Runtime</th>
-                                            <td>{filmData.runtime} minutes</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Status</th>
-                                            <td>{filmData.status}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Average vote</th>
-                                            <td>{filmData.vote_average *10}%</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Vote count</th>
-                                            <td>{filmData.vote_count}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Budget</th>
-                                            <td>{filmData.budget}$</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Revenue</th>
-                                            <td>{filmData.revenue}$</td>
-                                        </tr>
-                                </tbody>
-                            </table>
 
-							<CommentBlock
-								movieId={movieId}
-								userId={userId}
-								profilePicture={profilePicture}
-								userName={userName}
-								comments={comments}
-								DBoffest={DBoffest}
-							/>
+                        <CommentBlock
+                            movieId={movieId}
+                            userId={userId}
+                            profilePicture={profilePicture}
+                            userName={userName}
+                            comments={comments}
+                            DBoffest={DBoffest}
+                        />
 
-                        </div>
                     </div>
-                );
-            }
+                        </div>
 
+
+                </div>
+            );
         }
+
+    }
 
 }
 
