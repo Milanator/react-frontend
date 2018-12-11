@@ -25,7 +25,9 @@ class ListButtons extends Component {
 			widthRating = 14;
 			widthBookmark = 2;
 		} else {
-			// Add code for FilmDetail here
+			alignmentRating = 'left';
+			widthRating = 14;
+			widthBookmark = 2;
 		}
 
 		const { userLists,movieInMyLists,addToMyList,rating, movieId,poster_path,title,overview,original_language,genres, ...rest } = this.props;
