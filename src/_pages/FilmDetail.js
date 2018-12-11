@@ -10,10 +10,10 @@ import ListButtons from "../_components/ListButtons";
 import ImageSlider from "../_components/ImageSlider";
 import ImageLightbox from "../_components/ImageLightbox";
 import CommentBlock from "../_components/CommentBlock";
+import FlashMessage from '../_components/FlashMessage';
 
 import"../_helpers/method"
 import "../css/FilmDetail.css"
-import Footer from "../_components/Footer";
 
 let apiUrl = movieDbDomain + 'movie';
 let imageUrl = "https://api.themoviedb.org/3/movie/";
@@ -41,11 +41,13 @@ class FilmDetail extends React.Component {
 			movieInMyLists: [],
 			comments: [],
 			isLoading: true,
-			DBoffest: 0
+            DBoffest: 0,
+            flashMessage: ''
         }
 
         this.addToMyList = this.addToMyList.bind(this);
-    }
+        this.receiveFlashMessage = this.receiveFlashMessage.bind(this)
+       }
 
     componentDidMount() {
 
@@ -107,13 +109,18 @@ class FilmDetail extends React.Component {
 
     addToMyList = (event) => {
 
-        addMyList(event, this, 0)
+		addMyList(event, this, 0, 1)
+    }
+    
+    receiveFlashMessage = (message) => {
+
+        console.log(message)
     }
 
     render() {
 
         const {movieId,userLists,images,userId,profilePicture,userName,comments,isLoading,DBoffest} = this.state;
-        let {filmData} = this.state;
+        let {filmData,flashMessage} = this.state;
         filmData = filmData[0];
 
         if ( movieId == 0 || filmData == 0 || images == 0 || isLoading ) {
@@ -123,6 +130,11 @@ class FilmDetail extends React.Component {
                     <div>
                         <TopNavigation/>
 
+
+                            { flashMessage && 
+                                <FlashMessage message={flashMessage} type={'success'}/>
+                            }
+                            
                             <div className={'main-detail clearfix'}>
                                 <h1 className={'title'}>{filmData.original_title}</h1>
                                 <hr></hr>
@@ -144,6 +156,7 @@ class FilmDetail extends React.Component {
                                             overview={filmData.overview}
                                             original_language={filmData.original_language}
                                             genres={filmData.genres}
+                                            receiveFlashMessage={this.receiveFlashMessage}
                                         />
 
 
@@ -184,6 +197,7 @@ class FilmDetail extends React.Component {
                                 </table>
                             </div>
                         <div className={"content"}>
+                        <div className={"content"}>
                             <div className={'video'}>
                                 {filmData.videos.results[0] && (
                                     <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
@@ -209,6 +223,7 @@ class FilmDetail extends React.Component {
                         />
 
                     </div>
+                        </div>
 
 
                 </div>

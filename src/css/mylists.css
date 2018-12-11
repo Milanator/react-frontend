@@ -40,3 +40,21 @@
     margin-top: 45px;
 }
 
+.slider-divider {
+    border: 1px solid var(--standard-blue);
+}
+
+.empty-list {
+    height: 200px;
+    text-align: center;
+    font-size: var(--text-menu);
+    padding-top: 20px;
+}
+
+.empty-list p {
+    margin-top: 20px;
+}
+
+.image-prps{
+    height: 400px;
+}
