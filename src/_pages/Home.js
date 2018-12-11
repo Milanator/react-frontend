@@ -162,7 +162,7 @@ class Home extends Component {
 							genres={this.state.genres} />
 
 						{ flashMessage && 
-                            <FlashMessage message={flashMessage} type={'success'}/>
+                            <FlashMessage message={flashMessage.message} type={flashMessage.type}/>
                         }
 
 						{this.state.films.map((movie) => (

@@ -159,7 +159,7 @@ class Home extends Component {
                     <div className="container sliders">
 
                         { flashMessage && 
-                            <FlashMessage message={flashMessage} type={'success'} style={{ marginTop: "10px" }}/>
+                            <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }}/>
                         }
 
                         <AddListModal />

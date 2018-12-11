@@ -7,6 +7,7 @@ import '../css/login.css';
 import {setUserInBrowserStorage} from "../_helpers/helper";
 import {baseUrl, ourApiUrl} from "../_helpers/variable";
 
+import FlashMessage from '../_components/FlashMessage'
 
 class Login extends Component {
 
@@ -100,10 +101,10 @@ class Login extends Component {
 				<div className="login-form">
 					<div className="main-div">
 						{/* IF IS SOME AUTHENTICATION ERROR, THEN WILL SHOW MESSAGE  */}
-						{
-							this.state.error &&
-							<div className={'alert alert-danger'}><p>{ this.state.error }</p></div>
-						}
+						{ this.state.error && 
+                            <FlashMessage message={this.state.error} type={'danger'}/>
+                        }
+
 						<div className="panel">
 							<h2>Login</h2>
 							<p>Please enter your email and password</p>

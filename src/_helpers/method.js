@@ -102,10 +102,16 @@ export const addMyList = (event,that, fromFilmModal=0,fromFilmDetail=0) => {
 		// movie was removed from list
 		if( index !== -1 ){
 			
-			flashMessage = `Succesfully removed to ${listName}`;
+			flashMessage = {
+				message: `Succesfully removed to ${listName}`,
+				type: 'danger'
+			};
 		} else {	// movie was added to list
 
-			flashMessage = `Succesfully added to ${listName}`;
+			flashMessage = {
+				message: `Succesfully added to ${listName}`,
+				type: 'success'
+			};
 		}
 
 		that.setState({flashMessage:flashMessage,movieInMyLists: movieInMyLists})

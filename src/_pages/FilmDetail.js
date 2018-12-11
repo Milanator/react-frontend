@@ -132,7 +132,7 @@ class FilmDetail extends React.Component {
                         <div className={"content"}>
 
                             { flashMessage && 
-                                <FlashMessage message={flashMessage} type={'success'} style={{ marginTop: "10px" }}/>
+                                <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }}/>
                             }
                             
                             <div className={'main-detail clearfix'}>
