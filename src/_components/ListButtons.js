@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
 import {Dropdown,Grid} from "semantic-ui-react";
+import $ from 'jquery'
 
 class ListButtons extends Component {
+
+	constructor(props) {
+
+		super(props)
+
+		this.state = {
+			flashMessage: ''
+		}
+	}
 
 	render() {
 
@@ -43,6 +53,7 @@ class ListButtons extends Component {
 								{userLists.map(list =>
 									<Dropdown.Item key={list.id}
 												   data-list-id={list.id}
+												   data-list-name={list.name}
 												   onClick={addToMyList}
 												   className={'addToList'}
 												   text={ movieInMyLists && movieInMyLists.includes(list.id) ?

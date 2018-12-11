@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import axios from 'axios';
 
 import {baseUrl, ourApiUrl} from "../_helpers/variable";
+import FlashMessage from '../_components/FlashMessage';
 
 class Register extends Component {
 
@@ -127,14 +128,14 @@ class Register extends Component {
 
 						{/* IF IS SOME AUTHENTICATION ERROR, THEN WILL SHOW MESSAGE  */}
 						{
-							this.state.error &&
-							<div className={'alert alert-danger'}><p>{ this.state.error }</p></div>
+							this.state.error && 
+							<FlashMessage message={this.state.success} type={'danger'}/>
 						}
 
 						{/* IF REGISTRATION IS SUCCESSFUL  */}
 						{
-							this.state.success &&
-							<div className={'alert alert-success'}><p>{ this.state.success }</p></div>
+							this.state.success && 
+							<FlashMessage message={this.state.success} type={'success'}/>
 						}
 
 						<div className="panel">
