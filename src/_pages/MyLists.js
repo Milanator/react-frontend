@@ -14,7 +14,6 @@ import AddListModal from './../_components/AddListModal';
 import EditListModal from './../_components/EditListModal';
 import FlashMessage from '../_components/FlashMessage';
 
-
 let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
 class Home extends Component {
