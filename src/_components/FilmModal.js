@@ -7,7 +7,10 @@ import { addMyList, addSeenWatchList } from "../_helpers/method";
 
 import FilmCard from './FilmCard';
 import ListButtons from "./ListButtons";
+import FlashMessage from './FlashMessage'
+
 import {capitalize} from "lodash/string";
+
 class FilmModal extends Component {
 
     constructor(props) {
@@ -19,18 +22,11 @@ class FilmModal extends Component {
         this.state = {
             userId: userId,
             // FROM HOME, ....
-            inSeenList: this.props.inSeenList,
-            inWatchList: this.props.inWatchList
+            flashMessage: ''
         };
 
-        this.addSeenWatchList = this.addSeenWatchList.bind(this);
-        this.setWatchSeen = this.setWatchSeen.bind(this);
-    }
 
-    // function for add to seen and watchlist list also
-    addSeenWatchList = (event) => {
-
-        addSeenWatchList(event, this, 1)
+        this.changeFlashMessage = this.changeFlashMessage.bind(this)
     }
 
     addToMyList = (event) => {
@@ -38,16 +34,16 @@ class FilmModal extends Component {
         addMyList(event, this, 1)
     }
 
-    // receive data from child --> FILMCARD.JS
-    setWatchSeen = (watch, seen) => {
-        this.setState({ inWatchList: watch });
-        this.setState({ inSeenList: seen });
-    };
+    // if props are updated, if data are changed
+	changeFlashMessage = (flashMessage) => {
+
+        this.props.changeFlashMessage(flashMessage)
+    }
 
     render() {
 
         const { movieId, poster_path, rating, title, overview, original_language, genres, userLists, movieInMyLists } = this.props;
-        const { userId, inSeenList, inWatchList } = this.state;
+        const { userId, flashMessage } = this.state;
 
         return (
 
@@ -59,33 +55,36 @@ class FilmModal extends Component {
                         title={title}
                         overview={overview}
                         original_language={original_language}
-                        inSeenList={inSeenList}
-                        inWatchList={inWatchList}
-                        sendWatchSeen={this.setWatchSeen}
                         genres={genres}
                         userLists={userLists}
                         movieInMyLists={movieInMyLists}
+                        // sent props to parent
+                        changeFlashMessage={this.changeFlashMessage}
                     />
                 } centered={false}>
                     <Modal.Header color="blue">{title}</Modal.Header>
                     <Modal.Content image scrolling>
+
                         {poster_path ? (
                             <Image wrapped size="large" src={"https://image.tmdb.org/t/p/w500" + poster_path} />
                         ) : (
-                                <Image wrapped size="large" className={'undefined-logo'} src={require('../img/Logo.png')} />
-                            )}
+                             <Image wrapped size="large" className={'undefined-logo'} src={require('../img/Logo.png')} />
+                        )}
+
                         <Modal.Description>
                             <Header size="large">
                                 <Grid columns={7}>
+
+                                    { flashMessage && 
+                                        <FlashMessage message={flashMessage} type={'success'}/>
+                                    }
+
                                     <Grid.Column/><Grid.Column/>
 									<ListButtons
 										userLists={userLists}
 										movieInMyLists={movieInMyLists}
 										addToMyList={this.addToMyList}
-										addSeenWatchList={this.addSeenWatchList}
 										userId={userId}
-										inWatchList={inWatchList}
-										inSeenList={inSeenList}
 										movieId={movieId}
 										rating={rating}
 										poster_path={poster_path}

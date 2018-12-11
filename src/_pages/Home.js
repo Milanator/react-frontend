@@ -11,6 +11,7 @@ import TopNavigation from './../_components/TopNavigation';
 import PageTitle from '../_components/PageTitle';
 import FilterMenu from '../_components/FilterMenu';
 import LoadingIndicator from './../_components/LoadingIndicator';
+import FlashMessage from './../_components/FlashMessage'
 
 let apiUrlParams = "&language=en-US&sort_by=popularity.desc";
 let apiUrl = movieDbDomain + "discover/movie" + movieApiKeyPart + apiUrlParams;
@@ -36,9 +37,11 @@ class Home extends Component {
 			userId: userId,
 			userLists: [],
 			isLoading: true,
-			genres: []
+			genres: [],
+			flashMessage: ''
 		};
 
+		this.changeFlashMessage = this.changeFlashMessage.bind(this)
 	}
 
 	// THIS IS FIRST ACTION ON PAGE
@@ -128,7 +131,16 @@ class Home extends Component {
 		this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear});
 	}
 
+	// props passed from filmcard throughout filmmodal
+	changeFlashMessage = (flashMessage) => {
+
+		this.setState({flashMessage})
+	}
+
 	render() {
+
+		const {flashMessage} = this.state
+
 		if (this.state.films.length === 0 || this.state.isLoading || this.state.genres === 0 ) {
 			return (
 				<div>
@@ -149,6 +161,10 @@ class Home extends Component {
 							chosenYear={this.state.chosenYear}
 							genres={this.state.genres} />
 
+						{ flashMessage && 
+                            <FlashMessage message={flashMessage} type={'success'}/>
+                        }
+
 						{this.state.films.map((movie) => (
 							<FilmModal
 								movieId={movie.id}
@@ -161,6 +177,8 @@ class Home extends Component {
 								movieInMyLists={movie.inMyLists}
 								userLists={this.state.userLists}
 								genres={movie.genres}
+								// sent props to parent
+								changeFlashMessage={this.changeFlashMessage}
 							/>
 						))}
 					</div>

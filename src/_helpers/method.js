@@ -99,11 +99,6 @@ export const addMyList = (event,that, fromFilmModal=0,fromFilmDetail=0) => {
 		data: data
 	}).then((res) => {
 
-		if( !fromFilmModal && !fromFilmDetail ){
-			// send data to film modal --> update seen and watch button
-			that.props.sendWatchSeen(that.state.inWatchList,that.state.inSeenList,that.state.movieInMyLists)
-		}
-
 		// movie was removed from list
 		if( index !== -1 ){
 			
@@ -115,52 +110,17 @@ export const addMyList = (event,that, fromFilmModal=0,fromFilmDetail=0) => {
 
 		that.setState({flashMessage:flashMessage,movieInMyLists: movieInMyLists})
 
+		if( !fromFilmModal && !fromFilmDetail ){
+			// send data to film modal --> update seen and watch button
+			that.props.changeFlashMessage(flashMessage)
+		}
+
 	}).catch(err => {
 		console.log(err);
 	});
+
+	return flashMessage
 }
-
-// function for add to seen and watchlist list also
-export const addSeenWatchList = (event,that,fromFilmModal = 0) => {
-
-	event.preventDefault();
-	event.stopPropagation();
-
-	let icon = $(event.target);
-	let hiddenData = icon.closest('.marks').find('.hidden-data');
-	let listId = Number(icon.closest('.addToList')[0].getAttribute('data-list-id'));
-	let data = setRequestDataToMyList(hiddenData, listId);
-	let anchorTag = icon.parent();
-	let url = anchorTag.attr('href');
-	let inverseUrl = anchorTag.attr('data-inverse-url');
-
-	axios({
-		method: 'post',
-		url: url,
-		data: data
-	}).then((resp) => {
-
-		// change visual of icon
-		icon.toggleClass('outline');
-		// change href of anchors
-		anchorTag.attr('href',inverseUrl);
-		anchorTag.attr('data-inverse-url',url);
-
-		if (icon.hasClass('watchlist')) {
-			// set opposite value
-			that.setState({inWatchList: 1 - that.state.inWatchList});
-		} else if (icon.hasClass('seenlist')) {
-			// set opposite value
-			that.setState({inSeenList: 1 - that.state.inSeenList});
-		}
-
-		if( !fromFilmModal ){
-			// send data to film modal --> update seen and watch button
-			that.props.sendWatchSeen(that.state.inWatchList,that.state.inSeenList,that.state.movieInMyLists)
-		}
-
-	}).catch(err => { console.log(err); });
-};
 
 const setRequestDataToMyList = (hiddenData, listId=null) => {
 
