@@ -4,14 +4,15 @@ import {Pagination} from 'semantic-ui-react';
 
 import {movieDbDomain, movieApiKeyPart, ourApiUrl, apikey} from '../_helpers/variable';
 import {setFilmGenre, setMyListToMovie} from '../_helpers/method';
+import {unSlugify} from "../_helpers/helper";
+
 import '../css/main.css';
 
 import FilmModal from "../_components/FilmModal";
 import TopNavigation from './../_components/TopNavigation';
 import PageTitle from '../_components/PageTitle';
-import FilterMenu from '../_components/FilterMenu';
 import LoadingIndicator from './../_components/LoadingIndicator';
-import {unSlugify} from "../_helpers/helper";
+import FlashMessage from '../_components/FlashMessage';
 
 let apiUrlParams = "&language=en-US";
 let apiUrl = movieDbDomain + "search/movie?api_key=" + apikey + apiUrlParams;
@@ -130,7 +131,15 @@ class SearchFilms extends Component {
 		this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear});
 	}
 
+	changeFlashMessage = (flashMessage) => {
+
+        this.setState({flashMessage:flashMessage})
+    }
+
 	render() {
+
+		const {flashMessage} = this.state 
+
 		if (this.state.films.length === 0 || this.state.isLoading || this.state.genres === 0 ) {
 			return (
 				<div>
@@ -146,6 +155,10 @@ class SearchFilms extends Component {
 					<div className="container">
 						<PageTitle title={'Results for "' + this.state.searchWord + '"'} />
 
+						{ flashMessage && 
+                            <FlashMessage message={flashMessage} type={'success'} style={{ marginTop: "10px" }}/>
+                        }
+
 						{this.state.films.map((film) => (
 							<FilmModal
 								movieId={film.id}
@@ -160,6 +173,8 @@ class SearchFilms extends Component {
 								movieInMyLists={film.inMyLists}
 								userLists={this.state.userLists}
 								genres={film.genres}
+								// pass data from parent
+								changeFlashMessage={this.changeFlashMessage}
 							/>
 						))}
 					</div>

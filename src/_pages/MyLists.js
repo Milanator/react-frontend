@@ -12,7 +12,7 @@ import LoadingIndicator from './../_components/LoadingIndicator';
 import FilmCardSlider from './../_components/FilmCardSlider';
 import AddListModal from './../_components/AddListModal';
 import EditListModal from './../_components/EditListModal';
-
+import FlashMessage from '../_components/FlashMessage';
 
 let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
@@ -87,7 +87,6 @@ class Home extends Component {
 
             this.setState({ films: films, userLists: userLists, genres: genresArray });
         }).then(() => {
-
             this.createUserListsWithFilms();
         }).then(() => {
             this.setState({ isLoading: false });
@@ -135,8 +134,13 @@ class Home extends Component {
             });
     }
 
+    changeFlashMessage = (flashMessage) => {
+
+        this.setState({flashMessage:flashMessage})
+    }
+
     render() {
-        const { userListsWithFilms, userLists, isLoading } = this.state;
+        const { userListsWithFilms, userLists, isLoading, flashMessage } = this.state;
         let disabled;
 
         if ( isLoading ) {
@@ -153,6 +157,11 @@ class Home extends Component {
                     <TopNavigation />
 
                     <div className="container sliders">
+
+                        { flashMessage && 
+                            <FlashMessage message={flashMessage} type={'success'} style={{ marginTop: "10px" }}/>
+                        }
+
                         <AddListModal />
 
                         {userListsWithFilms.map(list => {
@@ -196,6 +205,7 @@ class Home extends Component {
                                 <FilmCardSlider
                                     films={list.films}
                                     userLists={userLists}
+                                    changeFlashMessage={this.changeFlashMessage}
                                 />
 
                             </div>

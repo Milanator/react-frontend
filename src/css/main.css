@@ -66,6 +66,11 @@ body {
     padding-left: 2px;
 }
 
+.ui.large.header .alert.alert-success{
+    font-size: 14px;
+    width: 100%
+}
+
 .ui.search>.results .result .image {
 	background: red;
 }
@@ -93,3 +98,4 @@ body {
 .container.sliders{
 	margin-bottom: 10px;
 }
+

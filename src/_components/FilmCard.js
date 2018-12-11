@@ -20,29 +20,19 @@ class FilmCard extends Component {
 			userId: userId,
 			// FROM FILM MODAL - after loading
 			movieInMyLists: this.props.movieInMyLists,
-			inSeenList: this.props.inSeenList,
-			inWatchList: this.props.inWatchList,
 			myList: this.props.myList,
 			lists: [],
 			isLoading: true
 		};
-		this.addSeenWatchList = this.addSeenWatchList.bind(this);
+
 		this.addToMyList = this.addToMyList.bind(this);
 	}
 
 	// if props are updated, if data are changed
 	componentWillReceiveProps = (nextProps) => {
 
-		this.setState({inWatchList: nextProps.inWatchList});
-		this.setState({inSeenList: nextProps.inSeenList});
 		this.setState({movieInMyLists: nextProps.movieInMyLists});
 	};
-
-	// function for add to seen and watchlist list also
-	addSeenWatchList = (event) => {
-
-		addSeenWatchList(event,this,0)
-	}
 
 	// function for adding and removing to myList
 	addToMyList = (event) => {
@@ -93,7 +83,7 @@ class FilmCard extends Component {
 					<p>
 						{ genres && genres.map((genre) => (
 							
-							<span className="badge badge-primary">{genre}</span>
+							<span className="badge badge-primary">{genre.name}</span>
 						))}
 					</p>
 				</div>

@@ -46,7 +46,6 @@ class FilmDetail extends React.Component {
         }
 
         this.addToMyList = this.addToMyList.bind(this);
-        this.receiveFlashMessage = this.receiveFlashMessage.bind(this)
        }
 
     componentDidMount() {
@@ -112,7 +111,7 @@ class FilmDetail extends React.Component {
 		addMyList(event, this, 0, 1)
     }
     
-    receiveFlashMessage = (message) => {
+    changeFlashMessage = (message) => {
 
         console.log(message)
     }
@@ -132,7 +131,7 @@ class FilmDetail extends React.Component {
 
 
                             { flashMessage && 
-                                <FlashMessage message={flashMessage} type={'success'}/>
+                                <FlashMessage message={flashMessage} type={'success'} style={{ marginTop: "10px" }}/>
                             }
                             
                             <div className={'main-detail clearfix'}>
@@ -156,7 +155,6 @@ class FilmDetail extends React.Component {
                                             overview={filmData.overview}
                                             original_language={filmData.original_language}
                                             genres={filmData.genres}
-                                            receiveFlashMessage={this.receiveFlashMessage}
                                         />
 
 

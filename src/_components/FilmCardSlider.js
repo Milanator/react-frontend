@@ -10,6 +10,11 @@ import { Button } from 'semantic-ui-react';
 
 class FilmCardSlider extends Component {
 
+    changeFlashMessage = (flashMessage) => {
+
+        this.props.changeFlashMessage(flashMessage)
+    }
+
     render() {
         const { films, userLists } = this.props;
 
@@ -40,6 +45,8 @@ class FilmCardSlider extends Component {
                                     movieInMyLists={film.inMyLists}
                                     userLists={userLists}
                                     genres={film.genres}
+                                    // sent props to parent
+                                    changeFlashMessage={this.changeFlashMessage}
                                 />
                             </div>
                         ))}
