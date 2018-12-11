@@ -14,6 +14,19 @@ class ListButtons extends Component {
 	}
 
 	render() {
+		var alignmentRating, widthRating, widthBookmark;
+
+		if(this.props.source == 'FilmCard') {
+			alignmentRating = 'center';
+			widthRating = 10;
+			widthBookmark = 3;
+		} if(this.props.source == 'FilmModal') {
+			alignmentRating = 'left';
+			widthRating = 14;
+			widthBookmark = 2;
+		} else {
+			// Add code for FilmDetail here
+		}
 
 		const { userLists,movieInMyLists,addToMyList,rating, movieId,poster_path,title,overview,original_language,genres, ...rest } = this.props;
 		const ratingWidth = 75;
@@ -32,7 +45,7 @@ class ListButtons extends Component {
 				</div>
 
 				<Grid verticalAlign="middle">
-				<Grid.Column textAlign="center" width={9}>
+				<Grid.Column textAlign={alignmentRating} width={widthRating}>
 					<div className="rating">
 						{ rating ? (
 							<div className={'stars'} style={{width:(ratingWidth/100)*(rating*10)}}>
@@ -46,8 +59,8 @@ class ListButtons extends Component {
 						</div>
 					</div>
 				</Grid.Column>
-				<Grid.Column textAlign="right" width={3}>
-					<Dropdown text='' multiple icon='bookmark' color="blue" className={'addToMyList blue-content'}>
+				<Grid.Column textAlign="right" width={widthBookmark}>
+					<Dropdown direction='left' text='' multiple icon='bookmark' color="blue" className={'addToMyList blue-content'}>
 						<Dropdown.Menu>
 							<Dropdown.Menu scrolling>
 								{userLists.map(list =>

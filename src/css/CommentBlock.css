@@ -118,7 +118,7 @@ button {
 	border-radius:0;
 }
 
-h3 {
+.comment-block h3 {
 	border:0 solid #efefef;
 	border-bottom-width:1px;
 	padding-bottom:10px;

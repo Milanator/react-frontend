@@ -73,14 +73,13 @@ class FilmModal extends Component {
 
                         <Modal.Description>
                             <Header size="large">
-                                <Grid columns={7}>
+                                <div>
 
                                     { flashMessage && 
                                         <FlashMessage message={flashMessage} type={'success'}/>
                                     }
-
-                                    <Grid.Column/><Grid.Column/>
 									<ListButtons
+                                        source='FilmModal'
 										userLists={userLists}
 										movieInMyLists={movieInMyLists}
 										addToMyList={this.addToMyList}
@@ -93,7 +92,7 @@ class FilmModal extends Component {
 										genres={genres}
 										original_language={original_language}
 									/>
-                                </Grid>
+                                </div>
                             </Header>
                             <Container textAlign="left">
                                 <p>Language: {capitalize(original_language)}</p>
