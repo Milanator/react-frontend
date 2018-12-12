@@ -12,8 +12,11 @@ import ImageLightbox from "../_components/ImageLightbox";
 import CommentBlock from "../_components/CommentBlock";
 import FlashMessage from '../_components/FlashMessage';
 
+import {formatMoney} from '../_helpers/method'
+
 import "../_helpers/method"
 import "../css/FilmDetail.css"
+import Footer from "../_components/Footer";
 
 let apiUrl = movieDbDomain + 'movie';
 let imageUrl = "https://api.themoviedb.org/3/movie/";
@@ -126,7 +129,8 @@ class FilmDetail extends React.Component {
             return <LoadingIndicator />;
         } else {
             return (
-                <div>
+
+                <div className={'film-detail'}>
                     <TopNavigation />
 
 
@@ -136,9 +140,14 @@ class FilmDetail extends React.Component {
 
                     <div className={'main-detail clearfix'}>
                         {/* <h1 className={'title'}>{filmData.original_title}</h1> */}
-                        <hr></hr>
                         <div className={'image'}>
-                            <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path} />
+                            {filmData.poster_path ? (
+                                <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" +
+                                filmData.poster_path} alt={"movie poster"} />
+                            ) : (
+                                <img src={require('../img/moviebot_darkblue.jpg')} className={'filmdetailimg'} alt="movie poster"/>
+                            )}
+
                         </div>
                         <div className={'description detail-description'}>
 
@@ -186,43 +195,59 @@ class FilmDetail extends React.Component {
                                 </tr>
                                 <tr>
                                     <th>Budget:</th>
-                                    <td>{filmData.budget}$</td>
+                                    <td>{formatMoney(filmData.budget)}$</td>
                                 </tr>
                                 <tr>
                                     <th>Revenue:</th>
-                                    <td>{filmData.revenue}$</td>
+                                    <td>{formatMoney(filmData.revenue, 0,"")}$</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                    <div className={'container'}>
+                        <div className={"content clearfix"}>
+                            <div className={'video'}>
+                                {filmData.videos.results[0] && (
+                                    <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
+                                    </iframe>
+                                )}
+                                { images.backdrops.length > 1 && (
+                                    <div>
+                                 <h2 className={"film-section-title"}>Image section</h2>
+                                <hr className={"slider-divider"}></hr>
+                                    </div>
+                                    )}
+                            </div>
+                            <ImageSlider
+                                images={images.backdrops}
+                            />
+                            <ImageLightbox
+                                image={images.backdrops}
+                            />
 
-                    <div className={"content"}>
-                        <div className={'video'}>
-                            {filmData.videos.results[0] && (
-                                <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
-                                </iframe>
-                            )}
+                                <div>
+                                    <h2 className={"film-section-title"}>Comments Section</h2>
+                                    <hr className={"slider-divider"} />
+                                </div>
+                                
+
+
+                            <CommentBlock
+                                movieId={movieId}
+                                userId={userId}
+                                profilePicture={profilePicture}
+                                userName={userName}
+                                comments={comments}
+                                DBoffest={DBoffest}
+                            />
+
+
                         </div>
-
-                        <ImageSlider
-                            images={images.backdrops}
-                        />
-                        <ImageLightbox
-                            image={images.backdrops}
-                        />
-
-
-                        <CommentBlock
-                            movieId={movieId}
-                            userId={userId}
-                            profilePicture={profilePicture}
-                            userName={userName}
-                            comments={comments}
-                            DBoffest={DBoffest}
-                        />
-
                     </div>
+                    <Footer/>
                 </div>
+
+
             );
         }
 

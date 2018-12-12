@@ -99,3 +99,6 @@ body {
 	margin-bottom: 10px;
 }
 
+.min-heigth{
+    min-height: 450px;
+}

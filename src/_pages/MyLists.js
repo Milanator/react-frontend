@@ -13,6 +13,7 @@ import FilmCardSlider from './../_components/FilmCardSlider';
 import AddListModal from './../_components/AddListModal';
 import EditListModal from './../_components/EditListModal';
 import FlashMessage from '../_components/FlashMessage';
+import Footer from "../_components/Footer";
 
 let genreApiUrl = movieDbDomain + "genre/movie/list" + movieApiKeyPart;
 
@@ -156,7 +157,7 @@ class Home extends Component {
                 <div>
                     <TopNavigation />
 
-                    <div className="container sliders">
+                    <div className="container sliders min-heigth">
 
                         { flashMessage && 
                             <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }}/>
@@ -213,6 +214,7 @@ class Home extends Component {
                         })}
                     </div>
 
+                    <Footer/>
                 </div>
 
             );

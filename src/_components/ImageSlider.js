@@ -33,6 +33,7 @@ class ImageSlider extends Component {
             speed: 500,
             slidesToShow: 2,
             slidesToScroll: 1,
+            centerMode: true,
 
         };
 

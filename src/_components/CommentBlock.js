@@ -118,7 +118,7 @@ class CommentBlock extends Component {
 		const {profilePicture,comments,DBoffest,movieId} = this.state
 
 		return (
-			<div className="container comment-block col-lg-8 col-sm-6">
+			<div className=" comment-block">
 				<div>
 					<div>
 						<form action="#" onSubmit={this.addComment}>

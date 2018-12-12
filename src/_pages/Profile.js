@@ -9,6 +9,7 @@ import TopNavigation from "./../_components/TopNavigation";
 import {setUserInBrowserStorage} from "../_helpers/helper";
 
 import FlashMessage from '../_components/FlashMessage'
+import Footer from "../_components/Footer";
 
 class Profile extends Component {
 
@@ -103,6 +104,7 @@ class Profile extends Component {
 		const {profilePicture,name,email,userId,newPassword,oldPassword,passwordConfirmation} = this.state.user;
 
 		return (
+			<div>
 			<div id="profile">
 				<TopNavigation/>
 				<div id="picture">
@@ -146,6 +148,8 @@ class Profile extends Component {
 						<button id="edit-profile" className="btn btn-primary">Save Profile</button>
 					</div>
 				</form>
+			</div>
+				<Footer/>
 			</div>
 
 		)

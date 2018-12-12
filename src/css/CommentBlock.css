@@ -1,5 +1,7 @@
 .comment-block{
 	float: left;
+	width: 65%;
+	margin: 0 15%;
 }
 
 .comment-block .comment{
@@ -44,8 +46,9 @@
 }
 
 .comment-block .comments{
-	max-height: 150px;
+	max-height: 300px;
     overflow: auto;
+	margin-bottom: 30px;
 }
 
 .comment-block .more-comments{
@@ -141,4 +144,9 @@ button {
 	100% {
 		background: var(--standard-blue) !important;
 	}
+}
+
+.film-detail .container .content p {
+	text-align: left;
+	margin-left: 10px;
 }

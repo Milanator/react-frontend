@@ -12,6 +12,7 @@ import PageTitle from '../_components/PageTitle';
 import FilterMenu from '../_components/FilterMenu';
 import LoadingIndicator from './../_components/LoadingIndicator';
 import FlashMessage from './../_components/FlashMessage'
+import Footer from "../_components/Footer";
 
 let apiUrlParams = "&language=en-US&sort_by=popularity.desc";
 let apiUrl = movieDbDomain + "discover/movie" + movieApiKeyPart + apiUrlParams;
@@ -186,6 +187,7 @@ class Home extends Component {
 					<div className="pagination-component">
 						<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange.bind(this)} />
 					</div>
+					<Footer/>
 				</div>
 
 			);
