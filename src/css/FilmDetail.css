@@ -28,6 +28,11 @@
 
 .main-detail .image{
     float: left;
+    width: 25%;
+}
+
+.main-detail .image img{
+    width: 100%;
 }
 
 .detail-description h1 {
@@ -68,9 +73,17 @@ h1 {
 
 .detail-description {
     color: white;
+    width: 45%;
 }
 
 .detail-description p {
     margin-top: 20px;
-    
+}
+
+.slick-slide img{
+    margin: 0 auto;
+}
+
+.description-table{
+    width: 25%;
 }

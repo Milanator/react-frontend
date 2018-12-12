@@ -158,7 +158,7 @@ class FilmDetail extends React.Component {
                                 <p>{filmData.overview}</p>
                                 <p>Original language: {filmData.original_language}</p>
                                 </div>
-                                <table className={"table col-4"}>
+                                <table className={"table description-table"}>
                                     <tr>
                                         <th>Release year:</th>
                                         <td>{filmData.release_date}</td>
