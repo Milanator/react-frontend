@@ -137,7 +137,7 @@ class FilmDetail extends React.Component {
                     <div className={'main-detail clearfix'}>
                         {/* <h1 className={'title'}>{filmData.original_title}</h1> */}
                         <hr></hr>
-                        <div className={'image'}>
+                        <div className={'filmdetail-image'}>
                             <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path} />
                         </div>
                         <div className={'description detail-description'}>
