@@ -128,13 +128,11 @@ class FilmDetail extends React.Component {
                 return(
                     <div>
                         <TopNavigation/>
-
-
-                            { flashMessage && 
-                                <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }}/>
-                            }
                             
                             <div className={'main-detail clearfix'}>
+                                { flashMessage && 
+                                    <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }}/>
+                                }
                                 <h1 className={'title'}>{filmData.original_title}</h1>
                                 <hr></hr>
                                 <div className={'image'}>
@@ -195,7 +193,6 @@ class FilmDetail extends React.Component {
                                 </table>
                             </div>
                         <div className={"content"}>
-                        <div className={"content"}>
                             <div className={'video'}>
                                 {filmData.videos.results[0] && (
                                     <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
@@ -221,9 +218,6 @@ class FilmDetail extends React.Component {
                         />
 
                     </div>
-                        </div>
-
-
                 </div>
             );
         }

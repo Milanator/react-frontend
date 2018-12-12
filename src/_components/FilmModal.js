@@ -22,7 +22,6 @@ class FilmModal extends Component {
         this.state = {
             userId: userId,
             // FROM HOME, ....
-            flashMessage: ''
         };
 
 
@@ -76,7 +75,7 @@ class FilmModal extends Component {
                                 <Grid columns={7}>
 
                                     { flashMessage && 
-                                        <FlashMessage message={flashMessage} type={'success'}/>
+                                        <FlashMessage message={flashMessage.message} type={flashMessage.type}/>
                                     }
 
                                     <Grid.Column/><Grid.Column/>

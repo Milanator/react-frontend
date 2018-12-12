@@ -69,7 +69,7 @@ export const addMyList = (event,that, fromFilmModal=0,fromFilmDetail=0) => {
 	let listId = Number(target.closest('.addToList').attr('data-list-id'));
 	let data = setRequestDataToMyList(hiddenData, listId);
 	let listName = target.closest('.addToList').attr('data-list-name');
-	let flashMessage
+	let flashMessage = {}
 
 	if( fromFilmModal ){
 
@@ -113,6 +113,8 @@ export const addMyList = (event,that, fromFilmModal=0,fromFilmDetail=0) => {
 				type: 'success'
 			};
 		}
+
+		$('.alert.flash-message').toggle()
 
 		that.setState({flashMessage:flashMessage,movieInMyLists: movieInMyLists})
 
