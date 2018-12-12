@@ -18,6 +18,8 @@ class FlashMessage extends Component {
 
         const {message,type,...rest} = this.props
 
+        $('.alert.flash-message').show()
+
         return (
 
             <div className={'flash-message alert alert-'+type} {...rest}>

@@ -47,7 +47,9 @@ class FilmModal extends Component {
         return (
 
             <div>
-                <Modal trigger={
+                <Modal 
+                    onClose={() => this.setState({flashMessage: false})}
+                    trigger={
                     <FilmCard 
                         source='FilmCard'
                         movieId={movieId}

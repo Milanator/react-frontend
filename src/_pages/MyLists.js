@@ -185,6 +185,7 @@ class Home extends Component {
                                         <EditListModal 
                                             myListId={list.id}
                                             myListName={list.name}
+                                            myListDescription={list.description}
                                             disabled={disabled}
                                         />
 
