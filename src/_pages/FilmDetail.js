@@ -97,7 +97,7 @@ class FilmDetail extends React.Component {
             let films = setMyListToMovie(this.state.filmData, myListMovies);
             let filmListIdies = films[0].inMyLists;
 
-            this.setState({ films: films, userLists: userLists, genres: genresArray, movieInMyLists: filmListIdies, comments: comments.reverse() });
+            this.setState({ films: films, userLists: userLists, genres: genresArray, movieInMyLists: filmListIdies, comments: comments });
         }).then(() => {
             this.setState({ isLoading: false });
         }).catch((err) => {
@@ -133,8 +133,6 @@ class FilmDetail extends React.Component {
                         { flashMessage && 
                             <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }}/>
                         }
-                       <h1 className={'title'}>{filmData.original_title}</h1>
-                       <hr></hr>
                         <div className={'image'}>
                             <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
                         </div>
@@ -192,49 +190,6 @@ class FilmDetail extends React.Component {
                                     </tbody>
                                 </table>
                             </div>
-                        <div className={"content"}>
-                        <div className={"content"}>
-                            <div className={'video'}>
-                                {filmData.videos.results[0] && (
-                                    <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
-                                    </iframe>
-                                )}
-                            </div>
-
-                        </div>
-                        <table className={"table col-4"}>
-                            <tr>
-                                <th>Release year:</th>
-                                <td>{filmData.release_date}</td>
-                            </tr>
-                            <tbody>
-                                <tr>
-                                    <th>Runtime:</th>
-                                    <td>{filmData.runtime} minutes</td>
-                                </tr>
-                                <tr>
-                                    <th>Status:</th>
-                                    <td>{filmData.status}</td>
-                                </tr>
-                                <tr>
-                                    <th>Average vote:</th>
-                                    <td>{filmData.vote_average * 10}%</td>
-                                </tr>
-                                <tr>
-                                    <th>Vote count:</th>
-                                    <td>{filmData.vote_count}</td>
-                                </tr>
-                                <tr>
-                                    <th>Budget:</th>
-                                    <td>{filmData.budget}$</td>
-                                </tr>
-                                <tr>
-                                    <th>Revenue:</th>
-                                    <td>{filmData.revenue}$</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
 
                     <div className={"content"}>
                         <div className={'video'}>

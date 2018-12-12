@@ -9,6 +9,10 @@
 	margin: 0;
 }
 
+.comment-block .comment{
+	border-bottom: none;
+}
+
 .comment-block .comment.highlight,
 .comment-block #add-button.highlight{
 	animation: highlight 1s;
@@ -44,12 +48,13 @@
 }
 
 .comment-block .comments{
+	margin-top: 5px;
 	max-height: 150px;
     overflow: auto;
 }
 
 .comment-block .more-comments{
-	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 .comment-block hr{
