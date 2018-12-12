@@ -19,8 +19,6 @@ class ListButtons extends Component {
 		const { source, userLists,movieInMyLists,addToMyList,rating, movieId,poster_path,title,overview,original_language,genres, ...rest } = this.props;
 		const ratingWidth = 75;
 
-		console.log(source);
-
 		if(source == 'FilmCard') {
 			alignmentRating = 'center';
 			iconClassName = 'dropdown-icon-small';
@@ -37,8 +35,6 @@ class ListButtons extends Component {
 			widthRating = 14;
 			widthBookmark = 2;
 		}
-
-		console.log(alignmentRating)
 
 		return (
 			<div className={'marks'}>

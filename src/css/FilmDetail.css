@@ -9,15 +9,15 @@
 margin-top: 10px;
 }
 
-.image {
-margin-top: 10px;
-margin-left: 10px;
-display: inline-block;
-float: left;
+.filmdetail-image {
+    margin-top: 10px;
+    margin-left: 10px;
+    display: inline-block;
+    float: left;
 }
 
-.image .filmdetailimg {
-max-height: 370px;
+.filmdetail-image .filmdetailimg {
+    max-height: 370px;
 }
 
 .description {

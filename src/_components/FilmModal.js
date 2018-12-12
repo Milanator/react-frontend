@@ -22,7 +22,6 @@ class FilmModal extends Component {
         this.state = {
             userId: userId,
             // FROM HOME, ....
-            flashMessage: ''
         };
 
 
@@ -48,7 +47,9 @@ class FilmModal extends Component {
         return (
 
             <div>
-                <Modal trigger={
+                <Modal 
+                    onClose={() => this.setState({flashMessage: false})}
+                    trigger={
                     <FilmCard 
                         source='FilmCard'
                         movieId={movieId}
@@ -78,7 +79,7 @@ class FilmModal extends Component {
                                 <div>
 
                                     { flashMessage && 
-                                        <FlashMessage message={flashMessage} type={'success'}/>
+                                        <FlashMessage message={flashMessage.message} type={flashMessage.type}/>
                                     }
 									<ListButtons
                                         source='FilmModal'

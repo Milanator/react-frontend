@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import $ from 'jquery'
 
 class FlashMessage extends Component {
 
@@ -7,15 +8,22 @@ class FlashMessage extends Component {
         super(props)
     }
 
+    hideAlert = (event) => {
+        
+        $(event.target).closest('.alert').hide();
+    }
+
     render() {
 
         const {message,type,...rest} = this.props
 
+        $('.alert.flash-message').show()
+
         return (
 
-            <div className={'alert alert-'+type} {...rest}>
+            <div className={'flash-message alert alert-'+type} {...rest}>
                 {message}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <button type="button" className={"close"} aria-label="Close" onClick={this.hideAlert}>
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

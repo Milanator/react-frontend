@@ -15,7 +15,16 @@
 }
 
 #add-list-modal {
-    height: 208px;
+    height: 320px;
+    background-color: #f9fafb;
+}
+
+.add-list-input-field {
+    margin-bottom: 20px;
+}
+
+.ui.label.label {
+    width: 100px;
 }
 
 .list-header {
@@ -31,6 +40,11 @@
     text-transform: uppercase;
     letter-spacing:0.1em;
     color: var(--standard-blue);
+}
+
+.list-description {
+    color: #cacbcd;
+    font-size: 1.28571429rem;
 }
 
 .list-actions {

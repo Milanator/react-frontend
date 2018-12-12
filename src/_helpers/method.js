@@ -71,7 +71,7 @@ export const addMyList = (event,that, fromFilmModal=0,fromFilmDetail=0) => {
 	let listId = Number(target.closest('.addToList').attr('data-list-id'));
 	let data = setRequestDataToMyList(hiddenData, listId);
 	let listName = target.closest('.addToList').attr('data-list-name');
-	let flashMessage
+	let flashMessage = {}
 
 	if( fromFilmModal ){
 
@@ -105,7 +105,7 @@ export const addMyList = (event,that, fromFilmModal=0,fromFilmDetail=0) => {
 		if( index !== -1 ){
 			
 			flashMessage = {
-				message: `Succesfully removed to ${listName}`,
+				message: `Succesfully removed from ${listName}`,
 				type: 'danger'
 			};
 		} else {	// movie was added to list
@@ -115,11 +115,11 @@ export const addMyList = (event,that, fromFilmModal=0,fromFilmDetail=0) => {
 				type: 'success'
 			};
 		}
-
+		
 		that.setState({flashMessage:flashMessage,movieInMyLists: movieInMyLists})
 
 		if( !fromFilmModal && !fromFilmDetail ){
-			// send data to film modal --> update seen and watch button
+			// send data to film modal --> update flash message 
 			that.props.changeFlashMessage(flashMessage)
 		}
 

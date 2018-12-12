@@ -45,6 +45,7 @@ class Register extends Component {
 				data: {
 					userId: userId,
 					name: 'Watchlist',
+					description: 'A list for the movies you always wanted to see.',
 					first: 1,
 					shortcut: 'watch'
 				}
@@ -55,6 +56,7 @@ class Register extends Component {
 				data: {
 					userId: userId,
 					name: 'Completed movies',
+					description: 'A list for the movies you have already seen.',
 					first: 1,
 					shortcut: 'seen'
 				}
