@@ -103,7 +103,7 @@ export const addMyList = (event,that, fromFilmModal=0,fromFilmDetail=0) => {
 		if( index !== -1 ){
 			
 			flashMessage = {
-				message: `Succesfully removed to ${listName}`,
+				message: `Succesfully removed from ${listName}`,
 				type: 'danger'
 			};
 		} else {	// movie was added to list
@@ -114,7 +114,7 @@ export const addMyList = (event,that, fromFilmModal=0,fromFilmDetail=0) => {
 			};
 		}
 
-		$('.alert.flash-message').show()
+		// $('.alert.flash-message').show()
 
 		that.setState({flashMessage:flashMessage,movieInMyLists: movieInMyLists})
 
