@@ -130,6 +130,7 @@ class FilmDetail extends React.Component {
                         <TopNavigation/>
 
                     <div className={'main-detail clearfix'}>
+
                         { flashMessage && 
                             <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }}/>
                         }

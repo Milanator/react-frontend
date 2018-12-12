@@ -113,9 +113,7 @@ export const addMyList = (event,that, fromFilmModal=0,fromFilmDetail=0) => {
 				type: 'success'
 			};
 		}
-
-		// $('.alert.flash-message').show()
-
+		
 		that.setState({flashMessage:flashMessage,movieInMyLists: movieInMyLists})
 
 		if( !fromFilmModal && !fromFilmDetail ){
