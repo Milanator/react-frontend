@@ -12,6 +12,8 @@ import FilmDetail from "./_pages/FilmDetail";
 import MyLists from './_pages/MyLists';
 import SearchFilms from "./_pages/SearchFilms";
 
+import 'bootstrap/js/dist/alert'
+
 // redirecting to inside application or login
 function Auth({component: Component, ...rest}) {
 	return (
