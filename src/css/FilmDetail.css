@@ -90,3 +90,8 @@ margin-top: 20px;
     letter-spacing:0.1em;
     color: var(--standard-blue);
 }
+
+.content-divider{
+     margin-top: 30px;
+     margin-bottom: 30px;
+}

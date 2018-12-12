@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from "axios";
 
-import { movieApiKeyPart, movieDbDomain, apikey, ourApiUrl } from "../_helpers/variable";
-import { addMyList, setMyListToMovie } from "../_helpers/method";
+import {movieApiKeyPart, movieDbDomain, apikey, ourApiUrl} from "../_helpers/variable";
+import {addMyList, setMyListToMovie} from "../_helpers/method";
 
 import LoadingIndicator from "../_components/LoadingIndicator";
 import TopNavigation from "../_components/TopNavigation";
@@ -56,7 +56,7 @@ class FilmDetail extends React.Component {
         let movieId = this.state.movieId;
         let url = apiUrl + '/' + movieId + movieApiKeyPart;
         let userLists, myListMovies, genresArray, comments;
-        let { userId, DBoffest } = this.state;
+        let {userId, DBoffest} = this.state;
 
         axios.all([
 
@@ -66,33 +66,43 @@ class FilmDetail extends React.Component {
 
                     let filmData = [];
                     filmData.push(res.data);
-                    this.setState({ filmData: filmData })
-                }).catch(err => { console.log(err); }),
+                    this.setState({filmData: filmData})
+                }).catch(err => {
+                console.log(err);
+            }),
 
             //images
             axios.get(imageUrl + movieId + "/images?api_key=" + apikey)
                 .then(res => {
-                    this.setState({ images: res.data })
-                }).catch(err => { console.log(err); }),
+                    this.setState({images: res.data})
+                }).catch(err => {
+                console.log(err);
+            }),
 
             // get all names and idies lists
             axios.get(ourApiUrl + "mylist/user/" + userId + "/category").then((res) => {
 
                 userLists = res.data;
-            }).catch((error) => { console.log(error); }),
+            }).catch((error) => {
+                console.log(error);
+            }),
 
             // get all names and idies lists
             axios.get(ourApiUrl + "mylist/user/" + userId + "/all").then((res) => {
 
                 myListMovies = res.data;
-            }).catch((error) => { console.log(error); }),
+            }).catch((error) => {
+                console.log(error);
+            }),
 
             // get comments by movie id
             axios.get(ourApiUrl + "comment/movie/" + movieId + "/" + DBoffest).then((res) => {
 
                 comments = res.data;
                 DBoffest += 3;
-            }).catch((error) => { console.log(error); })
+            }).catch((error) => {
+                console.log(error);
+            })
 
 
         ]).then(() => {
@@ -100,9 +110,15 @@ class FilmDetail extends React.Component {
             let films = setMyListToMovie(this.state.filmData, myListMovies);
             let filmListIdies = films[0].inMyLists;
 
-            this.setState({ films: films, userLists: userLists, genres: genresArray, movieInMyLists: filmListIdies, comments: comments.reverse() });
+            this.setState({
+                films: films,
+                userLists: userLists,
+                genres: genresArray,
+                movieInMyLists: filmListIdies,
+                comments: comments.reverse()
+            });
         }).then(() => {
-            this.setState({ isLoading: false });
+            this.setState({isLoading: false});
         }).catch((err) => {
             console.log(err);
         });
@@ -121,21 +137,21 @@ class FilmDetail extends React.Component {
 
     render() {
 
-        const { movieId, userLists, images, userId, profilePicture, userName, comments, isLoading, DBoffest } = this.state;
-        let { filmData, flashMessage } = this.state;
+        const {movieId, userLists, images, userId, profilePicture, userName, comments, isLoading, DBoffest} = this.state;
+        let {filmData, flashMessage} = this.state;
         filmData = filmData[0];
 
         if (movieId == 0 || filmData == 0 || images == 0 || isLoading) {
-            return <LoadingIndicator />;
+            return <LoadingIndicator/>;
         } else {
             return (
 
                 <div className={'film-detail'}>
-                    <TopNavigation />
+                    <TopNavigation/>
 
 
                     {flashMessage &&
-                        <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }} />
+                    <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{marginTop: "10px"}}/>
                     }
 
                     <div className={'main-detail clearfix'}>
@@ -143,9 +159,10 @@ class FilmDetail extends React.Component {
                         <div className={'image'}>
                             {filmData.poster_path ? (
                                 <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" +
-                                filmData.poster_path} alt={"movie poster"} />
+                                filmData.poster_path} alt={"movie poster"}/>
                             ) : (
-                                <img src={require('../img/moviebot_darkblue.jpg')} className={'filmdetailimg'} alt="movie poster"/>
+                                <img src={require('../img/moviebot_darkblue.jpg')} className={'filmdetailimg'}
+                                     alt="movie poster"/>
                             )}
 
                         </div>
@@ -177,30 +194,30 @@ class FilmDetail extends React.Component {
                                 <td>{filmData.release_date}</td>
                             </tr>
                             <tbody>
-                                <tr>
-                                    <th>Runtime:</th>
-                                    <td>{filmData.runtime} minutes</td>
-                                </tr>
-                                <tr>
-                                    <th>Status:</th>
-                                    <td>{filmData.status}</td>
-                                </tr>
-                                <tr>
-                                    <th>Average vote:</th>
-                                    <td>{filmData.vote_average * 10}%</td>
-                                </tr>
-                                <tr>
-                                    <th>Vote count:</th>
-                                    <td>{filmData.vote_count}</td>
-                                </tr>
-                                <tr>
-                                    <th>Budget:</th>
-                                    <td>{formatMoney(filmData.budget)}$</td>
-                                </tr>
-                                <tr>
-                                    <th>Revenue:</th>
-                                    <td>{formatMoney(filmData.revenue, 0,"")}$</td>
-                                </tr>
+                            <tr>
+                                <th>Runtime:</th>
+                                <td>{filmData.runtime} minutes</td>
+                            </tr>
+                            <tr>
+                                <th>Status:</th>
+                                <td>{filmData.status}</td>
+                            </tr>
+                            <tr>
+                                <th>Average vote:</th>
+                                <td>{filmData.vote_average * 10}%</td>
+                            </tr>
+                            <tr>
+                                <th>Vote count:</th>
+                                <td>{filmData.vote_count}</td>
+                            </tr>
+                            <tr>
+                                <th>Budget:</th>
+                                <td>{formatMoney(filmData.budget)}$</td>
+                            </tr>
+                            <tr>
+                                <th>Revenue:</th>
+                                <td>{formatMoney(filmData.revenue, 0, "")}$</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -208,15 +225,21 @@ class FilmDetail extends React.Component {
                         <div className={"content clearfix"}>
                             <div className={'video'}>
                                 {filmData.videos.results[0] && (
-                                    <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
+                                    <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key}
+                                            width={600} height={300}
+                                            allowfullscreen="allowfullscreen"
+                                            mozallowfullscreen="mozallowfullscreen"
+                                            msallowfullscreen="msallowfullscreen"
+                                            oallowfullscreen="oallowfullscreen"
+                                            webkitallowfullscreen="webkitallowfullscreen">
                                     </iframe>
                                 )}
-                                { images.backdrops.length > 1 && (
-                                    <div>
-                                 <h2 className={"film-section-title"}>Image section</h2>
-                                <hr className={"slider-divider"}></hr>
+                                {images.backdrops.length > 1 && (
+                                    <div className={"content-divider"}>
+                                        <h2 className={"film-section-title"}>Image section</h2>
+                                        <hr className={"slider-divider"}></hr>
                                     </div>
-                                    )}
+                                )}
                             </div>
                             <ImageSlider
                                 images={images.backdrops}
@@ -225,11 +248,10 @@ class FilmDetail extends React.Component {
                                 image={images.backdrops}
                             />
 
-                                <div>
-                                    <h2 className={"film-section-title"}>Comments Section</h2>
-                                    <hr className={"slider-divider"} />
-                                </div>
-                                
+                            <div className={"content-divider"}>
+                                <h2 className={"film-section-title"}>Comments Section</h2>
+                                <hr className={"slider-divider"}/>
+                            </div>
 
 
                             <CommentBlock
