@@ -63,7 +63,7 @@ class CommentBlock extends Component {
 			input.focus()
 			addButton.addClass('highlight')
 
-			comments.append(commentTemplate)
+			comments.prepend(commentTemplate)
 
 		}).catch(err => {
 			console.log(err);
@@ -82,7 +82,7 @@ class CommentBlock extends Component {
 		// get next 5 comments
 		axios.get(ourApiUrl + "comment/movie/"+movieId+"/"+DBoffest).then((res) => {
 			
-			let nextComments = res.data.reverse();
+			let nextComments = res.data;
 			let commentsTemplate = '';
 
 			if( nextComments.length < 3 )
@@ -93,7 +93,7 @@ class CommentBlock extends Component {
 				commentsTemplate += this.commentTemplate(comment.name,comment.content,comment.created_at)
 			});
 
-			comments.prepend(commentsTemplate)
+			comments.append(commentsTemplate)
 
 		}).catch((error) => { console.log( error ); })
 	}
@@ -132,12 +132,6 @@ class CommentBlock extends Component {
 								</a>
 							</span>
 							</div>
-							{ comments.length > 2 && (
-								<div className={'more-comments'}>
-									<a href={ourApiUrl+'comment/movie/'+movieId+'/'+DBoffest} onClick={this.moreComments}>More comments</a>
-								</div>
-							)}
-							<hr/>
 							<div className={'comments'}>
 								{comments.map((comment, key) => (
 									<ul className={"list-unstyled ui-sortable comment"}>
@@ -153,6 +147,11 @@ class CommentBlock extends Component {
 									</ul>
 								))}
 							</div>
+							{ comments.length > 2 && (
+								<div className={'more-comments'}>
+									<a href={ourApiUrl+'comment/movie/'+movieId+'/'+DBoffest} onClick={this.moreComments}>More comments</a>
+								</div>
+							)}
 						</form>
 					</div>
 				</div>
