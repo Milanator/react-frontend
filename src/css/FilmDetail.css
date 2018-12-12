@@ -35,6 +35,11 @@ background-color: #003459;
 
 .main-detail .image{
     float: left;
+    width: 25%;
+}
+
+.main-detail .image img{
+    width: 100%;
 }
 
 .detail-description h1 {
@@ -74,7 +79,8 @@ color: white;
 }
 
 .detail-description {
-color: white;
+    color: white;
+    width: 45%;
 }
 
 .detail-description p {
