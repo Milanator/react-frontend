@@ -77,7 +77,7 @@ class Home extends Component {
 
         ]).then(() => {
 
-            let films = setMyListToMovie(this.state.films, myListMovies,1);
+            let films = setMyListToMovie(this.state.films, myListMovies, 1);
 
             // set genres from json to array
             films.forEach((film) => {
@@ -109,7 +109,7 @@ class Home extends Component {
                 }
             });
 
-            let newList = { 'id': list.id, 'name': list.name, 'first': list.first, films: listFilms };
+            let newList = { 'id': list.id, 'name': list.name, 'description': list.description, 'first': list.first, films: listFilms };
 
             userListsWithFilms.push(newList);
         });
@@ -136,14 +136,15 @@ class Home extends Component {
 
     changeFlashMessage = (flashMessage) => {
 
-        this.setState({flashMessage:flashMessage})
+        this.setState({ flashMessage: flashMessage })
     }
 
     render() {
+        
         const { userListsWithFilms, userLists, isLoading, flashMessage } = this.state;
         let disabled;
 
-        if ( isLoading ) {
+        if (isLoading) {
             return (
                 <div>
                     <TopNavigation />
@@ -158,58 +159,62 @@ class Home extends Component {
 
                     <div className="container sliders">
 
-                        { flashMessage && 
-                            <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }}/>
+                        {flashMessage &&
+                            <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }} />
                         }
 
                         <AddListModal />
 
                         {userListsWithFilms.map(list => {
 
-                            if(list.first == 1) {
+                            if (list.first == 1) {
                                 disabled = 'disabled';
                             } else {
                                 disabled = '';
                             }
 
-                            return(
-                            <div>
+                            return (
+                                <div>
 
-                                <div className="list-header">
+                                    <div className="list-header">
 
-                                    <div className="list-title">
-                                        {list.name}
+                                        <div className="list-title">
+                                            {list.name}
+                                        </div>
+
+                                        <div className="list-actions">
+                                            <EditListModal
+                                                myListId={list.id}
+                                                myListName={list.name}
+                                                myListDescription={list.description}
+                                                disabled={disabled}
+                                            />
+
+                                            <Button
+                                                disabled={disabled}
+                                                className="second-delete"
+                                                icon
+                                                onClick={() => this.deleteList(list.id)}  >
+                                                <Icon
+                                                    name='trash'
+                                                    className={'addToMyList blue-icon'} />
+                                            </Button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="list-description">
+                                        {list.description}
                                     </div>
 
-                                    <div className="list-actions">
-                                        <EditListModal 
-                                            myListId={list.id}
-                                            myListName={list.name}
-                                            myListDescription={list.description}
-                                            disabled={disabled}
-                                        />
+                                    <hr className="slider-divider" />
 
-                                        <Button
-                                            disabled={disabled}
-                                            className="second-delete"
-                                            icon
-                                            onClick={() => this.deleteList(list.id)}  >
-                                            <Icon
-                                                name='trash'
-                                                className={'addToMyList blue-icon'} />
-                                        </Button>
-                                    </div>
+                                    <FilmCardSlider
+                                        films={list.films}
+                                        userLists={userLists}
+                                        changeFlashMessage={this.changeFlashMessage}
+                                    />
+
                                 </div>
-
-                                <hr className="slider-divider" />
-
-                                <FilmCardSlider
-                                    films={list.films}
-                                    userLists={userLists}
-                                    changeFlashMessage={this.changeFlashMessage}
-                                />
-
-                            </div>
                             )
                         })}
                     </div>

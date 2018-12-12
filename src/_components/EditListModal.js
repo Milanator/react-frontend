@@ -74,6 +74,7 @@ class EditListModal extends Component {
                     <Input
                         className="add-list-input-field"
                         fluid
+                        label="Name"
                         defaultValue={myListName}
                         ref={input => this.inputListName = input} />
                     <Input
