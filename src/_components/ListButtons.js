@@ -14,9 +14,31 @@ class ListButtons extends Component {
 	}
 
 	render() {
+		var alignmentRating, widthRating, widthBookmark, iconClassName;
 
-		const { userLists,movieInMyLists,addToMyList,rating, movieId,poster_path,title,overview,original_language,genres, ...rest } = this.props;
+		const { source, userLists,movieInMyLists,addToMyList,rating, movieId,poster_path,title,overview,original_language,genres, ...rest } = this.props;
 		const ratingWidth = 75;
+
+		console.log(source);
+
+		if(source == 'FilmCard') {
+			alignmentRating = 'center';
+			iconClassName = 'dropdown-icon-small';
+			widthRating = 10;
+			widthBookmark = 3;
+		} else if(source == 'FilmModal') {
+			alignmentRating = 'left';
+			iconClassName = 'dropdown-icon-big';
+			widthRating = 14;
+			widthBookmark = 2;
+		} else {
+			alignmentRating = 'left';
+			iconClassName = 'dropdown-icon-big';
+			widthRating = 14;
+			widthBookmark = 2;
+		}
+
+		console.log(alignmentRating)
 
 		return (
 			<div className={'marks'}>
@@ -32,7 +54,7 @@ class ListButtons extends Component {
 				</div>
 
 				<Grid verticalAlign="middle">
-				<Grid.Column textAlign="center" width={9}>
+				<Grid.Column textAlign={alignmentRating} width={widthRating}>
 					<div className="rating">
 						{ rating ? (
 							<div className={'stars'} style={{width:(ratingWidth/100)*(rating*10)}}>
@@ -46,8 +68,8 @@ class ListButtons extends Component {
 						</div>
 					</div>
 				</Grid.Column>
-				<Grid.Column textAlign="right" width={3}>
-					<Dropdown text='' multiple icon='bookmark' color="blue" className={'addToMyList blue-content'}>
+				<Grid.Column className={iconClassName} textAlign="right" width={widthBookmark}>
+					<Dropdown direction='left' text='' multiple icon='bookmark' color="blue" className={'addToMyList blue-content'}>
 						<Dropdown.Menu>
 							<Dropdown.Menu scrolling>
 								{userLists.map(list =>
