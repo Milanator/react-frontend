@@ -2,14 +2,14 @@
     margin-top: 10px;
 }
 
-.image {
+.filmdetail-image {
     margin-top: 10px;
     margin-left: 10px;
     display: inline-block;
     float: left;
 }
 
-.image .filmdetailimg {
+.filmdetail-image .filmdetailimg {
     max-height: 370px;
 }
 

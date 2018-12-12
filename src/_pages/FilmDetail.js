@@ -130,12 +130,13 @@ class FilmDetail extends React.Component {
                         <TopNavigation/>
 
                     <div className={'main-detail clearfix'}>
+
                         { flashMessage && 
                             <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }}/>
                         }
                        <h1 className={'title'}>{filmData.original_title}</h1>
                        <hr></hr>
-                        <div className={'image'}>
+                        <div className={'filmdetail-image'}>
                             <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" + filmData.poster_path}/>
                         </div>
                         <div className={'description detail-description'}>
