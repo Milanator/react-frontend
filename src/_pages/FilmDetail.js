@@ -128,11 +128,11 @@ class FilmDetail extends React.Component {
         if (movieId == 0 || filmData == 0 || images == 0 || isLoading) {
             return <LoadingIndicator />;
         } else {
-                return(
-                    <div>
-                        <TopNavigation/>
+            return (
 
-                    <div className={'main-detail clearfix'}>
+                <div className={'film-detail'}>
+                    <TopNavigation />
+
 
                     {flashMessage &&
                         <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }} />
@@ -167,50 +167,8 @@ class FilmDetail extends React.Component {
                                 genres={filmData.genres}
                             />
 
-                                <p>{filmData.overview}</p>
-                                <p>Original language: {filmData.original_language}</p>
-                                </div>
-                                <table className={"table col-4"}>
-                                    <tr>
-                                        <th>Release year:</th>
-                                        <td>{filmData.release_date}</td>
-                                    </tr>
-                                    <tbody>
-                                    <tr>
-                                        <th>Runtime:</th>
-                                        <td>{filmData.runtime} minutes</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Status:</th>
-                                        <td>{filmData.status}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Average vote:</th>
-                                        <td>{filmData.vote_average *10}%</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Vote count:</th>
-                                        <td>{filmData.vote_count}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Budget:</th>
-                                        <td>{filmData.budget}$</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Revenue:</th>
-                                        <td>{filmData.revenue}$</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div className={"content"}>
-                        <div className={"content"}>
-                            <div className={'video'}>
-                                {filmData.videos.results[0] && (
-                                    <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
-                                    </iframe>
-                                )}
-                            </div>
+                            <p>{filmData.overview}</p>
+                            <p>Original language: {filmData.original_language}</p>
 
                         </div>
                         <table className={"table col-4"}>
