@@ -119,7 +119,7 @@ export const addMyList = (event,that, fromFilmModal=0,fromFilmDetail=0) => {
 		that.setState({flashMessage:flashMessage,movieInMyLists: movieInMyLists})
 
 		if( !fromFilmModal && !fromFilmDetail ){
-			// send data to film modal --> update seen and watch button
+			// send data to film modal --> update flash message 
 			that.props.changeFlashMessage(flashMessage)
 		}
 

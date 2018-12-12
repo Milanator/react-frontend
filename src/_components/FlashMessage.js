@@ -8,10 +8,9 @@ class FlashMessage extends Component {
         super(props)
     }
 
-    toggleAlert = (event) => {
-
-        let target = event.target;
-        $(target).closest('.alert').hide();
+    hideAlert = (event) => {
+        
+        $(event.target).closest('.alert').hide();
     }
 
     render() {
@@ -22,7 +21,7 @@ class FlashMessage extends Component {
 
             <div className={'flash-message alert alert-'+type} {...rest}>
                 {message}
-                <button type="button" className={"close"} aria-label="Close" onClick={this.toggleAlert}>
+                <button type="button" className={"close"} aria-label="Close" onClick={this.hideAlert}>
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
