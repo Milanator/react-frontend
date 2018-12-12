@@ -51,6 +51,14 @@
 	padding: 4px 4px;
 }
 
+.dropdown-icon-small {
+    font-size: 22px;
+}
+
+.dropdown-icon-big {
+    font-size: 24px;
+}
+
 .marks {
     display: block;
     padding: 0 20px;

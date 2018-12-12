@@ -1,66 +1,72 @@
-.content .main-detail{
+.content .main-detail {
     margin-top: 10px;
 }
 
- .image{
-     margin-top: 10px;
-     margin-left: 10px;
+.image {
+    margin-top: 10px;
+    margin-left: 10px;
     display: inline-block;
     float: left;
 }
 
-  .image .filmdetailimg{
+.image .filmdetailimg {
     max-height: 370px;
 }
 
- .description{
+.description {
     float: left;
     width: 43%;
     text-align: left;
-
-
 }
-.main-detail{
-padding: 0 5%;
-    padding-bottom:20px;
 
+.main-detail {
+    padding: 0 5%;
+    padding-bottom: 20px;
     margin-bottom: 20px;
     background-color: #003459;
 }
- .main-detail .description .title{
-    text-align: center;
-}
-.content .main-detail .description > .title,
- .main-detail .description > p{
+
+.detail-description h1 {
+    text-align: left;
     padding: 0 20px;
 }
 
-.content .main-detail .description .ui.grid{
+.content .main-detail .description>.title, .main-detail .description>p {
+    padding: 0 20px;
+}
+
+.content .main-detail .description .ui.grid {
     margin: 0;
 }
 
-.content .video{
+.content .video {
     margin-top: 10px;
 }
 
-.table{
-    margin-top:20px;
-    max-width:370px;
-    margin-right:10px;
-    border:1px solid #dee2e6;
+.table {
+    margin-top: 20px;
+    max-width: 370px;
+    margin-right: 10px;
+    border: 1px solid #dee2e6;
     float: right;
     text-align: center;
     color: white;
 }
 
-.content .image-slider{
+.content .image-slider {
     margin: 10px 0 20px 0;
 }
-h1{
+
+h1 {
     text-align: center;
     color: white;
 }
-.detail-description{
+
+.detail-description {
     color: white;
 }
 
+.detail-description p {
+    margin-top: 20px;
+    
+}

@@ -49,7 +49,9 @@ class FilmModal extends Component {
 
             <div>
                 <Modal trigger={
-                    <FilmCard movieId={movieId}
+                    <FilmCard 
+                        source='FilmCard'
+                        movieId={movieId}
                         poster_path={poster_path}
                         rating={rating}
                         title={title}
