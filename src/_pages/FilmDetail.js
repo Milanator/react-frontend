@@ -131,7 +131,7 @@ class FilmDetail extends React.Component {
 
 
                     {flashMessage &&
-                        <FlashMessage message={flashMessage} type={'success'} style={{ marginTop: "10px" }} />
+                        <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }} />
                     }
 
                     <div className={'main-detail clearfix'}>
@@ -195,36 +195,33 @@ class FilmDetail extends React.Component {
                             </tbody>
                         </table>
                     </div>
+
                     <div className={"content"}>
-                        <div className={"content"}>
-                            <div className={'video'}>
-                                {filmData.videos.results[0] && (
-                                    <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
-                                    </iframe>
-                                )}
-                            </div>
-
-                            <ImageSlider
-                                images={images.backdrops}
-                            />
-                            <ImageLightbox
-                                image={images.backdrops}
-                            />
-
-
-                            <CommentBlock
-                                movieId={movieId}
-                                userId={userId}
-                                profilePicture={profilePicture}
-                                userName={userName}
-                                comments={comments}
-                                DBoffest={DBoffest}
-                            />
-
+                        <div className={'video'}>
+                            {filmData.videos.results[0] && (
+                                <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key} width={600} height={300}>
+                                </iframe>
+                            )}
                         </div>
+
+                        <ImageSlider
+                            images={images.backdrops}
+                        />
+                        <ImageLightbox
+                            image={images.backdrops}
+                        />
+
+
+                        <CommentBlock
+                            movieId={movieId}
+                            userId={userId}
+                            profilePicture={profilePicture}
+                            userName={userName}
+                            comments={comments}
+                            DBoffest={DBoffest}
+                        />
+
                     </div>
-
-
                 </div>
             );
         }

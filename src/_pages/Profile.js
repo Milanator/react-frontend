@@ -8,6 +8,8 @@ import '../css/profile.css'
 import TopNavigation from "./../_components/TopNavigation";
 import {setUserInBrowserStorage} from "../_helpers/helper";
 
+import FlashMessage from '../_components/FlashMessage'
+
 class Profile extends Component {
 
 	constructor(props) {
@@ -109,10 +111,10 @@ class Profile extends Component {
 				</div>
 				<form action={ourApiUrl + 'user'} method={'POST'} onSubmit={this.handleForm}>
 					{/* IF IS SOME AUTHENTICATION ERROR, THEN WILL SHOW MESSAGE  */}
-					{
-						this.state.error &&
-						<div className={'alert alert-danger'}><p>{this.state.error}</p></div>
-					}
+					{ this.state.error && 
+                        <FlashMessage message={this.state.error} type={'danger'} style={{ marginTop: "10px" }}/>
+                    }
+
 					<div id="informations">
 						<h1>Your Profile</h1>
 						<p>Attention: For each change in profile you have to enter your current password. </p>

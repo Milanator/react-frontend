@@ -154,10 +154,10 @@ class SearchFilms extends Component {
 					<TopNavigation />
 					<div className="container">
 						<PageTitle title={'Results for "' + this.state.searchWord + '"'} />
-
+						
 						{ flashMessage && 
-                            <FlashMessage message={flashMessage} type={'success'} style={{ marginTop: "10px" }}/>
-                        }
+                        	<FlashMessage message={flashMessage.error} type={flashMessage.type} style={{ marginTop: "10px" }}/>
+                    	}
 
 						{this.state.films.map((film) => (
 							<FilmModal
