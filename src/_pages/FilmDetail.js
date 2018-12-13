@@ -153,7 +153,6 @@ class FilmDetail extends React.Component {
                             <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }} />
                         }
 
-                        {/* <h1 className={'title'}>{filmData.original_title}</h1> */}
                         <div className={'image'}>
                             {filmData.poster_path ? (
                                 <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" +
@@ -186,40 +185,44 @@ class FilmDetail extends React.Component {
 
                         </div>
                         <table className={"table "}>
-                        <tbody>
-                            <tr>
-                                <th>Release year:</th>
-                                <td>{filmData.release_date}</td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <th>Release year:</th>
+                                    <td>{filmData.release_date}</td>
+                                </tr>
 
-                            <tr>
-                                <th>Runtime:</th>
-                                <td>{filmData.runtime} minutes</td>
-                            </tr>
-                            <tr>
-                                <th>Status:</th>
-                                <td>{filmData.status}</td>
-                            </tr>
-                            <tr>
-                                <th>Average vote:</th>
-                                <td>{filmData.vote_average * 10}%</td>
-                            </tr>
-                            <tr>
-                                <th>Vote count:</th>
-                                <td>{filmData.vote_count}</td>
-                            </tr>
-                            <tr>
-                                <th>Budget:</th>
-                                <td>{formatMoney(filmData.budget)}$</td>
-                            </tr>
-                            <tr>
-                                <th>Revenue:</th>
-                                <td>{formatMoney(filmData.revenue, 0, "")}$</td>
-                            </tr>
+                                <tr>
+                                    <th>Runtime:</th>
+                                    <td>{filmData.runtime} minutes</td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <td>{filmData.status}</td>
+                                </tr>
+                                <tr>
+                                    <th>Average vote:</th>
+                                    <td>{filmData.vote_average * 10}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Vote count:</th>
+                                    <td>{filmData.vote_count}</td>
+                                </tr>
+                                <tr>
+                                    <th>Budget:</th>
+                                    <td>{formatMoney(filmData.budget)}$</td>
+                                </tr>
+                                <tr>
+                                    <th>Revenue:</th>
+                                    <td>{formatMoney(filmData.revenue, 0, "")}$</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                     <div className={'container'}>
+                        <div className={"content-divider"}>
+                            <div className={"film-section-title"}>Movie Trailer</div>
+                            <hr className={"slider-divider"} />
+                        </div>
                         <div className={"content clearfix"}>
                             <div className={'video'}>
                                 {filmData.videos.results[0] && (
@@ -234,7 +237,7 @@ class FilmDetail extends React.Component {
                                 )}
                                 {images.backdrops.length > 1 && (
                                     <div className={"content-divider"}>
-                                        <h2 className={"film-section-title"}>Image section</h2>
+                                        <div className={"film-section-title"}>Images</div>
                                         <hr className={"slider-divider"}></hr>
                                     </div>
                                 )}
@@ -247,7 +250,7 @@ class FilmDetail extends React.Component {
                             />
 
                             <div className={"content-divider"}>
-                                <h2 className={"film-section-title"}>Comments Section</h2>
+                                <div className={"film-section-title"}>Comments</div>
                                 <hr className={"slider-divider"} />
                             </div>
 

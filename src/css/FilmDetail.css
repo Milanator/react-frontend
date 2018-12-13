@@ -1,4 +1,4 @@
-.film-detail .container .content{
+.film-detail .container .content {
     text-align: center;
     width: 100%;
     margin: 0;
@@ -6,7 +6,7 @@
 }
 
 .content .main-detail {
-margin-top: 10px;
+    margin-top: 10px;
 }
 
 .filmdetail-image {
@@ -21,64 +21,64 @@ margin-top: 10px;
 }
 
 .description {
-float: left;
-width: 43%;
-text-align: left;
+    float: left;
+    width: 43%;
+    text-align: left;
 }
 
 .main-detail {
-padding: 0 5%;
-padding-bottom: 20px;
-margin-bottom: 20px;
-background-color: #003459;
+    padding: 0 5%;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    background-color: #003459;
 }
 
-.main-detail .image{
+.main-detail .image {
     float: left;
     width: 25%;
 }
 
-.main-detail .image img{
+.main-detail .image img {
     width: 100%;
 }
 
 .detail-description h1 {
-text-align: left;
-padding: 0 20px;
+    text-align: left;
+    padding: 0 20px;
 }
 
 .content .main-detail .description>.title, .main-detail .description>p {
-padding: 0 20px;
+    padding: 0 20px;
 }
 
 .content .main-detail .description .ui.grid {
-margin: 0;
+    margin: 0;
 }
 
 .content .video {
-margin-top: 10px;
+    margin-top: 10px;
 }
 
 .table {
-margin-top: 20px;
-width: 30%;
-border: 1px solid #dee2e6;
-float: left;
-text-align: center;
-color: white;
+    margin-top: 20px;
+    width: 30%;
+    border: 1px solid #dee2e6;
+    float: left;
+    text-align: center;
+    color: white;
 }
 
 .content .image-slider {
-margin: 10px 0 20px 0;
+    margin: 10px 0 20px 0;
 }
 
-.image-slider img{
+.image-slider img {
     cursor: pointer;
 }
 
 h1 {
-text-align: center;
-color: white;
+    text-align: center;
+    color: white;
 }
 
 .detail-description {
@@ -87,20 +87,19 @@ color: white;
 }
 
 .detail-description p {
-margin-top: 20px;
-
+    margin-top: 20px;
 }
+
 .film-section-title {
-    height: 40px;
-    text-align: center;
-    font-size: var(--text-heading-font-size);
+    text-align: left;
+    font-size: 32px;
     margin-top: 50px;
     text-transform: uppercase;
-    letter-spacing:0.1em;
+    letter-spacing: 0.1em;
     color: var(--standard-blue);
 }
 
-.content-divider{
-     margin-top: 30px;
-     margin-bottom: 30px;
+.content-divider {
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
