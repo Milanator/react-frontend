@@ -71,6 +71,11 @@ body {
     width: 100%
 }
 
+.ui.large.header .alert.alert-danger{
+    font-size: 14px;
+    width: 100%
+}
+
 .ui.search>.results .result .image {
 	background: red;
 }
