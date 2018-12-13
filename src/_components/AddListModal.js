@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import $ from 'jquery';
 
 import { Button, Modal, Input } from 'semantic-ui-react';
 
