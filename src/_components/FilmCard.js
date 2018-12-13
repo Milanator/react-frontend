@@ -4,7 +4,7 @@ import '../css/filmcard.css';
 
 import {textLimit} from "../_helpers/helper";
 import ListButtons from "./ListButtons";
-import {addMyList, addSeenWatchList} from "../_helpers/method";
+import {addMyList} from "../_helpers/method";
 import {capitalize} from "lodash/string";
 
 
@@ -45,6 +45,8 @@ class FilmCard extends Component {
 		const {movieId, poster_path, rating, title, overview, original_language,genres,userLists,movieInMyLists, ...rest} = this.props;
 		const {userId} = this.state;
 
+		console.log(genres)
+
 		return (
 			<div className="card" {...rest} key={movieId}>
 				{ poster_path ? (
@@ -84,7 +86,7 @@ class FilmCard extends Component {
 					<p>
 						{ genres && genres.map((genre) => (
 							
-							<span className="badge badge-primary">{genre.name}</span>
+							<span className="badge badge-primary">{genre.hasOwnProperty('name') ? genre.name : genre}</span>
 						))}
 					</p>
 				</div>

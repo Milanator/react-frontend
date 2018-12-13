@@ -156,3 +156,10 @@ button {
 	text-align: left;
 	margin-left: 10px;
 }
+
+textarea#userComment:hover,
+textarea#userComment:focus{
+	box-shadow: none;
+	outline: none;
+	border: 1px solid #ced4da;
+}

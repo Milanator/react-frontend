@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from "axios";
 
-import {movieApiKeyPart, movieDbDomain, apikey, ourApiUrl} from "../_helpers/variable";
-import {addMyList, setMyListToMovie} from "../_helpers/method";
+import { movieApiKeyPart, movieDbDomain, apikey, ourApiUrl } from "../_helpers/variable";
+import { addMyList, setMyListToMovie } from "../_helpers/method";
 
 import LoadingIndicator from "../_components/LoadingIndicator";
 import TopNavigation from "../_components/TopNavigation";
@@ -12,7 +12,7 @@ import ImageLightbox from "../_components/ImageLightbox";
 import CommentBlock from "../_components/CommentBlock";
 import FlashMessage from '../_components/FlashMessage';
 
-import {formatMoney} from '../_helpers/method'
+import { formatMoney } from '../_helpers/method'
 
 import "../_helpers/method"
 import "../css/FilmDetail.css"
@@ -56,7 +56,7 @@ class FilmDetail extends React.Component {
         let movieId = this.state.movieId;
         let url = apiUrl + '/' + movieId + movieApiKeyPart;
         let userLists, myListMovies, genresArray, comments;
-        let {userId, DBoffest} = this.state;
+        let { userId, DBoffest } = this.state;
 
         axios.all([
 
@@ -66,18 +66,18 @@ class FilmDetail extends React.Component {
 
                     let filmData = [];
                     filmData.push(res.data);
-                    this.setState({filmData: filmData})
+                    this.setState({ filmData: filmData })
                 }).catch(err => {
-                console.log(err);
-            }),
+                    console.log(err);
+                }),
 
             //images
             axios.get(imageUrl + movieId + "/images?api_key=" + apikey)
                 .then(res => {
-                    this.setState({images: res.data})
+                    this.setState({ images: res.data })
                 }).catch(err => {
-                console.log(err);
-            }),
+                    console.log(err);
+                }),
 
             // get all names and idies lists
             axios.get(ourApiUrl + "mylist/user/" + userId + "/category").then((res) => {
@@ -91,9 +91,7 @@ class FilmDetail extends React.Component {
             axios.get(ourApiUrl + "mylist/user/" + userId + "/all").then((res) => {
 
                 myListMovies = res.data;
-            }).catch((error) => {
-                console.log(error);
-            }),
+            }).catch((error) => { console.log(error); }),
 
             // get comments by movie id
             axios.get(ourApiUrl + "comment/movie/" + movieId + "/" + DBoffest).then((res) => {
@@ -118,7 +116,7 @@ class FilmDetail extends React.Component {
                 comments: comments.reverse()
             });
         }).then(() => {
-            this.setState({isLoading: false});
+            this.setState({ isLoading: false });
         }).catch((err) => {
             console.log(err);
         });
@@ -137,37 +135,36 @@ class FilmDetail extends React.Component {
 
     render() {
 
-        const {movieId, userLists, images, userId, profilePicture, userName, comments, isLoading, DBoffest} = this.state;
-        let {filmData, flashMessage} = this.state;
+        const { movieId, userLists, images, userId, profilePicture, userName, comments, isLoading, DBoffest } = this.state;
+        let { filmData, flashMessage } = this.state;
         filmData = filmData[0];
 
         if (movieId == 0 || filmData == 0 || images == 0 || isLoading) {
-            return <LoadingIndicator/>;
+            return <LoadingIndicator />;
         } else {
             return (
 
                 <div className={'film-detail'}>
-                    <TopNavigation/>
-
-
-                    {flashMessage &&
-                    <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{marginTop: "10px"}}/>
-                    }
+                    <TopNavigation />
 
                     <div className={'main-detail clearfix'}>
+
+                        {flashMessage &&
+                            <FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }} />
+                        }
+
                         {/* <h1 className={'title'}>{filmData.original_title}</h1> */}
                         <div className={'image'}>
                             {filmData.poster_path ? (
                                 <img className={"filmdetailimg"} src={"https://image.tmdb.org/t/p/w342/" +
-                                filmData.poster_path} alt={"movie poster"}/>
+                                    filmData.poster_path} alt={"movie poster"} />
                             ) : (
-                                <img src={require('../img/moviebot_darkblue.jpg')} className={'filmdetailimg'}
-                                     alt="movie poster"/>
-                            )}
+                                    <img src={require('../img/moviebot_darkblue.jpg')} className={'filmdetailimg'}
+                                        alt="movie poster" />
+                                )}
 
                         </div>
                         <div className={'description detail-description'}>
-
                             <h1>{filmData.original_title}</h1>
 
                             <ListButtons
@@ -188,12 +185,13 @@ class FilmDetail extends React.Component {
                             <p>Original language: {filmData.original_language}</p>
 
                         </div>
-                        <table className={"table col-4"}>
+                        <table className={"table "}>
+                        <tbody>
                             <tr>
                                 <th>Release year:</th>
                                 <td>{filmData.release_date}</td>
                             </tr>
-                            <tbody>
+
                             <tr>
                                 <th>Runtime:</th>
                                 <td>{filmData.runtime} minutes</td>
@@ -226,12 +224,12 @@ class FilmDetail extends React.Component {
                             <div className={'video'}>
                                 {filmData.videos.results[0] && (
                                     <iframe src={"https://www.youtube.com/embed/" + filmData.videos.results[0].key}
-                                            width={600} height={300}
-                                            allowfullscreen="allowfullscreen"
-                                            mozallowfullscreen="mozallowfullscreen"
-                                            msallowfullscreen="msallowfullscreen"
-                                            oallowfullscreen="oallowfullscreen"
-                                            webkitallowfullscreen="webkitallowfullscreen">
+                                        width={600} height={300}
+                                        allowfullscreen="allowfullscreen"
+                                        mozallowfullscreen="mozallowfullscreen"
+                                        msallowfullscreen="msallowfullscreen"
+                                        oallowfullscreen="oallowfullscreen"
+                                        webkitallowfullscreen="webkitallowfullscreen">
                                     </iframe>
                                 )}
                                 {images.backdrops.length > 1 && (
@@ -250,7 +248,7 @@ class FilmDetail extends React.Component {
 
                             <div className={"content-divider"}>
                                 <h2 className={"film-section-title"}>Comments Section</h2>
-                                <hr className={"slider-divider"}/>
+                                <hr className={"slider-divider"} />
                             </div>
 
 
@@ -266,7 +264,7 @@ class FilmDetail extends React.Component {
 
                         </div>
                     </div>
-                    <Footer/>
+                    <Footer />
                 </div>
 
 

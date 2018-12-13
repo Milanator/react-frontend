@@ -40,8 +40,6 @@ class FilmCardSlider extends Component {
                                     overview={film.overview}
                                     original_language={film.original_language}
                                     key={film.id}
-                                    inSeenList={film.inSeenList}
-                                    inWatchList={film.inWatchList}
                                     movieInMyLists={film.inMyLists}
                                     userLists={userLists}
                                     genres={film.genres}

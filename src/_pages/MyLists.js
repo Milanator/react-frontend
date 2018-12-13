@@ -86,6 +86,16 @@ class Home extends Component {
                 film.genres = film.genres ? JSON.parse(film.genres) : []
             })
 
+            films.forEach((film) => {
+
+                film.genreNames = [];
+
+                film.genres.forEach((genre) => {
+
+                    film.genreNames.push(genre)
+                })
+            })
+
             this.setState({ films: films, userLists: userLists, genres: genresArray });
         }).then(() => {
             this.createUserListsWithFilms();

@@ -5,7 +5,7 @@ import Lightbox from "lightbox-react";
 
 class ImageSlider extends Component {
 
-    constructor(props){
+    constructor(props) {
 
         super(props);
 
@@ -20,7 +20,7 @@ class ImageSlider extends Component {
     setLightbox = (event) => {
 
         let imageKey = event.target.getAttribute('data-key');
-        this.setState({ isOpen: true,photoIndex:imageKey });
+        this.setState({ isOpen: true, photoIndex: imageKey });
     }
 
     render() {
@@ -39,30 +39,30 @@ class ImageSlider extends Component {
 
         return (
             <div className={'image-slider'}>
-                { images.length > 2 ? (
+                {images.length > 2 ? (
                     <Slider {...settings}>
-                        {images.map( (image,key) => (
-                            <div>
-                                <img src={"https://image.tmdb.org/t/p/w500/"+image.file_path}
+                        {images.map((image, key) => (
+                            <div key={key}>
+                                <img src={"https://image.tmdb.org/t/p/w500/" + image.file_path}
                                     onClick={this.setLightbox} data-key={key}
                                 />
                             </div>
                         ))}
                     </Slider>
                 ) : (
-                    <div>
-                        { images.map((image,key) => (
-                            <img src={"https://image.tmdb.org/t/p/w500/"+image.file_path}
-                            onClick={this.setLightbox} data-key={key}/>
-                        ))}
-                    </div>
-                )}
+                        <div>
+                            {images.map((image, key) => (
+                                <img src={"https://image.tmdb.org/t/p/w500/" + image.file_path}
+                                    onClick={this.setLightbox} data-key={key} />
+                            ))}
+                        </div>
+                    )}
 
                 {isOpen && (
                     <Lightbox
-                        mainSrc={prefix+images[photoIndex].file_path}
-                        nextSrc={prefix+images[(photoIndex + 1) % images.length].file_path}
-                        prevSrc={prefix+images[(photoIndex + images.length - 1) % images.length].file_path}
+                        mainSrc={prefix + images[photoIndex].file_path}
+                        nextSrc={prefix + images[(photoIndex + 1) % images.length].file_path}
+                        prevSrc={prefix + images[(photoIndex + images.length - 1) % images.length].file_path}
                         onCloseRequest={() => this.setState({ isOpen: false })}
                         onMovePrevRequest={() =>
                             this.setState({

@@ -40,8 +40,6 @@ export const setFilmGenre = (genres,films,fromMyList=0) => {
 // fromMyList - MyList.js file
 export const setMyListToMovie = (films,myLists,fromMyList=0) =>{
 
-	console.log(myLists)
-
 	if( myLists ){
 
         films.forEach((film,key) => {

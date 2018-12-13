@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Header, Image, Modal, Grid, Container, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-import { addMyList, addSeenWatchList } from "../_helpers/method";
+import { addMyList } from "../_helpers/method";
 
 import FilmCard from './FilmCard';
 import ListButtons from "./ListButtons";

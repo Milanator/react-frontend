@@ -8,7 +8,7 @@ import "../css/footer.css"
             <div>
                 <footer id="footer">
                    <p>
-                       Created by:  Meike Krohn, Milan Navratil and Peter Blstak
+                        &copy; Meike Krohn, Milan Navratil and Peter Blstak
                    </p>
 
                 </footer>
