@@ -156,7 +156,7 @@ class SearchFilms extends Component {
 						<PageTitle title={'Results for "' + this.state.searchWord + '"'} />
 						
 						{ flashMessage && 
-                        	<FlashMessage message={flashMessage.error} type={flashMessage.type} style={{ marginTop: "10px" }}/>
+                        	<FlashMessage message={flashMessage.message} type={flashMessage.type} style={{ marginTop: "10px" }}/>
                     	}
 
 						{this.state.films.map((film) => (

@@ -1,27 +1,37 @@
+/* LG */
 @media all and (max-width: 1199px) {
 	
 }
+/* MD */
 @media all and (max-width: 991px) {
-	
+	.container ul.nav li a{
+        font-size: 20px;
+    }
 }
+/* SM */
 @media all and (max-width: 768px) {
 
 }
+/* XS */
 @media all and (max-width: 575px) {
 	
 }
 
 
 
+/* LG */
 /* @media all and (max-width: 1199px) {
 	
-}
-@media all and (max-width: 991px) {
-	
-}
-@media all and (max-width: 768px) {
-
-}
-@media all and (max-width: 575px) {
+} */
+/* MD */
+/* @media all and (max-width: 991px) {
 	
 } */
+/* SM */
+/* @media all and (max-width: 768px) {
+
+} */
+/* XS */
+/* @media all and (max-width: 575px) {
+	
+}  */

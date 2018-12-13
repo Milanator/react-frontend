@@ -126,7 +126,7 @@ export default class SearchInput extends Component {
 
 		return (
 			<Grid>
-				<Grid.Column width={6}>
+				<Grid.Column width={16}>
 					<Search
 						loading={isLoading}
 						onResultSelect={this.handleResultSelect}

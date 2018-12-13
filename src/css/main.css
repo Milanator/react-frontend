@@ -118,3 +118,7 @@ body {
     padding: .85714286em 1.14285714em;
     display: block;
 }
+
+.search-field{
+    text-align: right;
+}

@@ -36,13 +36,13 @@ class TopNavigation extends Component {
 			<div>
 				<div className="top-navigation">
 					<Grid columns="equal">
-						<GridColumn width={11}>
+						<GridColumn width={10} className={'col-md-5'}>
 							<Image src={logo} as={Link} to="/home" alt="logo" />
 						</GridColumn>
-						<GridColumn className="search-field" verticalAlign="middle" width={3}>
+						<GridColumn className={"search-field col-md-5 col-sm-6"} verticalAlign="middle" width={5}>
 							<SearchInput/>
 						</GridColumn>
-						<GridColumn verticalAlign="middle" width={2}>
+						<GridColumn verticalAlign="middle" width={2} className={'col-md-2 col-sm-6'}>
 							<Dropdown trigger={<Image avatar src={this.state.user.profilePicture} />} className="top-navigation-dropdown">
 								<Dropdown.Menu direction="left">
 									<Dropdown.Item icon="film" as={Link} to="/home" text="Browse All" />

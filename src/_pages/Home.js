@@ -120,6 +120,8 @@ class Home extends Component {
 
 				let films = res.data.results;
 				films = setFilmGenre(this.state.genres, films);
+				films = setMyListToMovie(films,this.state.myListMovies);
+
 				this.setState({ films });
 			}).then(() => {
 				this.setState({ isLoading: false });

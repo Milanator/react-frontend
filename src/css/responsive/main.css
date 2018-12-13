@@ -7,11 +7,22 @@
 	.card {
 		width: calc(50% - 8px) !important;
 		margin: 4px 4px;
-		height: 570px;
+		height: 530px;
 		padding: 0 15px;
 	}
+
+
 }
 @media all and (max-width: 768px) {
+	.page-title{
+		line-height: var(--text-heading-font-size);
+		margin-top: 40px;
+    	margin-bottom: 40px;
+	}
+
+	.top-navigation {
+		height: auto;
+	}
 
 }
 @media all and (max-width: 575px) {
@@ -24,6 +35,15 @@
 
 	.card .fix-bottom{
 		padding: 0 40px;
+	}
+
+	.filter-menu{
+		text-align: center;
+	}
+
+	#footer{
+		padding: 30px 0;
+		font-size: 14px;
 	}
 }
 

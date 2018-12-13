@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 
 import '../css/login.css';
+import '../css/responsive/login.css'
 
 import { setUserInBrowserStorage } from "../_helpers/helper";
 import { baseUrl, ourApiUrl } from "../_helpers/variable";
@@ -99,7 +100,7 @@ class Login extends Component {
 						</li>
 					</ul>
 					<div className="login-form">
-						<div className="main-div col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10">
+						<div className="main-div col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12">
 							{/* IF IS SOME AUTHENTICATION ERROR, THEN WILL SHOW MESSAGE  */}
 							{this.state.error &&
 								<FlashMessage message={this.state.error} type={'danger'} />

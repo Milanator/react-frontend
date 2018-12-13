@@ -125,13 +125,13 @@ class Register extends Component {
 						<Link to="/register">Register</Link>
 					</li>
 				</ul>
-				<div className="login-form">
-					<div className="main-div">
+				<div className="login-form ">
+					<div className="main-div col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12">
 
 						{/* IF IS SOME AUTHENTICATION ERROR, THEN WILL SHOW MESSAGE  */}
 						{
 							this.state.error && 
-							<FlashMessage message={this.state.success} type={'danger'}/>
+							<FlashMessage message={this.state.error} type={'danger'}/>
 						}
 
 						{/* IF REGISTRATION IS SUCCESSFUL  */}
