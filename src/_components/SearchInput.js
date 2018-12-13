@@ -111,8 +111,8 @@ export default class SearchInput extends Component {
 		} else if( moreFilms ){
 
 			return (
-				<div key={price}>
-					<a href={baseUrl+'movie/search/'+slugify(searchWord)}>
+				<div key={price} className={'more-films'}>
+					<a href={baseUrl+'movie/search/'+slugify(searchWord)} style={{  padding: ".85714286em 1.14285714em" }}>
 						{'More films'}
 					</a>
 				</div>

@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import '../css/login.css';
 
-import {setUserInBrowserStorage} from "../_helpers/helper";
-import {baseUrl, ourApiUrl} from "../_helpers/variable";
+import { setUserInBrowserStorage } from "../_helpers/helper";
+import { baseUrl, ourApiUrl } from "../_helpers/variable";
 
 import FlashMessage from '../_components/FlashMessage'
 
@@ -46,7 +46,7 @@ class Login extends Component {
 		// clear all data in local storage
 		localStorage.clear();
 
-		const {email, password} = this.state.user;
+		const { email, password } = this.state.user;
 		const params = new URLSearchParams();
 
 		// set password and email to params for ajax
@@ -71,10 +71,10 @@ class Login extends Component {
 				let id = response.id;
 				let days = 30;
 				// with expiration
-				setUserInBrowserStorage(email,days,profilePicture,name,id);
+				setUserInBrowserStorage(email, days, profilePicture, name, id);
 				// redirect
 				window.location.href = baseUrl + 'home';
-			} else{
+			} else {
 
 				this.setState({ error: 'Invalid credentials!' });
 			}
@@ -85,42 +85,42 @@ class Login extends Component {
 	}
 
 	render() {
-		document.body.style.backgroundImage="url('background.png')";
+		document.body.style.backgroundImage = "url('background.png')";
 
 		return (
 			<div className="background">
-			<div className="container">
-				<ul className={'nav'}>
-					<li>
-						<Link to="/login">Login</Link>
-					</li>
-					<li>
-						<Link to="/register">Register</Link>
-					</li>
-				</ul>
-				<div className="login-form">
-					<div className="main-div">
-						{/* IF IS SOME AUTHENTICATION ERROR, THEN WILL SHOW MESSAGE  */}
-						{ this.state.error && 
-                            <FlashMessage message={this.state.error} type={'danger'}/>
-                        }
+				<div className="container">
+					<ul className={'nav'}>
+						<li>
+							<Link to="/login">Login</Link>
+						</li>
+						<li>
+							<Link to="/register">Register</Link>
+						</li>
+					</ul>
+					<div className="login-form">
+						<div className="main-div col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10">
+							{/* IF IS SOME AUTHENTICATION ERROR, THEN WILL SHOW MESSAGE  */}
+							{this.state.error &&
+								<FlashMessage message={this.state.error} type={'danger'} />
+							}
 
-						<div className="panel">
-							<h2>Login</h2>
-							<p>Please enter your email and password</p>
+							<div className="panel">
+								<h2>Login</h2>
+								<p>Please enter your email and password</p>
+							</div>
+							<form id="Login" onSubmit={this.checkUser}>
+								<div className="form-group">
+									<input type="email" className="form-control" id="email" placeholder="Email Address" name={'email'} onChange={this.onChangeInput} />
+								</div>
+								<div className="form-group">
+									<input type="password" className="form-control" id="password" placeholder="Password" name={'password'} onChange={this.onChangeInput} />
+								</div>
+								<button type="submit" className="btn btn-primary">Login</button>
+							</form>
 						</div>
-						<form id="Login" onSubmit={this.checkUser}>
-							<div className="form-group">
-								<input type="email" className="form-control" id="email" placeholder="Email Address" name={'email'} onChange={this.onChangeInput}/>
-							</div>
-							<div className="form-group">
-								<input type="password" className="form-control" id="password" placeholder="Password" name={'password'} onChange={this.onChangeInput}/>
-							</div>
-							<button type="submit" className="btn btn-primary">Login</button>
-						</form>
 					</div>
 				</div>
-			</div>
 			</div>
 		);
 	}

@@ -39,7 +39,8 @@ class Home extends Component {
 			userLists: [],
 			isLoading: true,
 			genres: [],
-			flashMessage: ''
+			flashMessage: '',
+			myListMovies: []
 		};
 
 		this.changeFlashMessage = this.changeFlashMessage.bind(this)
@@ -90,7 +91,7 @@ class Home extends Component {
 			let films = setFilmGenre(genresArray, this.state.films);
 			films = setMyListToMovie(films,myListMovies);
 
-			this.setState({ films:films,userLists:userLists,genres: genresArray });
+			this.setState({ films:films,userLists:userLists,genres:genresArray,myListMovies:myListMovies });
 		}).then(() => {
 			this.setState({ isLoading: false });
 		}).catch((err) => {
@@ -129,6 +130,8 @@ class Home extends Component {
 	// handle any update of the filterMenu
 	onUpdate(result, totalPages, chosenGenre, chosenYear) {
 		result = setFilmGenre(this.state.genres, result);
+		result = setMyListToMovie(result,this.state.myListMovies);
+		console.log(result)
 		this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear});
 	}
 
@@ -185,7 +188,7 @@ class Home extends Component {
 					</div>
 
 					<div className="pagination-component">
-						<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange.bind(this)} />
+						<Pagination siblingRange={2} activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange.bind(this)} />
 					</div>
 					<Footer/>
 				</div>

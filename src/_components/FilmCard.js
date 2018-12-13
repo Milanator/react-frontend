@@ -45,8 +45,6 @@ class FilmCard extends Component {
 		const {movieId, poster_path, rating, title, overview, original_language,genres,userLists,movieInMyLists, ...rest} = this.props;
 		const {userId} = this.state;
 
-		console.log(genres)
-
 		return (
 			<div className="card" {...rest} key={movieId}>
 				{ poster_path ? (

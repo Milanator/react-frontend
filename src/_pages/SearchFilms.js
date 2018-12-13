@@ -180,7 +180,7 @@ class SearchFilms extends Component {
 					</div>
 
 					<div className="pagination-component">
-						<Pagination activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange.bind(this)} />
+						<Pagination siblingRange={2} activePage={this.state.activePage} totalPages={this.state.totalPages} onPageChange={this.handlePaginationChange.bind(this)} />
 
 					</div>
 				</div>
