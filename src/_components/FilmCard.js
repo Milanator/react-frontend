@@ -46,49 +46,50 @@ class FilmCard extends Component {
 		const {userId} = this.state;
 
 		return (
-			<div className="card" {...rest} key={movieId}>
-				{ poster_path ? (
-					<img src={"https://image.tmdb.org/t/p/w500" + poster_path} className={'poster-picture'} alt="movie poster"/>
-				) : (
-					<div className={'undefined-logo'}>
-						<img src={require('../img/Logo.png')} className={'poster-picture'} alt="movie poster"/>
+			<div className={'card-wrapper'}>
+				<div className="card" {...rest} key={movieId}>
+					{ poster_path ? (
+						<img src={"https://image.tmdb.org/t/p/w500" + poster_path} className={'poster-picture'} alt="movie poster"/>
+					) : (
+						<div className={'undefined-logo'}>
+							<img src={require('../img/Logo.png')} className={'poster-picture'} alt="movie poster"/>
+						</div>
+					) }
+
+					<ListButtons
+						source='FilmCard'
+						userLists={userLists}
+						movieInMyLists={movieInMyLists}
+						addToMyList={this.addToMyList}
+						userId={userId}
+						movieId={movieId}
+						rating={rating}
+						poster_path={poster_path}
+						title={title}
+						overview={overview}
+						original_language={original_language}
+						genres={genres}
+					/>
+					<h3>
+						{title}
+					</h3>
+					<p>
+						{textLimit(overview, 100)}
+					</p>
+
+					<div className={'fix-bottom'}>
+						<p>
+							Language: {capitalize(original_language)}
+						</p>
+
+						<p>
+							{ genres && genres.map((genre) => (
+								
+								<span className="badge badge-primary">{genre.hasOwnProperty('name') ? genre.name : genre}</span>
+							))}
+						</p>
 					</div>
-				) }
-
-				<ListButtons
-					source='FilmCard'
-					userLists={userLists}
-					movieInMyLists={movieInMyLists}
-					addToMyList={this.addToMyList}
-					userId={userId}
-					movieId={movieId}
-					rating={rating}
-					poster_path={poster_path}
-					title={title}
-					overview={overview}
-					original_language={original_language}
-					genres={genres}
-				/>
-				<h3>
-					{title}
-				</h3>
-				<p>
-					{textLimit(overview, 100)}
-				</p>
-
-				<div className={'fix-bottom'}>
-					<p>
-						Language: {capitalize(original_language)}
-					</p>
-
-					<p>
-						{ genres && genres.map((genre) => (
-							
-							<span className="badge badge-primary">{genre.hasOwnProperty('name') ? genre.name : genre}</span>
-						))}
-					</p>
 				</div>
-
 			</div>
 		);
 	}

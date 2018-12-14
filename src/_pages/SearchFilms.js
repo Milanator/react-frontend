@@ -39,7 +39,8 @@ class SearchFilms extends Component {
 			userLists: [],
 			isLoading: true,
 			genres: [],
-			searchWord: unSlugify(this.props.match.params.value)
+			searchWord: unSlugify(this.props.match.params.value),
+			myListMovies: []
 		};
 
 	}
@@ -89,9 +90,7 @@ class SearchFilms extends Component {
 			let films = setFilmGenre(genresArray, this.state.films);
 			films = setMyListToMovie(films,myListMovies);
 
-			console.log( films );
-
-			this.setState({ films:films,userLists:userLists,genres: genresArray });
+			this.setState({ films:films,userLists:userLists,genres: genresArray, myListMovies:myListMovies });
 		}).then(() => {
 			this.setState({ isLoading: false });
 		}).catch((err) => {
@@ -118,6 +117,8 @@ class SearchFilms extends Component {
 			axios.get(requestUrl).then(res => {
 				let films = res.data.results;
 				films = setFilmGenre(this.state.genres, films);
+				films = setMyListToMovie(films,this.state.myListMovies);
+
 				this.setState({ films });
 			}).then(() => {
 				this.setState({ isLoading: false });
@@ -128,6 +129,8 @@ class SearchFilms extends Component {
 	// handle any update of the filterMenu
 	onUpdate(result, totalPages, chosenGenre, chosenYear) {
 		result = setFilmGenre(this.state.genres, result);
+		result = setMyListToMovie(result,this.state.myListMovies);
+
 		this.setState({ films: result, totalPages, activePage: 1, chosenGenre, chosenYear});
 	}
 

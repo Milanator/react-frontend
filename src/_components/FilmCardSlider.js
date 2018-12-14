@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import FilmModal from '../_components/FilmModal';
 
 import '../css/mylists.css';
+import '../css/responsive/mylists.css';
 import { Button } from 'semantic-ui-react';
 
 
@@ -23,8 +24,29 @@ class FilmCardSlider extends Component {
             infinite: false,
             speed: 500,
             slidesToShow: 4,
-            slidesToScroll: 1
-        };
+            slidesToScroll: 1,
+            responsive: [
+                {
+                    breakpoint: 995,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                    },
+                },{
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                    },
+                },{
+                    breakpoint: 575,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                    },
+                }
+            ]
+        }
 
         if (films.length != 0) {
             return (
@@ -57,14 +79,14 @@ class FilmCardSlider extends Component {
             return (
                 <div className="empty-list">
                     <p>
-                    You Haven't Added Any Movies to This List
+                        You Haven't Added Any Movies to This List
                     </p>
                     <p>
-                    <Button 
-                        as={ Link } 
-                        to={'/home'}
-                        color="blue"
-                        content="Find Movies"
+                        <Button
+                            as={Link}
+                            to={'/home'}
+                            color="blue"
+                            content="Find Movies"
                         />
                     </p>
                 </div>

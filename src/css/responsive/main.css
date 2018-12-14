@@ -11,6 +11,9 @@
 		padding: 0 15px;
 	}
 
+	.slick-slider .card{
+		width: calc(100% - 8px) !important;
+	}
 
 }
 @media all and (max-width: 768px) {
@@ -24,13 +27,27 @@
 		height: auto;
 	}
 
+	.top-navigation .ui.equal.width.grid{
+		height: auto;
+	}
+
+	.website-title{
+		text-align: center;
+	}
+
 }
 @media all and (max-width: 575px) {
+
+	.card-wrapper{
+		display: inline-block;	
+	}
+
 	.card {
-		width: 100% !important;
-		margin: 4px 4px;
-		height: 520px;
+		width: 80% !important;
+		margin: 4px auto;
+		height: 470px;
 		padding: 0 40px;
+		float: none;
 	}
 
 	.card .fix-bottom{

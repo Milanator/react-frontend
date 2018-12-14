@@ -91,6 +91,17 @@ class FilmDetail extends React.Component {
             axios.get(ourApiUrl + "mylist/user/" + userId + "/all").then((res) => {
 
                 myListMovies = res.data;
+
+                this.state.filmData.forEach((film) => {
+
+                    film.genreNames = [];
+
+                    film.genres.forEach((genre) => {
+
+                        film.genreNames.push(genre.name)
+                    })
+                })
+
             }).catch((error) => { console.log(error); }),
 
             // get comments by movie id
@@ -126,11 +137,6 @@ class FilmDetail extends React.Component {
     addToMyList = (event) => {
 
         addMyList(event, this, 0, 1)
-    }
-
-    changeFlashMessage = (message) => {
-
-        console.log(message)
     }
 
     render() {
@@ -177,7 +183,7 @@ class FilmDetail extends React.Component {
                                 title={filmData.title}
                                 overview={filmData.overview}
                                 original_language={filmData.original_language}
-                                genres={filmData.genres}
+                                genres={filmData.genreNames}
                             />
 
                             <p>{filmData.overview}</p>

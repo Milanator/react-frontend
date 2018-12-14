@@ -51,3 +51,8 @@
   margin-top: 5px;
   margin-left: 5px;
 }
+
+.results{
+  left: none;
+  right: 0;
+}
