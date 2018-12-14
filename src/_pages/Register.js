@@ -102,9 +102,8 @@ class Register extends Component {
 					let userId = resp.data.insertId;
 					this.createWatchSeenList(userId);
 					that.setState({ success: 'Successful registration!' })
+					window.location.href = baseUrl + 'login';
 				}
-			}).then(() => {
-				window.location.href = baseUrl + 'login';
 			}).catch(err => {
 				console.log(err);
 			})
