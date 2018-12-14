@@ -86,7 +86,7 @@ class CommentBlock extends Component {
 			let commentsTemplate = '';
 
 			if (nextComments.length < 3)
-				$('.more-comments').text('Nothing else').css('color', 'black')
+				$('.more-comments').text('Nothing else').css('color', 'white').addClass('btn btn-light').attr('type','button')
 
 			nextComments.forEach((comment) => {
 
@@ -148,7 +148,7 @@ class CommentBlock extends Component {
 							</div>
 							{comments.length > 2 && (
 								<div className={'more-comments'}>
-									<a href={ourApiUrl + 'comment/movie/' + movieId + '/' + DBoffest} onClick={this.moreComments}>More comments</a>
+									<a href={ourApiUrl + 'comment/movie/' + movieId + '/' + DBoffest} onClick={this.moreComments} className={'btn btn-primary'}>More comments</a>
 								</div>
 							)}
 						</form>
